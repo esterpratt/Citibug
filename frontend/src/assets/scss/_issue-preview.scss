@@ -1,0 +1,90 @@
+.issue-preview {
+    border: 1px solid rgb(172, 172, 172);
+    border-radius: 5px;
+    position: relative;
+    transition: .5s;
+
+    // &hover {
+    //     transform: scale(1.1)
+    // }
+
+    .issue-details {
+        display: flex;
+        flex-direction: column;
+
+        .issue-img {
+            width: 100%;
+            height: 160px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            // margin-top: 10px;
+            // align-self: center;
+        }
+
+        h2, .txt-details, .time {
+            margin: 10px;
+        }
+    
+        h2 {
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+    
+        .txt-details {
+            font-size: .8rem;
+            display: flex;
+            justify-content: space-between;
+    
+            .comments {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                div {
+                    display: flex;
+    
+                    i {
+                        margin-right: 5px;
+                    }
+                }
+    
+                p {
+                    margin-top: 5px;
+                }
+            }
+        }
+    
+        .time {
+            font-size: .8rem;
+        }
+    
+        .issue-severity {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+    
+        .urgent {
+            background-color: rgb(165, 0, 0);
+        }
+    
+        .severe {
+            background-color: rgb(184, 119, 0);
+        }
+    
+        .mild {
+            background-color: rgb(0, 155, 0);
+        }
+    }
+
+    .resloved-container {
+        position: absolute;
+        top: 20px;
+    }
+}

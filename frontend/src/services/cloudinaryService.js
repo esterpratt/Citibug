@@ -1,6 +1,6 @@
 const CLOUD_NAME = "dnz0a2abj"
 
-var UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
+// var UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
 
 // on submit call to this function
 function uploadImg(elForm, ev) {
