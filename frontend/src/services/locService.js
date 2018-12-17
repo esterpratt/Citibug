@@ -1,6 +1,6 @@
 'use strict';
 
-import {secretData} from './secretService.js'
+import {secretData} from './secretData.js'
 
 export default {
     getLocs,
