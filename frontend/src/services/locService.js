@@ -13,8 +13,6 @@ export default {
 }
 
 const API_KEY = secretData['Google_API_KEY'];
-console.log(API_KEY);
-
 // var locs = [{ lat: 11.22, lng: 22.11 }]
 
 function getLocs() {

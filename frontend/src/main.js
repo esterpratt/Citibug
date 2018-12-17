@@ -9,8 +9,8 @@ import * as moment from 'moment';
 Vue.config.productionTip = false
 
 // vue-cmps imports
-import VueCarousel from 'vue-carousel';
-Vue.use(VueCarousel);
+import vueCarousel from 'vue-carousel';
+Vue.use(vueCarousel);
 
 Vue.filter('relativeTime', (time) => {
   return moment(time).fromNow();
