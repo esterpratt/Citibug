@@ -1,5 +1,7 @@
 'use strict';
 
+import {secretData} from './secretData.js'
+
 export default {
     getLocs,
     getCurrLoc,
@@ -10,7 +12,9 @@ export default {
     panTo
 }
 
-const API_KEY = 'AIzaSyBi6ra3hbtkJZKdyipozy54Ih8LB2gGsxw';
+const API_KEY = secretData['Google_API_KEY'];
+console.log(API_KEY);
+
 // var locs = [{ lat: 11.22, lng: 22.11 }]
 
 function getLocs() {
