@@ -69,7 +69,10 @@ var issues = [
         address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
         ownerId: 'xyz',
-        comments: []
+        comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 
+                   {txt: 'dont come the issue is resolved', ownerId: 'wxy'},
+                   {txt: 'ok thanks', ownerId: 'xyz'}, 
+                  ]
     },
     {
         _id: 'bcd',
@@ -87,7 +90,11 @@ var issues = [
         address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
         ownerId: 'xyz',
-        comments: []
+        comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 
+                   {txt: 'dont come the issue is resolved', ownerId: 'wxy'},
+                   {txt: 'ok thanks', ownerId: 'xyz'},
+                   {txt: 'not coming', ownerId: 'xyz'},
+                  ]
     },
     {
         _id: 'cde',
@@ -130,7 +137,7 @@ var issues = [
     },
     {
         _id: 'fgh',
-        title: 'garbage on the street',
+        title: 'a lot a lot of garbage on the street',
         description: 'garbage is thrown all over the street!',
         category: 'life quality',
         createdAt: Date.now(),

@@ -3,17 +3,21 @@
         <div v-if="issue.isResolved" class="resloved-container">
             <div class="resolved">
                 <i class="fas fa-check"></i>
-                <p>Issue resolved!</p>
+                <p>Issue is resolved!</p>
             </div>
         </div>
-        <div class="issue-details">
-            <div class="issue-img" 
-            :style="'background-image: url(' + issue.pic + ')'">
-                <!-- <img :src="issue.pic"> -->
-                <i class="far fa-eye"></i>
+        <div class="issue-img" 
+        :style="'background-image: url(' + issue.pic + ')'">
+            <!-- <img :src="issue.pic"> -->
+            <div class="seen-container">
+                <p>{{issue.seenCount}}</p>
+                <img src="../../public/img/eye.png">
+                <!-- <i class="far fa-eye"></i> -->
             </div>
-            <h2>{{issue.title}}</h2>
-            <div class="txt-details">
+        </div>
+        <h2>{{issue.title}}</h2>
+        <div class="txt-details">
+            <div class="address-n-comments">
                 <div class="address">At {{issue.address}}</div>
                 <div class="comments" :class="severityStatus">
                     <div>

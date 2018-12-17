@@ -1,6 +1,12 @@
 <template>
   <div class="home">
-    <h1>Welcome to Munacipal!</h1>
+    <header>
+        <h1>Make our city a better place!</h1>
+    </header>
+    <h2>
+        Issues near you
+    </h2>
+    
   </div>
 </template>
 
