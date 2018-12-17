@@ -1,5 +1,7 @@
 'use strict';
 
+import locService from './locService.js'
+
 const axios = require('axios')
 
 const BASE_URL = (process.env.NODE_ENV !== 'development')
@@ -14,8 +16,7 @@ export default {
 }
 
 function query(filter = {}) {
-    console.log(filter);
-    
+
     return Promise.resolve(issues);
     // var queryParams  = new URLSearchParams()
     // queryParams.append('inStock', filter.byStatus)
@@ -31,8 +32,8 @@ function query(filter = {}) {
 }
 
 function getIssueById(issueId) {
-    // to return the 1st issue (for now)
-
+    // return the 1st issue (for now)
+    return Promise.resolve(issues[0]);
     // return axios.get(`${BASE_URL}/issue/${issueId}`)
     //     .then(res => res.data)
 }
@@ -60,14 +61,18 @@ var issues = [
         createdAt: Date.now(),
         severity: 3.3,
         seenCount: 12,
-        isResolved: true,
+        isResolved: false,
         loc: {
             lat: 10.223333,
             lng: 11.114442
         },
+        address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
         ownerId: 'xyz',
-        comments: []
+        comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 
+                   {txt: 'dont come the issue is resolved', ownerId: 'wxy'},
+                   {txt: 'ok thanks', ownerId: 'xyz'}, 
+                  ]
     },
     {
         _id: 'bcd',
@@ -77,14 +82,19 @@ var issues = [
         createdAt: Date.now(),
         severity: 5.3,
         seenCount: 1,
-        isResolved: true,
+        isResolved: false,
         loc: {
             lat: 10.223333,
             lng: 11.114442
         },
+        address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
         ownerId: 'xyz',
-        comments: []
+        comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 
+                   {txt: 'dont come the issue is resolved', ownerId: 'wxy'},
+                   {txt: 'ok thanks', ownerId: 'xyz'},
+                   {txt: 'not coming', ownerId: 'xyz'},
+                  ]
     },
     {
         _id: 'cde',
@@ -99,7 +109,8 @@ var issues = [
             lat: 10.223333,
             lng: 11.114442
         },
-        pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
+        address: 'Ben Yehuda 85',
+        pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544971934/xmk5xhgjjstg2fwuqrv9.jpg',
         ownerId: 'xyz',
         comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 
                    {txt: 'dont come the issue is resolved', ownerId: 'wxy'},
@@ -114,28 +125,30 @@ var issues = [
         createdAt: Date.now(),
         severity: 7.3,
         seenCount: 5,
-        isResolved: true,
+        isResolved: false,
         loc: {
             lat: 10.223333,
             lng: 11.114442
         },
-        pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
+        address: 'Ben Yehuda 85',
+        pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544971843/osesasyy4cr40lqb91yc.jpg',
         ownerId: 'xyz',
         comments: []
     },
     {
         _id: 'fgh',
-        title: 'garbage on the street',
+        title: 'a lot a lot of garbage on the street',
         description: 'garbage is thrown all over the street!',
         category: 'life quality',
         createdAt: Date.now(),
         severity: 1.3,
         seenCount: 12,
-        isResolved: true,
+        isResolved: false,
         loc: {
             lat: 10.223333,
             lng: 11.114442
         },
+        address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
         ownerId: 'xyz',
         comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 
@@ -150,12 +163,13 @@ var issues = [
         createdAt: Date.now(),
         severity: 9.3,
         seenCount: 1,
-        isResolved: false,
+        isResolved: true,
         loc: {
             lat: 10.223333,
             lng: 11.114442
         },
-        pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
+        address: 'Ben Yehuda 85',
+        pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544971647/sktpnz4y5v5gph2cml13.jpg',
         ownerId: 'xyz',
         comments: [{txt: '1.5 meters left', ownerId: 'xyz'},]
     },
