@@ -1,4 +1,4 @@
-src/services/secretSevrice.js
+src/services/secretService.js
 .DS_Store
 node_modules
 /dist
