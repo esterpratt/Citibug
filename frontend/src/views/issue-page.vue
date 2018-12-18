@@ -1,12 +1,13 @@
 <template>
-    <section>
-        <h1>see all issues</h1>
+    <section class="container">
+        <issue-filter></issue-filter>
         <issue-list :issues="issues"></issue-list>
     </section>
 </template>
 
 <script>
 import issueList from '@/components/issue-list.vue'
+import issueFilter from '@/components/issue-filter.vue'
 
 export default {
   name: 'issue-page',
@@ -20,6 +21,7 @@ export default {
   },
   components: {
     issueList,
+    issueFilter,
   },
   computed: {
       issues() {

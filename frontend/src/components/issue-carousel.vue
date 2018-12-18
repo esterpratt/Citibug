@@ -2,9 +2,10 @@
     <section class="issue-carousel">
         <carousel 
         :navigationEnabled="true"
-        navigationNextLabel="<i class='fas fa-chevron-right'></i>" 
-        navigationPrevLabel="<i class='fas fa-chevron-left'></i>" 
-        :perPageCustom="[[0,1],[650,2],[950, 3], [1250, 4]]"
+        navigationNextLabel="<i class='fas fa-chevron-right carousel-arrow'></i>" 
+        navigationPrevLabel="<i class='fas fa-chevron-left carousel-arrow'></i>"
+        :navigationClickTargetSize="0"
+        :perPageCustom="[[0,1],[680,2],[1080, 3]]"
         :scrollPerPage="false"
         :mouse-drag="true">
             <slide class="slide" v-for="issue in issues" :key="issue._id">

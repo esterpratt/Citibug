@@ -4,6 +4,7 @@ import locService from '@/services/locService'
 export default {
     state: {
         issues: [],
+        issueCategories: ['Animals', 'Landscape', 'Sanitation', 'Construction', 'Traffic & walkways'],
         filter: {
           // update loc when loading issues
           loc: {},
@@ -13,12 +14,17 @@ export default {
           byTxt: '',
           // could be: open, resolved, all
           byStatus: 'all',
+          byCategory: 'all',
         },
       },
     
       getters: {
         issues(state) {
           return state.issues
+        },
+
+        issueCategories(state) {
+          return state.issueCategories
         },
 
         loc(state) {
@@ -52,5 +58,8 @@ export default {
               })
         },
         
+        getIssueById(context, {issueId}) {
+          return issueService.getIssueById(issueId)
+        }
       }
 }

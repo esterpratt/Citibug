@@ -1,0 +1,22 @@
+.issue-filter {
+    margin: 40px 30px;
+    display: flex;
+    justify-content: space-between;
+
+    .issue-search {
+        width: 180px;
+    }
+
+    .category-filter {
+        width: 250px;
+    }
+    
+    .issue-sort {
+        display: flex;
+        align-items: center;
+
+        p {
+            margin-right: 5px;
+        }
+    }
+}

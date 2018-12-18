@@ -3,10 +3,23 @@
     <header>
         <h1>Make our city a better place!</h1>
     </header>
-    <h2>
-        Issues near you
-    </h2>
-    <issue-carousel :issues="issues"></issue-carousel>
+    <section class="container">
+        <div class="carousel-container">
+            <h2>Issues near you</h2>
+            <issue-carousel :issues="issues"></issue-carousel>
+            <router-link to="/issue">Show All Issues ></router-link>
+        </div>
+        <div class="carousel-container">
+            <h2>Most urgent issues</h2>
+            <issue-carousel :issues="issues"></issue-carousel>
+            <router-link to="/issue">Show All Issues ></router-link>
+        </div>
+        <div class="carousel-container">
+            <h2>Recent issues</h2>
+            <issue-carousel :issues="issues"></issue-carousel>
+            <router-link to="/issue">Show All Issues ></router-link>
+        </div>
+    </section>
   </div>
 </template>
 

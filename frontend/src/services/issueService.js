@@ -55,12 +55,13 @@ function saveIssue(issue) {
 var issues = [
     {
         _id: 'abc',
-        title: 'garbage on the street',
+        title: 'a lot a lot a lot of garbage on the street',
         description: 'garbage is thrown all over the street!',
-        category: 'life quality',
+        category: 'sanitation',
         createdAt: Date.now(),
         severity: 3.3,
         seenCount: 12,
+        shareCount: 2,
         isResolved: false,
         loc: {
             lat: 10.223333,
@@ -76,12 +77,13 @@ var issues = [
     },
     {
         _id: 'bcd',
-        title: 'garbage on the street',
+        title: 'Turtle crossing the street',
         description: 'garbage is thrown all over the street!',
-        category: 'infrastracture',
+        category: 'sanitation',
         createdAt: Date.now(),
         severity: 5.3,
         seenCount: 1,
+        shareCount: 1,
         isResolved: false,
         loc: {
             lat: 10.223333,
@@ -98,13 +100,14 @@ var issues = [
     },
     {
         _id: 'cde',
-        title: 'garbage on the street',
+        title: 'Milk spilled from truck',
         description: 'garbage is thrown all over the street!',
-        category: 'life quality',
+        category: 'construction',
         createdAt: Date.now(),
         severity: 8.3,
         seenCount: 212,
-        isResolved: true,
+        shareCount: 10,
+        isResolved: false,
         loc: {
             lat: 10.223333,
             lng: 11.114442
@@ -119,12 +122,13 @@ var issues = [
     },
     {
         _id: 'efg',
-        title: 'garbage on the street',
+        title: 'Dead flowers at old lady\'s garden',
         description: 'garbage is thrown all over the street!',
-        category: 'infrastracture',
+        category: 'landscape',
         createdAt: Date.now(),
         severity: 7.3,
         seenCount: 5,
+        shareCount: 0,
         isResolved: false,
         loc: {
             lat: 10.223333,
@@ -137,13 +141,14 @@ var issues = [
     },
     {
         _id: 'fgh',
-        title: 'a lot a lot of garbage on the street',
+        title: 'Turtle crossing the street',
         description: 'garbage is thrown all over the street!',
-        category: 'life quality',
+        category: 'animals',
         createdAt: Date.now(),
         severity: 1.3,
         seenCount: 12,
-        isResolved: false,
+        shareCount: 22,
+        isResolved: true,
         loc: {
             lat: 10.223333,
             lng: 11.114442
@@ -159,10 +164,11 @@ var issues = [
         _id: 'ghi',
         title: 'garbage on the street',
         description: 'garbage is thrown all over the street!',
-        category: 'infrastracture',
+        category: 'traffic & walkways',
         createdAt: Date.now(),
         severity: 9.3,
         seenCount: 1,
+        shareCount: 6,
         isResolved: true,
         loc: {
             lat: 10.223333,

@@ -1,7 +1,10 @@
 <template>
     <section>
         <div class="issues-list">
-            <issue-preview v-for="issue in issues" :key="issue._id" :issue="issue"></issue-preview>
+            <issue-preview v-for="issue in issues" 
+            :key="issue._id" 
+            :issue="issue">
+            </issue-preview>
         </div>
     </section>
 </template>
