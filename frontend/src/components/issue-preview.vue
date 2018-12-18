@@ -1,5 +1,5 @@
 <template>
-    <section class="issue-preview">
+    <section class="issue-preview" @click="openIssue">
         <div v-if="issue.isResolved" class="resloved-container">
             <div class="resolved">
                 <i class="fas fa-check"></i>
@@ -8,33 +8,38 @@
         </div>
         <div class="issue-img" 
         :style="'background-image: url(' + issue.pic + ')'">
-            <!-- <img :src="issue.pic"> -->
-            <div class="seen-container">
-                <p>{{issue.seenCount}}</p>
-                <img src="../../public/img/eye.png">
-                <!-- <i class="far fa-eye"></i> -->
-            </div>
+            <!-- <img :src="issue.pic"> -->       
         </div>
-        <h2>{{issue.title}}</h2>
-        <div class="txt-details">
-            <div class="address-n-comments">
-                <div class="address">At {{issue.address}}</div>
-                <div class="comments" :class="severityStatus">
-                    <div>
-                        <i class="far fa-comment"></i>
-                        <span>
-                            {{issue.comments.length ? issue.comments.length : 'No'}}
-                        </span>
-                    </div>
-                    <p>{{issue.comments.length === 1? 'comment' : 'comments'}}</p>
-                </div>
-            </div>
+        <div class="issue-details">
             <div class="time">
                 reported {{issue.createdAt | relative-time}}    
             </div>
-            <div class="issue-severity" :class="severityStatus">
-                {{severityStatus}}
+            <h3>{{issue.title}}</h3>
+            <div class="category">{{issue.category}}</div>
+            <div class="address">At {{issue.address}}</div>
+            <div class="social-details">
+                <div class="seen">
+                    <i class="far fa-eye" :class="severityStatus"></i>
+                    <span>
+                        {{issue.seenCount}} seen
+                    </span>
+                </div>
+                <div class="comments">
+                    <i class="far fa-comment" :class="severityStatus"></i>
+                    <span>
+                        {{issue.comments.length}} {{issue.comments.length === 1? 'comment' : 'comments'}}
+                    </span>
+                </div>
+                <div class="share">
+                    <i class="fas fa-share" :class="severityStatus"></i>
+                    <span>
+                        {{issue.shareCount}} {{issue.shareCount === 1? 'share' : 'shares'}}
+                    </span>
+                </div>
             </div>
+        </div>
+        <div class="issue-severity" :class="severityStatus">
+            {{severityStatus}}
         </div>
     </section>
 </template>
@@ -55,17 +60,13 @@ export default {
   },
   computed: {
       severityStatus() {
-          if (this.issue.severity < 4) {
-              return 'mild'
-          } else if (this.issue.severity < 7) {
-              return 'severe'
-          } else {
-              return 'urgent'
-          }
+          return this.getSeverityStatus(this.issue.severity)
       }
   },
   methods: {
-      
+      openIssue() {
+          this.$router.push(`/issue/${this.issue._id}`)
+      }
   },
   created() {
       
