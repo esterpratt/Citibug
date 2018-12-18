@@ -11,7 +11,7 @@
             <button>Share</button>
         </div>
         <p :class="severityStatus">
-            This issue is {{severityStatus === 'urgent' ? severityStatus+'!' : severityStatus}}</span>
+            This issue is {{severityStatus === 'urgent' ? severityStatus+'!' : severityStatus}}
         </p>
     </section>
 </template>
