@@ -12,7 +12,9 @@ export default {
   },
   data() {
       return {
-          
+          issue: {
+
+          }
       }
   },
   components: {
@@ -25,7 +27,13 @@ export default {
       
   },
   created() {
-      
+      const issueId = this.$route.params.issueId
+      if (issueId) {
+          this.$store.dispatch({type: 'getIssueById', issueId})
+            .then(issue => {
+                this.issue = issue
+            })
+      }
   }
 }
 </script>

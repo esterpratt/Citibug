@@ -3,6 +3,7 @@
 import {secretData} from './secretData.js'
 
 export default {
+    getApiKey,
     getLocs,
     getCurrLoc,
     getAddressLoc,
@@ -14,6 +15,10 @@ export default {
 
 const API_KEY = secretData['Google_API_KEY'];
 // var locs = [{ lat: 11.22, lng: 22.11 }]
+
+function getApiKey() {
+    return API_KEY;
+}
 
 function getLocs() {
     return Promise.resolve(locs);
