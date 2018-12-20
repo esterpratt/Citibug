@@ -1,7 +1,5 @@
 'use strict';
 
-import locService from './locService.js'
-
 const axios = require('axios')
 
 const BASE_URL = (process.env.NODE_ENV !== 'development')
@@ -63,11 +61,13 @@ var issues = [
         seenCount: 12,
         shareCount: 2,
         isResolved: false,
-        loc: {
-            lat: 32.0853,
-            lng: 34.7818
+        location: {
+            pos: {
+                lat: 32.0853,
+                lng: 34.7818
+            },
+            address: 'Ben Yehuda 85',
         },
-        address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
         ownerId: 'xyz',
         comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 

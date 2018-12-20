@@ -1,13 +1,14 @@
 'use strict';
 
 import {secretData} from './secretData.js'
+const axios = require('axios')
 
 export default {
     getApiKey,
     getLocs,
     getCurrLoc,
-    getAddressLoc,
-    getAddressByLoc,
+    getPosByAddress,
+    getAddressByPos,
     initMap,
     addMarker,
     panTo
@@ -46,7 +47,7 @@ function getCurrLoc() {
 //     locs.push(pos);
 // }
 
-function getAddressLoc(address) {
+function getPosByAddress(address) {
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`)
         .then(locRes => {
             // _saveToLocs(locRes.data.results[0].geometry.location)
@@ -54,9 +55,9 @@ function getAddressLoc(address) {
         });
 }
 
-function getAddressByLoc(loc) {
-    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${loc.lat},${loc.lng}&key=${API_KEY}`)
-    .then(locRes => locRes.data.results)
+function getAddressByPos(pos) {
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.lat},${pos.lng}&key=${API_KEY}`)
+    .then(locRes => locRes.data.results[0].formatted_address)
 }
 
 

@@ -30,7 +30,9 @@
             <div class="imgs-container">
                 <img :src="issue.pic"/>
                 <div class="map-container">
-                    <map-cmp :issueLoc="issue.loc"></map-cmp>
+                    <map-cmp :issuePos="issue.location.pos"
+                    :mapCenter="issue.location.pos"
+                    :isEditable="false"></map-cmp>
                 </div>
             </div>
         </div>
