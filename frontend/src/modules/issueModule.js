@@ -7,7 +7,7 @@ export default {
         issueCategories: ['Animals', 'Landscape', 'Sanitation', 'Construction', 'Traffic & walkways'],
         filter: {
           // update loc when loading issues
-          loc: {},
+          pos: {},
           // could be: distance, severity, time, attention
           sortBy: '',
           sortDir: 1,
@@ -28,38 +28,55 @@ export default {
         },
 
         loc(state) {
-          return state.filter.loc
+          return state.filter.pos
         }
       },
     
       mutations: {
         setIssues(state, {issues}) {
-          state.issues = issues;
+          state.issues = issues
         },
 
-        setLoc(state, {loc}) {
-          state.filter.loc = loc;
+        setPos(state, {pos}) {
+          state.filter.pos = pos
         },
       },
     
-      actions: {
-        getLoc({commit}) {
-          return locService.getCurrLoc()
-            .then(loc => {
-              commit({type: 'setLoc', loc})
-              // return loc
-            })
-        },
-
+      actions: {       
         getIssues({commit, state}) {
           issueService.query(state.filter)
-            .then(issues => {
-                commit({type: 'setIssues', issues})
-              })
+          .then(issues => {
+            commit({type: 'setIssues', issues})
+          })
         },
         
         getIssueById(context, {issueId}) {
           return issueService.getIssueById(issueId)
+        },
+
+        getLoc({commit, dispatch}) {
+          return locService.getCurrLoc()
+            .then(pos => {
+              commit({type: 'setPos', pos})
+              return dispatch({type: 'getAddressByPos', pos})
+                .then(address => {
+                  return {pos, address}
+                })
+            })
+        },
+
+        getPosByAddress(context, {address}) {
+          return locService.getPosByAddress(address)
+            .then(pos => {
+              return pos
+            })
+        },
+
+        getAddressByPos(context, {pos}) {
+          return locService.getAddressByPos(pos)
+            .then(address => {
+              return address
+            })
         }
       }
 }
