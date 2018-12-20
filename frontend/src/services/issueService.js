@@ -64,8 +64,8 @@ var issues = [
         shareCount: 2,
         isResolved: false,
         loc: {
-            lat: 10.223333,
-            lng: 11.114442
+            lat: 32.0853,
+            lng: 34.7818
         },
         address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
