@@ -43,7 +43,7 @@
             @setPos="setPos"></map-cmp>
         </div>
       </div>
-      <img-upload v-model="uploadedPic"></img-upload>
+      <img-upload v-model="issue.pic"></img-upload>
     </div>
     <div class="edit-btns">
       <button>{{issue._id ? 'Save' : 'Report'}}</button>
@@ -64,7 +64,7 @@ export default {
     return {
       issue: null,
       mapCenter: null,
-      uploadedPic: ''
+      // uploadedPic: ''
     };
   },
 
@@ -86,10 +86,10 @@ export default {
         this.$store.dispatch({ type: "getIssueById", issueId }).then(issue => {
           this.issue = issue
           this.mapCenter = this.issue.location.pos
-          this.uploadedPic = this.issue.pic
+          // this.uploadedPic = this.issue.pic
         });
       } else {
-          this.uploadedPic = ''
+          // this.uploadedPic = ''
           this.setEmptyIssue()
       }
     },
@@ -107,7 +107,7 @@ export default {
               pos: null,
               address: null,
           },
-        //   pic: "",
+          pic: "",
           // TODO: update the owner according to loggedInUser
           ownerId: "xyz"
         }
