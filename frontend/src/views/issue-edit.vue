@@ -1,4 +1,5 @@
 <template>
+<!-- TODO: optimize: divide to select/input cmps -->
   <section class="issue-edit" v-if="issue">
     <button v-if="issue._id">Delete</button>
     <div class="edit-details">
@@ -27,22 +28,9 @@
       </div>
     </div>
     <div class="edit-imgs">
-      <div class="edit-map">
-        <div class="loc-select">
-          <form @submit.prevent="getPosByAddress">
-            <el-input type="text" v-model="issue.location.address"
-            placeholder="Address"></el-input>
-            <button>OK</button>
-          </form>
-          <button @click="getCurrLoc">My Location</button>
-        </div>
-        <div class="map-container" v-if="this.issue.location.pos">
-            <map-cmp :issuePos="issue.location.pos"
-            :mapCenter="mapCenter"
-            :isEditable="true"
-            @setPos="setPos"></map-cmp>
-        </div>
-      </div>
+      <map-edit :locProp="issue.location" :mapCenter="mapCenter"
+      @getPosByAddress="getPosByAddress"
+      @getCurrLoc="getCurrLoc" @setPos="setPos"/>
       <img-upload v-model="issue.pic"></img-upload>
     </div>
     <div class="edit-btns">
@@ -53,12 +41,11 @@
 </template>
 
 <script>
-import mapCmp from '@/components/map-cmp.vue'
-import imgUpload from '@/components/img-upload.vue'
+import mapEdit from '@/components/map-edit'
+import imgUpload from '@/components/img-upload'
 
 export default {
   name: "issue-edit",
-  props: {},
 
   data() {
     return {
@@ -69,8 +56,8 @@ export default {
   },
 
   components: {
-      mapCmp,
-      imgUpload
+    mapEdit,
+    imgUpload
   },
 
   computed: {
@@ -123,8 +110,8 @@ export default {
             })
     },
 
-    getPosByAddress() {
-        this.$store.dispatch({type: 'getPosByAddress', address: this.issue.location.address})
+    getPosByAddress(address) {
+        this.$store.dispatch({type: 'getPosByAddress', address})
             .then(pos => {
                 this.issue.location.pos = pos
                 this.mapCenter = pos
@@ -134,9 +121,7 @@ export default {
     setPos(pos) {
         this.issue.location.pos = pos
         this.$store.dispatch({type: 'getAddressByPos', pos})
-            .then(address => {
-                this.issue.location.address = address
-            })
+            .then(address => this.issue.location.address = address)
     },
   },
 

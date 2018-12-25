@@ -57,7 +57,12 @@ function getPosByAddress(address) {
 
 function getAddressByPos(pos) {
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.lat},${pos.lng}&key=${API_KEY}`)
-    .then(locRes => locRes.data.results[0].formatted_address)
+    .then(locRes => {
+        const addressToReturn = locRes.data.results[0] ? 
+                                locRes.data.results[0].formatted_address :
+                                'Unknown Address'
+        return addressToReturn
+    })
 }
 
 

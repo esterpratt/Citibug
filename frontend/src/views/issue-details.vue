@@ -1,16 +1,7 @@
 <template>
     <section class="container" v-if="issue">
         <div class="issue-details">
-            <div class="resloved-container">
-                <template v-if="issue.isResolved">
-                    <i class="fas fa-times"></i>
-                    <p>Re-open</p>
-                </template>
-                <template v-else>
-                    <i class="fas fa-check"></i>
-                    <p>Resolve</p>
-                </template>
-            </div>
+            <resolved-cmp :isResolved="issue.isResolved"/>
             <router-link :to="'/issue/edit/' + issue._id">Edit your issue</router-link>
             <h2>{{issue.title}}</h2>
             <p>{{issue.description}}</p>
@@ -30,41 +21,21 @@
             <div class="imgs-container">
                 <img :src="issue.pic"/>
                 <div class="map-container">
-                    <map-cmp :issuePos="issue.location.pos"
+                    <map-view :issuePos="issue.location.pos"
                     :mapCenter="issue.location.pos"
-                    :isEditable="false"></map-cmp>
+                    :isEditable="false" />
                 </div>
             </div>
         </div>
-        <div class="comments-container">
-            <h2>Comments</h2>
-            <div class="new-comment">
-                <div class="user-pic">
-
-                </div>
-                <form @submit.prevent="addComment">
-                    <input type="text" 
-                    v-model="newComment" 
-                    placeholder="What's on your heart">
-                    <button>
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </form>
-            </div>
-            <div class="comments">
-                <comment-preview
-                v-for="(comment, idx) in issue.comments"
-                :key="idx"
-                :comment="comment">
-                </comment-preview>
-            </div>
-        </div>
+        <comments-cmp :comments="issue.comments"
+        @addComment="addComment" />
     </section>
 </template>
 
 <script>
-import commentPreview from '@/components/comment-preview.vue'
-import mapCmp from '@/components/map-cmp.vue'
+import mapView from '@/components/map-view.vue'
+import resolvedCmp from '@/components/resolved-cmp.vue'
+import commentsCmp from '@/components/comments-cmp.vue'
 
 export default {
   name: 'issue-details',
@@ -74,12 +45,12 @@ export default {
   data() {
       return {
           issue: null,
-          newComment: '',
       }
   },
   components: {
-    commentPreview,
-    mapCmp
+    mapView,
+    resolvedCmp,
+    commentsCmp
   },
   computed: {
       severityStatus() {
@@ -87,9 +58,8 @@ export default {
       }
   },
   methods: {
-      addComment() {
-          console.log(this.comment)
-          this.newComment = ''
+      addComment(comment) {
+          console.log(comment);
       }
   },
   created() {
