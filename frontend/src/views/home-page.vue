@@ -3,6 +3,7 @@
     <header>
         <h1>Make our city a better place!</h1>
     </header>
+    <!-- TODO: optimize: loop over array -->
     <section class="container">
         <div class="carousel-container">
             <h2>Issues near you</h2>

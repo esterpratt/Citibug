@@ -1,4 +1,5 @@
 <template>
+<!-- TODO: optimize: divide to select/input/radio cmps -->
     <section class="issue-filter">
         <form @submit.prevent="setFilter">
             <el-input class="issue-search" type="text" 
