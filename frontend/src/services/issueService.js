@@ -70,9 +70,9 @@ var issues = [
         },
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
         ownerId: 'xyz',
-        comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 
-                   {txt: 'dont come the issue is resolved', ownerId: 'wxy'},
-                   {txt: 'ok thanks', ownerId: 'xyz'}, 
+        comments: [{txt: 'Im coming to help', ownerId: 'xyz', at: Date.now()}, 
+                   {txt: 'dont come the issue is resolved', ownerId: 'wxy', at: Date.now()},
+                   {txt: 'ok thanks', ownerId: 'xyz', at: Date.now()}, 
                   ]
     },
     {
@@ -85,17 +85,19 @@ var issues = [
         seenCount: 1,
         shareCount: 1,
         isResolved: false,
-        loc: {
-            lat: 10.223333,
-            lng: 11.114442
+        location: {
+            pos: {
+                lat: 32.0853,
+                lng: 34.7818
+            },
+            address: 'Ben Yehuda 85',
         },
-        address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
         ownerId: 'xyz',
-        comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 
-                   {txt: 'dont come the issue is resolved', ownerId: 'wxy'},
-                   {txt: 'ok thanks', ownerId: 'xyz'},
-                   {txt: 'not coming', ownerId: 'xyz'},
+        comments: [{txt: 'Im coming to help', ownerId: 'xyz', at: Date.now()}, 
+                   {txt: 'dont come the issue is resolved', ownerId: 'wxy', at: Date.now()},
+                   {txt: 'ok thanks', ownerId: 'xyz', at: Date.now()},
+                   {txt: 'not coming', ownerId: 'xyz', at: Date.now()},
                   ]
     },
     {
@@ -108,16 +110,18 @@ var issues = [
         seenCount: 212,
         shareCount: 10,
         isResolved: false,
-        loc: {
-            lat: 10.223333,
-            lng: 11.114442
+        location: {
+            pos: {
+                lat: 32.0853,
+                lng: 34.7818
+            },
+            address: 'Ben Yehuda 85',
         },
-        address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544971934/xmk5xhgjjstg2fwuqrv9.jpg',
         ownerId: 'xyz',
-        comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 
-                   {txt: 'dont come the issue is resolved', ownerId: 'wxy'},
-                   {txt: 'ok thanks', ownerId: 'xyz'}, 
+        comments: [{txt: 'Im coming to help', ownerId: 'xyz', at: Date.now()}, 
+                   {txt: 'dont come the issue is resolved', ownerId: 'wxy', at: Date.now()},
+                   {txt: 'ok thanks', ownerId: 'xyz', at: Date.now()}, 
                   ]
     },
     {
@@ -130,11 +134,13 @@ var issues = [
         seenCount: 5,
         shareCount: 0,
         isResolved: false,
-        loc: {
-            lat: 10.223333,
-            lng: 11.114442
+        location: {
+            pos: {
+                lat: 32.0853,
+                lng: 34.7818
+            },
+            address: 'Ben Yehuda 85',
         },
-        address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544971843/osesasyy4cr40lqb91yc.jpg',
         ownerId: 'xyz',
         comments: []
@@ -149,15 +155,17 @@ var issues = [
         seenCount: 12,
         shareCount: 22,
         isResolved: true,
-        loc: {
-            lat: 10.223333,
-            lng: 11.114442
+        location: {
+            pos: {
+                lat: 32.0853,
+                lng: 34.7818
+            },
+            address: 'Ben Yehuda 85',
         },
-        address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544712287/udiihqmvei1gmmqagldh.jpg',
         ownerId: 'xyz',
-        comments: [{txt: 'Im coming to help', ownerId: 'xyz'}, 
-                   {txt: 'dont come the issue is resolved', ownerId: 'xyz'},
+        comments: [{txt: 'Im coming to help', ownerId: 'xyz', at: Date.now()}, 
+                   {txt: 'dont come the issue is resolved', ownerId: 'xyz', at: Date.now()},
                   ]
     },
     {
@@ -170,13 +178,15 @@ var issues = [
         seenCount: 1,
         shareCount: 6,
         isResolved: true,
-        loc: {
-            lat: 10.223333,
-            lng: 11.114442
+        location: {
+            pos: {
+                lat: 32.0853,
+                lng: 34.7818
+            },
+            address: 'Ben Yehuda 85',
         },
-        address: 'Ben Yehuda 85',
         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1544971647/sktpnz4y5v5gph2cml13.jpg',
         ownerId: 'xyz',
-        comments: [{txt: '1.5 meters left', ownerId: 'xyz'},]
+        comments: [{txt: '1.5 meters left', ownerId: 'xyz', at: Date.now()},]
     },
 ]

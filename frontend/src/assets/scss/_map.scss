@@ -1,0 +1,22 @@
+.map {
+    position: relative;
+
+    .vue-map-container {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .pan-container {
+        cursor: pointer;
+        position: absolute;
+        top: 15px;
+        right: 70px;
+        width: 30px;
+        height: 30px;
+        transition: .2s;
+
+        &:hover {
+            transform: scale(0.95)
+        }
+    }
+}

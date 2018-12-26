@@ -1,3 +1,15 @@
+// Colors
+
 $urgentColor: rgb(235,79,2);
 $importantColor: rgb(244,130,8);
 $casualColor: rgb(143,145,39);
+$bgColorDark: rgb(230, 230, 230);
+$bgColorLight: #e9e9e9;
+$darkBorder: rgb(145, 145, 145);
+
+
+@mixin round($size) {
+	border-radius: 50%;
+    width: $size;
+    height: $size;
+}

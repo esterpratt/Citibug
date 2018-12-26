@@ -2,13 +2,12 @@
     <div class="comments-container">
         <h2>Comments</h2>
         <div class="new-comment">
-            <div class="user-pic">
-
-            </div>
+            <div class="user-pic"></div>
             <form @submit.prevent="addComment">
-                <input type="text" 
-                v-model="newComment" 
-                placeholder="What's on your heart">
+                <el-input type="text" 
+                    v-model="newComment" 
+                    placeholder="What's on your heart">
+                </el-input>
                 <button>
                     <i class="fas fa-plus"></i>
                 </button>
@@ -25,7 +24,7 @@
 </template>
 
 <script>
-import commentPreview from '@/components/comment-preview.vue'
+import commentPreview from './comment-preview'
 
 export default {
     props: {
