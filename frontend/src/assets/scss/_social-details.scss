@@ -1,0 +1,23 @@
+.social-details {
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: .9rem;
+    color: rgb(71, 71, 71);
+
+    .urgent {
+        color: $urgentColor;
+    }
+
+    .important {
+        color: $importantColor;
+    }
+
+    .casual {
+        color: $casualColor;
+    }
+
+    i {
+        margin-right: 0.3rem;
+    }
+}

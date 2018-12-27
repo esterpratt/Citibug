@@ -1,5 +1,6 @@
 <template>
     <section class="issue-preview" @click="openIssue">
+        <!-- TODO: unite with resolved cmp -->
         <div v-if="issue.isResolved" class="resloved-container">
             <div class="resolved">
                 <i class="fas fa-check"></i>
@@ -18,24 +19,9 @@
             <div class="category">{{issue.category}}</div>
             <div class="address">At {{issue.address}}</div>
             <div class="social-details">
-                <div class="seen">
-                    <i class="far fa-eye" :class="severityStatus"></i>
-                    <span>
-                        {{issue.seenCount}} seen
-                    </span>
-                </div>
-                <div class="comments">
-                    <i class="far fa-comment" :class="severityStatus"></i>
-                    <span>
-                        {{issue.comments.length}} {{issue.comments.length === 1? 'comment' : 'comments'}}
-                    </span>
-                </div>
-                <div class="share">
-                    <i class="fas fa-share" :class="severityStatus"></i>
-                    <span>
-                        {{issue.shareCount}} {{issue.shareCount === 1? 'share' : 'shares'}}
-                    </span>
-                </div>
+                <seen-count :count="issue.seenCount" :severityStatus="severityStatus"/>
+                <comment-count :count="issue.comments.length" :severityStatus="severityStatus"/>
+                <share-count :count="issue.shareCount" :severityStatus="severityStatus"/>
             </div>
         </div>
         <div class="issue-severity" :class="severityStatus">
@@ -45,6 +31,9 @@
 </template>
 
 <script>
+import seenCount from './seen-count'
+import shareCount from './share-count'
+import commentCount from './comment-count'
 
 export default {
   props: {
@@ -56,7 +45,9 @@ export default {
       }
   },
   components: {
-
+      seenCount,
+      shareCount,
+      commentCount
   },
   computed: {
       severityStatus() {

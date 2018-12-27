@@ -1,5 +1,5 @@
 <template>
-    <div class="resloved-container">
+    <div class="resolved">
         <template v-if="isResolved">
             <i class="fas fa-times"></i>
             <p>Re-open</p>

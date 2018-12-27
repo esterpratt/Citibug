@@ -1,18 +1,16 @@
 <template>
     <section class="map">
-        <button class="pan-container" @click="panTo">
-            <img src="../../public/img/gps.png">
-        </button>
         <GmapMap ref="mapRef"
         :center="mapCenter"
         :zoom="16"
         map-type-id="terrain"
-        @click="setPos"
-        style="width: 500px; height: 300px">
+        @click="setPos">
             <GmapMarker :position="issuePos"
             :draggable="isEditable"
             @dragend="setPos"/>
         </GmapMap>
+        <img class="pan-container" @click="panTo"
+        src="../../public/img/gps.png">
     </section>
 </template>
 

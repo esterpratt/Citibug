@@ -1,0 +1,77 @@
+.comments-container {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    background-color: $bgColorDark;
+
+    h2 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .new-comment {
+        display: flex;
+        align-items: center;
+
+        .user-pic {
+            @include round(2rem);
+            border: 1px solid $darkBorder;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+
+            button {
+                @include round(2rem);
+                background-color: $casualColor;
+                color: white;
+
+                &:hover {
+                    background-color: darken($casualColor, 15%);
+                }
+            }
+
+            .el-input {
+                width: 80%;
+                margin: 0 1rem;
+            }
+        }
+    }
+
+    .comments {
+        margin-top: 2rem;
+
+        .comment-preview {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+
+            .user-img {
+                @include round(2rem);
+                border: 1px solid $darkBorder;
+                margin-right: 1rem;
+            }
+
+            div:last-child {
+                width: 90%;
+                div {
+                    display: flex;
+                    justify-content: space-between;
+
+                    * {
+                        font-size: 0.8rem;
+                    }
+
+                    .user-name {
+                        font-weight: bold;
+                    }
+                }
+
+                .comment-txt {
+                    margin-top: 4px;
+                }
+            }
+        }
+    }
+}

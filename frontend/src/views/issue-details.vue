@@ -1,31 +1,35 @@
 <template>
-    <section class="container" v-if="issue">
-        <div class="issue-details">
+    <section class="container issue-details-page" v-if="issue">
+        <div class="issue-details-container">
+            <div class="issue-details">
+                <!-- TODO: show only if issue owner -->
+                <router-link :to="'/issue/edit/' + issue._id">
+                    <i class="fas fa-edit"></i>
+                    Edit your issue
+                </router-link>
+                <h2>{{issue.title}}</h2>
+                <p>{{issue.description}}</p>
+                <p class="category">Category: {{issue.category}}</p>
+                <p class="time">Reported {{issue.reportedAt | relative-time}}</p>
+                <p :class="severityStatus">
+                    This issue is {{severityStatus === 'urgent' ? severityStatus+'!' : severityStatus}}
+                </p>
+            </div>
             <resolved-cmp :isResolved="issue.isResolved"/>
-            <router-link :to="'/issue/edit/' + issue._id">Edit your issue</router-link>
-            <h2>{{issue.title}}</h2>
-            <p>{{issue.description}}</p>
-            <div class="seen">
-                <span>Seen by: {{issue.seenCount}}</span>
-                <button>Me Too</button>
-            </div>
-            <div class="shared">
-                <span>Shared by: {{issue.shareCount}}</span>
-                <button>Share</button>
-            </div>
-            <p :class="severityStatus">
-                This issue is {{severityStatus === 'urgent' ? severityStatus+'!' : severityStatus}}
-            </p>
-            <p class="time">Reported {{issue.reportedAt | relative-time}}</p>
-            <p class="category">Category: {{issue.category}}</p>
-            <div class="imgs-container">
-                <img :src="issue.pic"/>
-                <div class="map-container">
-                    <map-view :issuePos="issue.location.pos"
-                    :mapCenter="issue.location.pos"
-                    :isEditable="false" />
+            <div class="issue-report social-details">
+                <div class="seen-container">
+                    <seen-count :count="issue.seenCount" :severityStatus="severityStatus"/>
+                    <button>Me Too</button>
+                </div>
+                <div class="share-container">
+                    <share-count :count="issue.shareCount" :severityStatus="severityStatus"/>
+                    <button>Share</button>
                 </div>
             </div>
+            <img class="issue-img" :src="issue.pic"/>
+            <map-view :issuePos="issue.location.pos"
+            :mapCenter="issue.location.pos"
+            :isEditable="false" />
         </div>
         <comments-cmp :comments="issue.comments"
         @addComment="addComment" />
@@ -33,9 +37,11 @@
 </template>
 
 <script>
-import mapView from '@/components/map-view.vue'
-import resolvedCmp from '@/components/resolved-cmp.vue'
-import commentsCmp from '@/components/comments-cmp.vue'
+import mapView from '@/components/map-view'
+import resolvedCmp from '@/components/resolved-cmp'
+import commentsCmp from '@/components/comments-cmp'
+import seenCount from '@/components/seen-count'
+import shareCount from '@/components/share-count'
 
 export default {
   name: 'issue-details',
@@ -50,7 +56,9 @@ export default {
   components: {
     mapView,
     resolvedCmp,
-    commentsCmp
+    commentsCmp,
+    seenCount,
+    shareCount
   },
   computed: {
       severityStatus() {

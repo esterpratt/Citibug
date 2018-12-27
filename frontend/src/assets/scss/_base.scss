@@ -11,6 +11,24 @@ html {
     margin: 0 auto;
 }
 
-button {
+button, input, select {
     font-family: inherit;
+}
+
+button {
+    // padding: 0;
+    // margin: 0;
+    cursor: pointer;
+    border: 1px solid $darkBorder;
+    transition: .3s;
+}
+
+input {
+    padding: 4px 10px;
+    border: 1px solid $darkBorder;
+    border-radius: 10px;
+}
+
+a {
+    text-decoration: none;
 }
