@@ -1,5 +1,230 @@
+.issue-edit {
+    margin-top: 30px;
+    padding: 0 3rem;
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    // grid-template-rows: 4fr 4fr 8fr 1fr;
+    grid-template-areas:
+    "input delete"
+    "input map-btns"
+    "img map"
+    ". btns";
+}
+
+.edit-input {
+    grid-area: input;
+
+    .title {
+        input {
+            color: $hlColor;
+        }
+    }
+
+    & > div:not(:last-child) {
+        margin-bottom: 1.5rem;
+    }
+
+    .category, .severity {
+        
+        p {
+            font-size: 1rem;
+            margin-right: 0.8rem;
+        }
+    }
+
+    .category {
+        display: flex;
+        align-items: center;
+    }
+
+    .severity {
+        p {
+            margin-bottom: 25px;
+        }
+    }
+
+    & > div:first-of-type {
+        input {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    }
+}
+
+.delete-btn {
+    grid-area: delete;
+    justify-self: end;
+    height: fit-content;
+    padding: 0.5rem 1rem;
+    margin: 0.7rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1.1;
+    border: 1px solid darken($urgentColor, 15%);
+    border-radius: 500px;
+    background-color: $urgentColor;
+    color: white;
+    transition: .3s;
+    
+    i {
+        margin-right: 0.5rem;
+    }
+
+    &:hover {
+        background-color: darken($urgentColor, 15%);
+    }
+}
+
+.loc-select {
+    grid-area: map-btns;
+    align-self: end;
+    display: flex;
+    justify-content: space-between;
+
+    form {
+        display: flex;
+        align-items: center;
+        width: 70%;
+
+        .el-input {
+            width: 90%;
+        }
+
+        button {
+            margin-left: 5px;
+            @include round(2.3rem);
+            
+        }
+    }
+
+    button {
+        border: 1px solid darken($casualColor, 15%);
+        background-color: $casualColor;
+        color: white;
+
+        &:hover {
+            background-color: darken($casualColor, 15%);
+        }
+    }
+
+    & > button {
+        padding: 0.3rem 1rem;
+        border-radius: 500px;
+    }
+}
+
+
+.img-container {
+    grid-area: img;
+    border: 1px solid $darkBorder;
+    position: relative;
+    height: fit-content;
+    
+    img {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    video {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .img-btns {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        display: flex;
+
+        i {
+            cursor: pointer;
+            transition: .3s;
+            font-size: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(128, 128, 128, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            @include round(4rem);
+
+            &:hover {
+                color: rgba(255, 255, 255, 1);
+                border: 1px solid rgba(255, 255, 255, 0.7);
+                background-color: rgba(128, 128, 128, 0.8);
+            }
+
+            &:first-child {
+                margin-right: 2rem;
+            }
+
+            &.fa-circle {
+                color: rgba($urgentColor, 0.5);
+                border: 1px solid rgba($urgentColor, 0.4);
+                
+                &:hover {
+                    color: rgba($urgentColor, 1);
+                    border: 1px solid rgba($urgentColor, 0.9);
+                }
+            }
+        }
+
+        input {
+            position: fixed;
+            visibility: hidden;
+        }
+    }
+}
+
+.map {
+    grid-area: map;
+
+    // .map-container {
+    //     width: 100%;
+    //     height: 100%;
+    // }
+}
+
+.edit-btns {
+    grid-area: btns;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    justify-self: end;
+
+    button {
+        border-radius: 500px;
+        padding: 0.4rem 1rem;
+        color: white;
+
+        &:first-child {
+            border: 1px solid darken(grey, 15%);
+            background-color: grey;
+            &:hover {
+                background-color: darken(grey, 15%);
+            }
+        }
+
+        &:last-child {
+            margin-left: 3rem;
+            border: 1px solid darken($casualColor, 15%);
+            background-color: $casualColor;
+
+            &:hover {
+                background-color: darken($casualColor, 15%);
+            }
+        }
+    }
+
+}
+
+
 canvas {
     position: fixed;
-    top: -5000;
-    left: -5000;
+    top: -5000px;
+    left: -5000px;
 }

@@ -31,7 +31,7 @@ function query(filter = {}) {
 
 function getIssueById(issueId) {
     // return the 1st issue (for now)
-    return Promise.resolve(issues[0]);
+    return Promise.resolve(issues[2]);
     // return axios.get(`${BASE_URL}/issue/${issueId}`)
     //     .then(res => res.data)
 }

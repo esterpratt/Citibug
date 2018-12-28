@@ -11,8 +11,7 @@
         </div>
         <canvas ref="canvas" id="canvas" width="320" height="240"></canvas>
         <div class="img-container">
-            <video ref="video" id="video" 
-            width="320" height="240" autoplay>
+            <video ref="video" id="video" autoplay>
             </video>
             <img :src="value" />
         </div>

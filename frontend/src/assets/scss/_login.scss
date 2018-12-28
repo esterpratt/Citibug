@@ -1,0 +1,88 @@
+.login-container {
+    display: flex;
+
+    
+    .login, .signup {
+        flex: 1;
+        padding: 1.7rem;
+    }
+    
+    .signup {
+        border-left: 1px solid $darkBorder;
+
+        .emoji-picked {
+            margin-top: 2rem;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+
+            p {
+                margin-left: 1rem;
+            }
+
+            div {
+                font-size: 1.5rem;
+                @include round(2.5rem);
+                border: 1px solid $darkBorder;
+                background-color: $darkBorder;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        .emoji-picker {
+            width: 70%;
+            align-self: center;
+            display: grid;
+            grid-gap: 0.4rem;
+            grid-template-columns: repeat(auto-fill, minmax(2.7rem, 1fr));
+
+            div {
+                cursor: pointer;
+                font-size: 1.5rem;
+                @include round(2.5rem);
+                justify-self: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(185, 185, 185, 0);
+                transition: .3s;
+
+                &:hover {
+                    background-color: rgba(185, 185, 185, 0.644);
+                }
+            }
+        }
+    }
+
+    h2 {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        > p {
+            margin-top: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+
+        button {
+            align-self: center;
+            margin-top: 3rem;
+            border-radius: 500px;
+            padding: 0.4rem 1rem;
+            color: white;
+            border: 1px solid darken($casualColor, 15%);
+            background-color: $casualColor;
+
+            &:hover {
+                background-color: darken($casualColor, 15%);
+            }
+        }
+    }
+}

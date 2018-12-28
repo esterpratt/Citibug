@@ -1,0 +1,48 @@
+nav {
+    display: flex;
+    align-items: center;
+    background-color: $hlColor;
+    color: $bgColorLight;
+    font-size: 1.2rem;
+    
+    .logo {
+        flex: 1;
+        margin: 1rem;
+        font-style: italic;
+
+        span {
+            text-transform: uppercase;
+            font-style: normal;
+            color: $hlColor;
+            background-color: $bgColorLight;
+            border-radius: 3px;
+            padding: 1px 2px;
+            margin-left: 4px;
+        }
+        
+        &.router-link-active {
+            color: $bgColorLight;
+        }
+    }
+
+    ul {
+        display: flex;
+
+        li {
+            cursor: pointer;
+            text-align: center;
+            width: 100px;
+            padding: 1.5rem 1rem;
+            transition: .3s;
+
+            &:not(:last-child) {
+                border-right: 1px solid darken($bgColorLight, 50%);
+            }
+
+            &:hover, &.router-link-active {
+                box-shadow: inset 0px -37px 1px -32px rgba($bgColorLight, 0.75);
+            }
+        }
+    }
+    
+}

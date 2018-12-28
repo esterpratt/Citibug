@@ -11,7 +11,7 @@ html {
     margin: 0 auto;
 }
 
-button, input, select {
+button, input, select, textarea {
     font-family: inherit;
 }
 
@@ -31,4 +31,8 @@ input {
 
 a {
     text-decoration: none;
+}
+
+h1, h2, h3 {
+    color: $hlColor;
 }

@@ -1,6 +1,6 @@
 <template>
     <section class="issue-preview" @click="openIssue">
-        <!-- TODO: unite with resolved cmp -->
+        <!-- TODO: merge with resolved cmp -->
         <div v-if="issue.isResolved" class="resloved-container">
             <div class="resolved">
                 <i class="fas fa-check"></i>
@@ -17,8 +17,9 @@
             </div>
             <h3>{{issue.title}}</h3>
             <div class="category">{{issue.category}}</div>
-            <div class="address">At {{issue.address}}</div>
+            <div class="address">At {{issue.location.address}}</div>
             <div class="social-details">
+                <!-- TODO: merge to one component -->
                 <seen-count :count="issue.seenCount" :severityStatus="severityStatus"/>
                 <comment-count :count="issue.comments.length" :severityStatus="severityStatus"/>
                 <share-count :count="issue.shareCount" :severityStatus="severityStatus"/>
