@@ -1,13 +1,42 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <router-link to="/issue/edit">Report</router-link>
-    </div>
+    <nav-bar @openLogin="openLogin"></nav-bar>
     <router-view/>
+    <modal-cmp :isOpen="isModalOpen" @closeModal="isModalOpen=false">
+      <login-cmp></login-cmp>
+    </modal-cmp>
   </div>
 </template>
+
+<script>
+import navBar from '@/components/nav-bar'
+import modalCmp from '@/components/modal-cmp'
+import loginCmp from '@/components/login-cmp'
+
+export default {
+  data() {
+    return {
+      isModalOpen: false
+    }
+  },
+
+  components: {
+    navBar,
+    modalCmp,
+    loginCmp,
+  },
+
+  methods: {
+    openLogin() {
+      // TODO: check if login or logout (check if user exist) 
+      // and continue accordinly
+      // do it when app is up and prop navbar cmp
+      this.isModalOpen = true;
+    }
+  }
+}
+
+</script>
 
 <style lang="scss">
 // #app {

@@ -106,9 +106,7 @@
         font-size: 1.2rem;
         font-weight: bold;
         line-height: 1.1;
-        height: 110px;
-        width: 110px;
-        border-radius: 50%;
+        @include round(110px);
         border: 1px solid darken($casualColor, 15%);
         background-color: $casualColor;
         color: white;
@@ -135,6 +133,5 @@
     
     .map {
         grid-area: map;
-        border: 1px solid $darkBorder;
     }
 }

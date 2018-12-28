@@ -1,5 +1,7 @@
 .map {
     position: relative;
+    border: 1px solid $darkBorder;
+    // height: 100%;
 
     .vue-map-container {
         width: 100%;

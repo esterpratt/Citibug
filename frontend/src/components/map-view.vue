@@ -10,7 +10,7 @@
             @dragend="setPos"/>
         </GmapMap>
         <img class="pan-container" @click="panTo"
-        src="../../public/img/gps.png">
+        src="../assets/img/gps.png">
     </section>
 </template>
 

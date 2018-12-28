@@ -1,8 +1,45 @@
 .home {
     header {
-        background-color: $casualColor;
         height: 70vh;
         text-align: center;
+        position: relative;
+        display: flex;
+        justify-content: center;
+
+        .back-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url('../img/homepage/1.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .back-color {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(83, 83, 83, 0.8);
+        }
+
+        h1 {
+            color: $bgColorLight;
+            margin-top: 150px;
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            z-index: 1;
+
+            p {
+                margin-top: 3rem;
+                line-height: 4rem;
+            }
+        }
     }
 
     .container {

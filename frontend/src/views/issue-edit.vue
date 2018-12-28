@@ -1,48 +1,87 @@
 <template>
-<!-- TODO: optimize: divide to select/input cmps -->
-  <section class="issue-edit" v-if="issue">
-    <button v-if="issue._id">Delete</button>
-    <div class="edit-details">
-      <el-input type="text" v-model="issue.title" placeholder="Issue Title"></el-input>
-      <el-input
-        type="textarea"
-        v-model="issue.description"
-        placeholder="Issue Description"
-        rows="3">
-        </el-input>
-      <div class="category">
-        <p>Category:</p>
-        <el-select v-model="issue.category" placeholder="Select">
-          <el-option v-for="item in categoryOptions" :key="item" :value="item"></el-option>
-        </el-select>
+  <!-- TODO: optimize: divide to select/input cmps -->
+  <section class="container">
+    <canvas ref="canvas" id="canvas" :height="imgHeight" :width="imgWidth"></canvas>
+    <section class="issue-edit" v-if="issue">
+      <div class="edit-input">
+        <div class="title">
+          <el-input type="text" v-model="issue.title" placeholder="Title"></el-input>
+        </div>
+        <div class="description">
+          <el-input type="textarea" v-model="issue.description"
+          placeholder="Description" rows="3">
+          </el-input>
+        </div>
+        <div class="category">
+          <p>Category:</p>
+          <el-select v-model="issue.category" placeholder="Select">
+            <el-option v-for="item in categoryOptions" :key="item" :value="item"></el-option>
+          </el-select>
+        </div>
+        <div class="severity">
+          <p>Severity:</p>
+          <vue-slider ref="slider" v-model="issue.severity"
+          :max=10 :interval=0.1
+          :process-style="{backgroundImage: '-webkit-linear-gradient(left, #8f9127, #eb4f02)'}"
+          :tooltip-style="{backgroundColor: '#8f9127', borderColor: '#8f9127'}"
+          ></vue-slider>
+        </div>
       </div>
-      <div class="severity">
-        <p>Severity:</p>
-        <el-slider
-          v-model="issue.severity"
-          :max="10"
-          :step="0.01"
-          show-input
-          :show-input-controls="false"
-        ></el-slider>
+      <button class="delete-btn" @click="deleteIssue">
+        <template v-if="issue._id">
+          <i class="fas fa-trash-alt"></i>
+          Delete Issue
+        </template>
+        <template v-else>
+          <i class="fas fa-eraser"></i>
+          Clear Form
+        </template>
+      </button>
+
+      <!-- IMG -->
+      <div class="img-container">
+        <img :src="issue.pic" ref="img" @load="setImgSize"/>
+        <video ref="video" id="video" autoplay
+         :height="imgHeight" :width="imgWidth"></video>
+        <div class="img-btns">
+          <form v-if="!video" class="publish-form" method="POST" enctype="multipart/form-data">
+            <label for="imgFile">
+              <i class="fas fa-file-upload"></i>
+            </label>
+            <input type="file" id="imgFile" @input="previewImg">
+          </form>
+          <i v-else class="fas fa-arrow-left" @click="stopVideo"></i>
+          <i v-if="!video" class="fas fa-camera" @click="startVideo"></i>
+          <i v-else class="fas fa-circle" @click="capture"></i>
+        </div>
       </div>
-    </div>
-    <div class="edit-imgs">
-      <map-edit :locProp="issue.location" :mapCenter="mapCenter"
-      @getPosByAddress="getPosByAddress"
-      @getCurrLoc="getCurrLoc" @setPos="setPos"/>
-      <img-upload v-model="issue.pic"></img-upload>
-    </div>
-    <div class="edit-btns">
-      <button>{{issue._id ? 'Save' : 'Report'}}</button>
-      <button>Cancel</button>
-    </div>
+
+      <!-- MAP -->
+      <div class="loc-select">
+        <form @submit.prevent="getPosByAddress">
+          <el-input type="text" v-model="issue.location.address" placeholder="Address"></el-input>
+          <button><i class="fas fa-search"></i></button>
+        </form>
+        <button @click="getCurrLoc">My Location</button>
+      </div>
+      <!-- <div class="map-container" v-if="location.pos"> -->
+      <map-view v-if="mapCenter"
+        :issuePos="issue.location.pos"
+        :mapCenter="mapCenter"
+        :isEditable="true"
+        @setPos="setPos"
+      />
+      <div class="edit-btns">
+        <button @click="goBack">Cancel</button>
+        <button @click="saveIssue">{{issue._id ? 'Save' : 'Report'}}</button>
+      </div>
+    </section>
   </section>
 </template>
 
 <script>
-import mapEdit from '@/components/map-edit'
-import imgUpload from '@/components/img-upload'
+import mapView from "@/components/map-view";
+import vueSlider from 'vue-slider-component'
 
 export default {
   name: "issue-edit",
@@ -51,88 +90,147 @@ export default {
     return {
       issue: null,
       mapCenter: null,
-      // uploadedPic: ''
+      video: null,
+      canvas: null,
+      imgHeight: 0,
+      imgWidth: 0
     };
   },
 
   components: {
-    mapEdit,
-    imgUpload
+    mapView,
+    vueSlider
   },
 
   computed: {
     categoryOptions() {
       return this.$store.getters.issueCategories;
-    }
+    },
   },
 
   methods: {
+    // ISSUE
     getId() {
       const issueId = this.$route.params.issueId;
       if (issueId) {
         this.$store.dispatch({ type: "getIssueById", issueId }).then(issue => {
-          this.issue = issue
-          this.mapCenter = this.issue.location.pos
-          // this.uploadedPic = this.issue.pic
+          this.issue = issue;
+          this.mapCenter = this.issue.location.pos;
         });
       } else {
-          // this.uploadedPic = ''
-          this.setEmptyIssue()
+        this.setEmptyIssue();
       }
     },
 
     setEmptyIssue() {
-        this.issue = {
-          title: "",
-          description: "",
-          category: "",
-          severity: 5,
-          seenCount: 0,
-          shareCount: 0,
-          isResolved: false,
-          location: {
-              pos: null,
-              address: null,
-          },
-          pic: "",
-          // TODO: update the owner according to loggedInUser
-          ownerId: "xyz"
-        }
-        this.getCurrLoc()
+      this.issue = {
+        title: "",
+        description: "",
+        category: "",
+        severity: 5,
+        seenCount: 0,
+        shareCount: 0,
+        isResolved: false,
+        location: {
+          pos: null,
+          address: null
+        },
+        pic: "https://dummyimage.com/380x250/cccccc/ffffff.png&text=Issue+Photo",
+        // TODO: update the owner according to loggedInUser
+        ownerId: "xyz"
+      };
+      this.getCurrLoc()
     },
 
+    goBack() {
+      this.$router.push(this.issue._id ? `/issue/${this.issue._id}` : '/')
+    },
+
+    saveIssue() {
+      console.log('saving issue')
+    },
+
+    deleteIssue() {
+      if (this.issue._id) console.log('Delete issue')
+      else this.setEmptyIssue()
+    },
+
+    // MAP
     getCurrLoc() {
-        this.$store.dispatch({type: 'getLoc'})
-            .then(loc => {
-                this.mapCenter = loc.pos
-                this.issue.location.pos = loc.pos
-                this.issue.location.address = loc.address
-            })
+      this.$store.dispatch({ type: "getLoc" }).then(loc => {
+        this.mapCenter = loc.pos;
+        this.issue.location.pos = loc.pos;
+        this.issue.location.address = loc.address;
+      });
     },
 
-    getPosByAddress(address) {
-        this.$store.dispatch({type: 'getPosByAddress', address})
-            .then(pos => {
-                this.issue.location.pos = pos
-                this.mapCenter = pos
-            })
+    getPosByAddress() {
+      if (this.issue.location.address) {
+        this.$store.dispatch({ type: "getPosByAddress", address: this.issue.location.address }).then(pos => {
+          this.issue.location.pos = pos;
+          this.mapCenter = pos;
+        });
+      }
     },
 
     setPos(pos) {
-        this.issue.location.pos = pos
-        this.$store.dispatch({type: 'getAddressByPos', pos})
-            .then(address => this.issue.location.address = address)
+      this.issue.location.pos = pos;
+      this.$store
+        .dispatch({ type: "getAddressByPos", pos })
+        .then(address => (this.issue.location.address = address));
     },
+
+    // IMG
+    previewImg(ev) {
+      const imgPath = ev.target.files[0];
+      if (imgPath) {
+        this.issue.pic = URL.createObjectURL(imgPath);
+        this.setImgSize()
+        // cloudinaryService.uploadImg(ev.target.parentElement)
+      }
+    },
+
+    startVideo() {
+      this.video = this.$refs.video;
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+          this.video.srcObject = stream;
+          this.video.play();
+        });
+      }
+    },
+
+    stopVideo() {
+      this.video.srcObject.getTracks().forEach(track => track.stop());
+      this.video.srcObject = null;
+      this.video = null;
+    },
+
+    capture() {
+      this.canvas = this.$refs.canvas;
+      this.canvas.getContext("2d").drawImage(this.video, 0, 0);
+      this.issue.pic = canvas.toDataURL("image/png");
+      this.stopVideo();
+    },
+
+    setImgSize(ev) {
+      this.imgHeight = this.$refs.img.clientHeight
+      this.imgWidth = this.$refs.img.clientWidth
+    }
   },
 
   created() {
-    this.getId()
+    this.getId();
   },
 
   watch: {
     "$route.params.issueId": function() {
-      this.getId()
-    }
+      this.getId();
+    },
   }
 };
 </script>
+
+<style>
+
+</style>

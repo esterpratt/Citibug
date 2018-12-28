@@ -1,7 +1,12 @@
 <template>
   <div class="home">
     <header>
-        <h1>Make our city a better place!</h1>
+        <transition name="fade">
+            <div class="back-img" :key="backImg"
+            :style="{'background-image': 'url(' + backImgSrc +')'}"></div>
+        </transition>
+        <div class="back-color"></div>
+        <h1>Be a PAL!<p>Make our city a better place!</p></h1>
     </header>
     <!-- TODO: optimize: loop over array -->
     <section class="container">
@@ -35,7 +40,8 @@ export default {
   },
   data() {
       return {
-          
+          backImg: 1,
+          imgInterval: null,
       }
   },
   components: {
@@ -45,6 +51,10 @@ export default {
       issues() {
           return this.$store.getters.issues
       },
+
+      backImgSrc() {
+          return `/img/homepage/${this.backImg}.jpg`
+      }
   },
   methods: {
       
@@ -57,6 +67,24 @@ export default {
       //       but consider situation where user choose 
       //       not to allow use of his location
       this.$store.dispatch({type: 'getIssues'})
+
+      this.imgInterval = setInterval(() => {
+          this.backImg++
+          if (this.backImg === 4) this.backImg = 1
+      }, 5000)
+  },
+  destroyed() {
+      clearInterval(this.imgInterval)
   }
 }
 </script>
+
+<style>
+    .fade-enter-active, .fade-leave-active {
+    transition: opacity 1s;
+    }
+
+    .fade-enter, .fade-leave-to {
+    opacity: 0;
+    }
+</style>

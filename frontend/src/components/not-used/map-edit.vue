@@ -1,5 +1,5 @@
 <template>
-    <div class="edit-map">
+    <div class="map-edit">
         <div class="loc-select">
             <form @submit.prevent="getPosByAddress">
                 <el-input type="text" v-model="location.address"
@@ -8,12 +8,12 @@
             </form>
             <button @click="getCurrLoc">My Location</button>
         </div>
-        <div class="map-container" v-if="location.pos">
-            <map-view :issuePos="location.pos"
-            :mapCenter="mapCenter"
-            :isEditable="true"
-            @setPos="setPos" />
-        </div>
+        <!-- <div class="map-container" v-if="location.pos"> -->
+        <map-view :issuePos="location.pos"
+        :mapCenter="mapCenter"
+        :isEditable="true"
+        @setPos="setPos" />
+        <!-- </div> -->
     </div>
 </template>
 
