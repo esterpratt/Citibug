@@ -6,8 +6,8 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const app = express();
 
-// const toyRoute = require('./routes/toy.route')
-// const userService = require('./services/user.service')
+const issueRoute = require('./routes/issue-route')
+const userRoute = require('./routes/user-route')
 
 const cors = require('cors')
 
@@ -27,7 +27,8 @@ app.use(session({
   }))
 
 app.use(express.static('public'));
-// toyRoute(app);
+issueRoute(app);
+userRoute(app);
 
 const port = process.env.PORT || 3000;
 

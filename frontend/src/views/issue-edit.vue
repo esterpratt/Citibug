@@ -129,6 +129,7 @@ export default {
       const issueId = this.$route.params.issueId;
       if (issueId) {
         this.$store.dispatch({ type: "getIssueById", issueId }).then(issue => {
+          // TODO: copy the object?
           this.issue = issue;
           this.mapCenter = this.issue.location.pos;
         });
