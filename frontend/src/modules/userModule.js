@@ -22,9 +22,8 @@ export default {
             return userService.login(user)
             .then(_ => commit({type: 'setIsUserLoggedin', isUser: true}))
             .catch(err => {
-                console.log('not valid')
                 // tell login-cmp user/pass is wrong
-                throw new Error('Username or password are wrong')
+                throw new Error(err)
             }) 
         },
 
@@ -47,5 +46,5 @@ export default {
                     }
                 })
         },
-        }
+    }
 }

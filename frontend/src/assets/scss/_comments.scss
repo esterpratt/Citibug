@@ -21,6 +21,8 @@
         form {
             display: flex;
             align-items: center;
+            width: 90%;
+            margin-left: 1rem;
 
             button {
                 @include round(2rem);
@@ -34,7 +36,7 @@
 
             .el-input {
                 width: 80%;
-                margin: 0 1rem;
+                margin-right: 1rem;
             }
         }
     }

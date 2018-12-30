@@ -5,6 +5,9 @@ import router from './router'
 import store from './store'
 import './assets/scss/main.scss'
 import './registerServiceWorker'
+import axios from 'axios'
+// tell axios to always send the sessionId cookie in AJAX requests
+axios.defaults.withCredentials = true;
 
 import * as moment from 'moment'
 
