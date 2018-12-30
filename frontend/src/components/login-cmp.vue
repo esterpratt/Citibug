@@ -2,7 +2,7 @@
     <div class="login-container">
         <div class="login">
             <h2>I am a returned PAL</h2>
-            <form @submit.prevent="checkLogin">
+            <form @submit.prevent="login">
                 <p>Username *</p>
                 <el-input type="text" 
                 v-model="user.name" 
@@ -18,7 +18,7 @@
         </div>
         <div class="signup">
             <h2>I want to become a PAL</h2>
-            <form @submit.prevent="signUp">
+            <form @submit.prevent="checkValidation">
                 <p>Username *</p>
                 <el-input type="text" 
                 v-model="newUser.name" 
@@ -31,7 +31,7 @@
                 </el-input>
                 <p>Re-enter password *</p>
                 <el-input type="password" 
-                v-model="newUser.pass" 
+                v-model="rePass" 
                 placeholder="Password">
                 </el-input>
                 <div class="emoji-picked">
@@ -49,6 +49,7 @@
 
 <script>
 import emojiPicker from './emoji-picker'
+
 export default {
     props: {
         
@@ -68,20 +69,47 @@ export default {
             newUser: {
                 name: '',
                 pass: '',
-                pass2: '',
                 emoji: '?',
-            }
+            },
+
+            rePass: '',
         }
     },
 
     methods: {
-        checkLogin() {
-            console.log('to login');
-            
+        login() {
+            // if not empty
+            if (this.user.name && this.user.pass) {
+                this.$store.dispatch({type: 'login', user: this.user})
+                    .then(_ => {
+                        console.log(`show welcome back msg to ${this.user.name}`)
+                        this.$emit('closeModal')               
+                    })
+                    .catch(err => console.log(err))
+            } else {
+                console.log('show msg to fill required fields');
+            }
+        },
+
+        checkValidation() {
+            // if not empty
+            if (this.newUser.name && this.newUser.pass) {
+                // TODO: check if password is valid using regex
+                // if not - show msg that password is not valid
+                if (this.newUser.pass === this.rePass) {
+                    this.signUp()
+                } else {
+                    console.log('show msg that passwords dont match');
+                }
+            } else {
+                console.log('show msg to fill required fields');
+            }
         },
 
         signUp() {
-            console.log('to signup');
+            console.log(`show welcome msg to ${this.newUser.name}`);           
+            this.$store.dispatch({type: 'signup', user: this.newUser})
+            this.$emit('closeModal')
         }
     },
 }

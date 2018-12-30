@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <nav-bar @openLogin="openLogin"></nav-bar>
+    <nav-bar @openLogin="openLogin" :isUserLoggedin="isUserLoggedin"></nav-bar>
     <router-view/>
     <modal-cmp :isOpen="isModalOpen" @closeModal="isModalOpen=false">
-      <login-cmp></login-cmp>
+      <login-cmp @closeModal="isModalOpen=false"></login-cmp>
     </modal-cmp>
   </div>
 </template>
@@ -26,13 +26,26 @@ export default {
     loginCmp,
   },
 
+  computed: {
+    isUserLoggedin() {
+      return this.$store.getters.isUserLoggedin
+    }
+  },
+
   methods: {
     openLogin() {
-      // TODO: check if login or logout (check if user exist) 
-      // and continue accordinly
-      // do it when app is up and prop navbar cmp
-      this.isModalOpen = true;
+      // if user exist - logout and go to homepage
+      if (this.isUserLoggedin) {
+        this.$store.dispatch({type: 'logout'})
+        this.$router.push('/')
+      } else {
+        this.isModalOpen = true;
+      }
     }
+  },
+
+  created() {
+    this.$store.dispatch({type: 'getLoggedInUser'})
   }
 }
 
