@@ -27,15 +27,13 @@
           ></vue-slider>
         </div>
       </div>
-      <button class="delete-btn" @click="deleteIssue">
-        <template v-if="issue._id">
-          <i class="fas fa-trash-alt"></i>
-          Delete Issue
-        </template>
-        <template v-else>
-          <i class="fas fa-eraser"></i>
-          Clear Form
-        </template>
+      <button v-if="issue._id" class="delete-btn" @click="isModalOpen=true">
+        <i class="fas fa-trash-alt"></i>
+        Delete Issue
+      </button>
+      <button v-else class="delete-btn" @click="setEmptyIssue">
+        <i class="fas fa-eraser"></i>
+        Clear Form
       </button>
 
       <!-- IMG -->
@@ -76,11 +74,17 @@
         <button @click="saveIssue">{{issue._id ? 'Save' : 'Report'}}</button>
       </div>
     </section>
+    <modal-cmp :isOpen="isModalOpen" @closeModal="closeModal">
+      <sure-validation :yesCB="deleteIssueCB" @closeModal="closeModal">
+      </sure-validation>
+    </modal-cmp>
   </section>
 </template>
 
 <script>
-import mapView from "@/components/map-view";
+import modalCmp from "@/components/modal-cmp"
+import sureValidation from "@/components/sure-validation"
+import mapView from "@/components/map-view"
 import vueSlider from 'vue-slider-component'
 
 export default {
@@ -93,11 +97,18 @@ export default {
       video: null,
       canvas: null,
       imgHeight: 0,
-      imgWidth: 0
+      imgWidth: 0,
+      isModalOpen: false,
+      deleteIssueCB: () => {
+        this.closeModal()
+        this.deleteIssue()
+      }
     };
   },
 
   components: {
+    modalCmp,
+    sureValidation,
     mapView,
     vueSlider
   },
@@ -109,6 +120,10 @@ export default {
   },
 
   methods: {
+    closeModal() {
+      this.isModalOpen = false;
+    },
+
     // ISSUE
     getId() {
       const issueId = this.$route.params.issueId;
@@ -151,8 +166,9 @@ export default {
     },
 
     deleteIssue() {
-      if (this.issue._id) console.log('Delete issue')
-      else this.setEmptyIssue()
+      // delete issue and go to homepage
+        console.log('Delete issue and show msg that issue deleted')
+        this.$router.push('/')
     },
 
     // MAP

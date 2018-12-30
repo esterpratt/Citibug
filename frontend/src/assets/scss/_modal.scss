@@ -12,7 +12,9 @@
 
     .modal-inner {
         width: 70vw;
-        margin: 100px auto;
+        max-height: 90vh;
+        overflow-y: auto;
+        margin: 60px auto;
         padding: 10px;
         border: 1px solid $darkBorder;
         border-radius: 5px;
@@ -22,5 +24,48 @@
     &.open {
         visibility: visible;
         opacity: 1;
+    }
+}
+
+// sure-validation
+
+.sure-validation {
+    margin: 2rem;
+    text-align: center;
+    h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 5rem;
+    }
+
+    .sure-btns {
+        display: flex;
+        justify-content: space-around;
+        
+        button {
+            border-radius: 500px;
+            padding: 0.4rem 1rem;
+            color: white;
+            width: 80px;
+
+            &:first-child {
+                border: 1px solid darken(grey, 15%);
+                background-color: grey;
+
+                &:hover {
+                    background-color: darken(grey, 15%);
+                }
+            }
+
+            &:last-child {
+                margin-left: 3rem;
+                border: 1px solid darken($urgentColor, 15%);
+                background-color: $urgentColor;
+
+                &:hover {
+                    background-color: darken($urgentColor, 15%);
+                }
+            }
+        }
     }
 }

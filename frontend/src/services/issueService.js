@@ -11,6 +11,7 @@ export default {
     removeIssue,
     getIssueById,
     saveIssue,
+    getIssuesByUser
 }
 
 function query(filter = {}) {
@@ -27,6 +28,11 @@ function query(filter = {}) {
     //     //     console.log('ERROR:', err);
 
     //     // })
+}
+
+function getIssuesByUser() {
+    // check id of logged in user and return the issues he owns
+    return Promise.resolve(issues);
 }
 
 function getIssueById(issueId) {

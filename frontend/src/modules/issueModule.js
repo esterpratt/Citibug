@@ -4,7 +4,8 @@ import locService from '@/services/locService'
 export default {
     state: {
         issues: [],
-        issueCategories: ['Animals', 'Landscape', 'Sanitation', 'Construction', 'Traffic & walkways'],
+        issueCategories: ['Animals', 'Landscape', 'Sanitation', 
+                          'Construction', 'Traffic & walkways'],
         filter: {
           // update loc when loading issues
           pos: {},
@@ -45,6 +46,13 @@ export default {
       actions: {       
         getIssues({commit, state}) {
           issueService.query(state.filter)
+          .then(issues => {
+            commit({type: 'setIssues', issues})
+          })
+        },
+
+        getIssuesByUser({commit}) {
+          issueService.getIssuesByUser()
           .then(issues => {
             commit({type: 'setIssues', issues})
           })

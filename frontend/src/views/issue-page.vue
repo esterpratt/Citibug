@@ -32,6 +32,8 @@ export default {
       
   },
   created() {
+      // scroll to top of the screen
+      window.scrollTo(0, 0)
       // get current user location
       this.$store.dispatch({type: 'getLoc'})
       

@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import homePage from './views/home-page.vue'
-import issuePage from './views/issue-page.vue'
-import issueDetails from './views/issue-details.vue'
-import issueEdit from './views/issue-edit.vue'
-import userProfile from './views/user-profile.vue'
+import homePage from './views/home-page'
+import issuePage from './views/issue-page'
+import issueDetails from './views/issue-details'
+import issueEdit from './views/issue-edit'
+import userPage from './views/user-page'
+import userIssues from '@/components/user-issues'
+import userProfile from '@/components/user-profile'
 
 Vue.use(Router)
 
@@ -38,9 +40,10 @@ export default new Router({
       component: issueDetails
     },
     {
-      path: '/user/:userId',
-      name: 'user-profile',
-      component: userProfile
+      path: '/user',
+      component: userPage,
+      children: [{path: '', name: 'user-profile', component: userProfile},
+                 {path: 'issues', component: userIssues}]
     },
     {
       path: '/about',
