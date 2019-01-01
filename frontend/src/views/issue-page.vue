@@ -34,13 +34,13 @@ export default {
   created() {
       // scroll to top of the screen
       window.scrollTo(0, 0)
-      // get current user location
+      // get current user location and then load issues
+      // TODO: consider situation where user choose 
+      //       not to allow use of his location
       this.$store.dispatch({type: 'getLoc'})
-      
-      // load issues. TODO: think how to get issues after getting loc
-      //                    but consider situation where user choose 
-      //                    not to allow use of his location
-      this.$store.dispatch({type: 'getIssues'})
+        .then(_ => {
+            this.$store.dispatch({type: 'getIssues'})
+        })  
   }
 }
 </script>

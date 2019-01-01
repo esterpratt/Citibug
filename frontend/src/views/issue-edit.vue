@@ -56,19 +56,17 @@
 
       <!-- MAP -->
       <div class="loc-select">
-        <form @submit.prevent="getPosByAddress">
-          <el-input type="text" v-model="issue.location.address" placeholder="Address"></el-input>
+        <form @submit.prevent="getCoordsByAddress">
+          <el-input type="text" v-model="issue.address" placeholder="Address"></el-input>
           <button><i class="fas fa-search"></i></button>
         </form>
         <button @click="getCurrLoc">My Location</button>
       </div>
-      <!-- <div class="map-container" v-if="location.pos"> -->
-      <map-view v-if="mapCenter"
-        :issuePos="issue.location.pos"
+      <map-view v-if="issue.location.coordinates.length"
+        :issueCoords="issue.location.coordinates"
         :mapCenter="mapCenter"
         :isEditable="true"
-        @setPos="setPos"
-      />
+        @setCoords="setCoords"/>
       <div class="edit-btns">
         <button @click="goBack">Cancel</button>
         <button @click="saveIssue">{{issue._id ? 'Save' : 'Report'}}</button>
@@ -93,7 +91,7 @@ export default {
   data() {
     return {
       issue: null,
-      mapCenter: null,
+      mapCenter: [],
       video: null,
       canvas: null,
       imgHeight: 0,
@@ -130,8 +128,8 @@ export default {
       if (issueId) {
         this.$store.dispatch({ type: "getIssueById", issueId }).then(issue => {
           // TODO: copy the object?
-          this.issue = issue;
-          this.mapCenter = this.issue.location.pos;
+          this.issue = issue
+          this.mapCenter = this.issue.location.coordinates
         });
       } else {
         this.setEmptyIssue();
@@ -148,9 +146,10 @@ export default {
         shareCount: 0,
         isResolved: false,
         location: {
-          pos: null,
-          address: null
+          type: 'Point',
+          coordinates: [],
         },
+        address: null,
         pic: "https://dummyimage.com/380x250/cccccc/ffffff.png&text=Issue+Photo",
         // TODO: update the owner according to loggedInUser
         ownerId: "xyz"
@@ -163,7 +162,7 @@ export default {
     },
 
     saveIssue() {
-      console.log('saving issue')
+      this.$store.dispatch({type: 'saveIssue', issue: this.issue})
     },
 
     deleteIssue() {
@@ -175,32 +174,33 @@ export default {
     // MAP
     getCurrLoc() {
       this.$store.dispatch({ type: "getLoc" }).then(loc => {
-        this.mapCenter = loc.pos;
-        this.issue.location.pos = loc.pos;
-        this.issue.location.address = loc.address;
+        this.issue.location.coordinates = loc.coords;
+        this.issue.address = loc.address;
+        this.mapCenter = loc.coords;
       });
     },
 
-    getPosByAddress() {
-      if (this.issue.location.address) {
-        this.$store.dispatch({ type: "getPosByAddress", address: this.issue.location.address }).then(pos => {
-          this.issue.location.pos = pos;
-          this.mapCenter = pos;
+    getCoordsByAddress() {
+      if (this.issue.address) {
+        this.$store.dispatch({ type: "getCoordsByAddress", address: this.issue.address }).then(coords => {
+          this.issue.location.coordinates = coords;
+          this.mapCenter = coords;
         });
       }
     },
 
-    setPos(pos) {
-      this.issue.location.pos = pos;
+    setCoords(coords) {
+      this.issue.location.coordinates = coords;
       this.$store
-        .dispatch({ type: "getAddressByPos", pos })
-        .then(address => (this.issue.location.address = address));
+        .dispatch({ type: "getAddressByCoords", coords })
+        .then(address => (this.issue.address = address));
     },
 
     // IMG
     previewImg(ev) {
       const imgPath = ev.target.files[0];
       if (imgPath) {
+        this.issue.picPath = imgPath;
         this.issue.pic = URL.createObjectURL(imgPath);
         this.setImgSize()
         // cloudinaryService.uploadImg(ev.target.parentElement)

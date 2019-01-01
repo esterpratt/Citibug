@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="!isLoading">
     <nav-bar @openLogin="openLogin" :isUserLoggedin="isUserLoggedin"></nav-bar>
     <router-view/>
     <modal-cmp :isOpen="isModalOpen" @closeModal="isModalOpen=false">
@@ -16,7 +16,8 @@ import loginCmp from '@/components/login-cmp'
 export default {
   data() {
     return {
-      isModalOpen: false
+      isModalOpen: false,
+      isLoading: true,
     }
   },
 
@@ -28,7 +29,7 @@ export default {
 
   computed: {
     isUserLoggedin() {
-      return this.$store.getters.isUserLoggedin
+      return !!this.$store.getters.loggedinUser
     }
   },
 
@@ -45,28 +46,11 @@ export default {
   },
 
   created() {
-    this.$store.dispatch({type: 'getLoggedInUser'})
+    this.$store.dispatch({type: 'getLoggedinUser'})
+    .then(_ => {
+      this.isLoading = false;
+    })
   }
 }
 
 </script>
-
-<style lang="scss">
-// #app {
-//   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   text-align: center;
-//   color: #2c3e50;
-// }
-// #nav {
-//   padding: 30px;
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-// }
-</style>

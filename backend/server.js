@@ -8,9 +8,11 @@ const app = express();
 
 const issueRoute = require('./routes/issue-route')
 const userRoute = require('./routes/user-route')
+const msgRoute = require('./routes/msg-route')
 
 const cors = require('cors')
 
+// app.use(cors())
 app.use(cors({
     origin: ['http://localhost:8080'],
     credentials: true
@@ -29,6 +31,7 @@ app.use(session({
 app.use(express.static('public'));
 issueRoute(app);
 userRoute(app);
+msgRoute(app);
 
 const port = process.env.PORT || 3000;
 

@@ -3,7 +3,7 @@
         <div class="issue-details-container">
             <div class="issue-details">
                 <!-- TODO: show only if issue owner -->
-                <router-link :to="'/issue/edit/' + issue._id">
+                <router-link v-if="isOwner" :to="'/issue/edit/' + issue._id">
                     <i class="fas fa-edit"></i>
                     Edit your issue
                 </router-link>
@@ -27,11 +27,12 @@
                 </div>
             </div>
             <img class="issue-img" :src="issue.pic"/>
-            <map-view :issuePos="issue.location.pos"
-            :mapCenter="issue.location.pos"
+            <map-view :issueCoords="issue.location.coordinates"
+            :mapCenter="issue.location.coordinates"
             :isEditable="false" />
         </div>
         <comments-cmp :comments="issue.comments"
+        :user="user"
         @addComment="addComment" />
     </section>
 </template>
@@ -51,6 +52,7 @@ export default {
   data() {
       return {
           issue: null,
+          isOwner: false
       }
   },
   components: {
@@ -63,6 +65,9 @@ export default {
   computed: {
       severityStatus() {
           return this.getSeverityStatus(this.issue.severity)
+      },
+      user() {
+          return this.$store.getters.loggedinUser
       }
   },
   methods: {
@@ -75,7 +80,18 @@ export default {
       this.$store.dispatch({type: 'getIssueById', issueId})
         .then(issue => {
             this.issue = issue
+            if (this.user && this.issue.ownerId === this.user._id) {
+                this.isOwner = true
+            }
         })
+  },
+  // if owner login while on page
+  watch: {
+      user: function() {
+        if (this.user && this.issue.ownerId === this.user._id) {
+            this.isOwner = true
+        }
+      }
   }
 }
 </script>

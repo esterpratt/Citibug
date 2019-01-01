@@ -1,13 +1,13 @@
 <template>
     <section class="map">
         <GmapMap ref="mapRef"
-        :center="mapCenter"
+        :center="center"
         :zoom="16"
         map-type-id="terrain"
-        @click="setPos">
-            <GmapMarker :position="issuePos"
+        @click="setCoords">
+            <GmapMarker :position="coords"
             :draggable="isEditable"
-            @dragend="setPos"/>
+            @dragend="setCoords"/>
         </GmapMap>
         <img class="pan-container" @click="panTo"
         src="../assets/img/gps.png">
@@ -17,8 +17,8 @@
 <script>
 export default {
     props: {
-        mapCenter: Object,
-        issuePos: Object,
+        mapCenter: Array,
+        issueCoords: Array,
         isEditable: Boolean
     },
 
@@ -28,15 +28,31 @@ export default {
         }
     },
 
-    methods: {
-        panTo() {
-            this.$refs.mapRef.panTo(this.issuePos)
+    computed: {
+        coords() {
+            return {
+                lng: this.issueCoords[0],
+                lat: this.issueCoords[1]
+            }
         },
 
-        setPos(ev) {
+        center() {
+            return {
+                lng: this.mapCenter[0],
+                lat: this.mapCenter[1],
+            }
+        }
+    },
+
+    methods: {
+        panTo() {
+            this.$refs.mapRef.panTo(this.coords)
+        },
+
+        setCoords(ev) {
             if (this.isEditable) {
-                const pos = {lat: ev.latLng.lat(), lng: ev.latLng.lng()}
-                this.$emit('setPos', pos)
+                const coords = [ev.latLng.lng(), ev.latLng.lat()]
+                this.$emit('setCoords', coords)
             }
         },
     },

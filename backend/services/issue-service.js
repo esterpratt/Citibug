@@ -12,24 +12,68 @@ module.exports = {
 }
 
 function query(filter) {
-    // const byStatus = filter.inStock
-    // const byName = filter.name
-    // const byType = filter.type
-    // const sortParams = filter.sortBy.split('_')
-    // const sortObj = { [sortParams[0]]: +sortParams[1] }
-    // const findFilters = [{ name: { $regex: `.*${byName}.*` } }]
-    // if (byStatus !== 'all') {
-    //     if (byStatus === 'inStock') findFilters.push({ inStock: true })
-    //     else findFilters.push({ inStock: false })
-    // }
-    // if (byType !== 'all') {
-    //     findFilters.push({ type: byType })
-    // }
+    const categoriesCount = 5;
+    var findFilters = [];
+    
+    var sortObj = {createdAt: -1};
+    var findFunc = (issueCollection) => {
+        return issueCollection.find({ $and: findFilters }).limit(+filter.to).sort(sortObj).toArray()
+    }
+    // if to filter by user
+    if (filter.byUser) {
+        findFilters.push({ownerId: filter.byUser})
+    } else {
+        // add filters options
+        findFilters.push({ title: { $regex: `.*${filter.byTxt}.*`, $options: 'i'}})
+        if (filter.byStatus !== 'All') {
+            if (filter.byStatus === 'Open') {
+                findFilters.push({isResolved : false})
+            } else {
+                findFilters.push({isResolved : true})
+            }
+        }
+        // if only some of the categories were chosen
+        var byCategory = filter.byCategory.split(',')
+        if (byCategory[0] && byCategory.length < categoriesCount) { 
+            findFilters.push({category : { $in : byCategory}})
+        }
+
+        switch(filter.sortBy) {
+            case('Distance'):
+                findFunc = (issueCollection) => {
+                    return issueCollection.aggregate([
+                        {
+                        $geoNear: {
+                            near: { 
+                                type: "Point", 
+                                coordinates: [+filter.lng , +filter.lat] 
+                            },
+                            distanceField: "dist.calculated",
+                            spherical: true,
+                            query: {$and: findFilters}
+                        }
+                    }]).limit(+filter.to).toArray()
+                }
+            break;
+            case('Attention'):
+                sortObj = {commentsCount: -1}
+                break;
+            case('Oldest first'):
+                sortObj = {createdAt: 1}
+                break;
+            case('Recent first'):
+                sortObj = {createdAt: -1}
+                break;
+            case('Severity'):
+                sortObj = {severity: -1}
+                break;
+        }
+    }
+
     return mongoService.connectToDB()
         .then(dbConn => {
             const issueCollection = dbConn.collection('issue');
-            return issueCollection.find().toArray()
-            // return issueCollection.find({ $and: findFilters }).sort(sortObj).toArray()
+            return findFunc(issueCollection)
         })
 }
 

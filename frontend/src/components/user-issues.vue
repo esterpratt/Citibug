@@ -18,11 +18,6 @@ export default {
         issues() {
             return this.$store.getters.issues
         }
-    },
-
-    created() {
-        // get user issues
-        this.$store.dispatch({type: 'getIssuesByUser'})
     }
 }
 </script>

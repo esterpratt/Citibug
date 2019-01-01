@@ -1,7 +1,7 @@
 'use strict';
 
-const issueService = require('../services/issue-service')
 const userService = require('../services/user-service')
+
 module.exports = addRoutes;
 
 function addRoutes(app) {
@@ -19,6 +19,11 @@ function addRoutes(app) {
         userService.add(user)
           .then(user => res.json(user))
       })
+
+    app.delete('/logout', (req, res) => {
+      req.session.user = null
+      res.end()
+    })
       
     // app.get(`/:id`, (req, res) => {
     //     const userId = req.params.id

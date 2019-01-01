@@ -7,15 +7,17 @@ export default {
         issueCategories: ['Animals', 'Landscape', 'Sanitation', 
                           'Construction', 'Traffic & walkways'],
         filter: {
-          // update loc when loading issues
-          pos: {},
+          lat: null,
+          lng: null,
+          byUser: '',
           // could be: distance, severity, time, attention
-          sortBy: '',
-          sortDir: 1,
+          sortBy: 'Distance',
           byTxt: '',
           // could be: open, resolved, all
-          byStatus: 'all',
-          byCategory: 'all',
+          byStatus: 'All',
+          from: 0,
+          to: 18,
+          byCategory: []
         },
       },
     
@@ -27,10 +29,6 @@ export default {
         issueCategories(state) {
           return state.issueCategories
         },
-
-        loc(state) {
-          return state.filter.pos
-        }
       },
     
       mutations: {
@@ -38,23 +36,24 @@ export default {
           state.issues = issues
         },
 
-        setPos(state, {pos}) {
-          state.filter.pos = pos
-        },
+        setFilterKey(state, {key, value}) {
+          state.filter[key] = value
+        }
       },
     
-      actions: {       
-        getIssues({commit, state}) {
-          issueService.query(state.filter)
-          .then(issues => {
-            commit({type: 'setIssues', issues})
+      actions: {
+        setFilter({commit, dispatch}, {filter}) {
+          Object.keys(filter).forEach(key => {
+            commit({type: 'setFilterKey', key, value: filter[key]})
           })
+          return dispatch({type: 'getIssues'})
         },
 
-        getIssuesByUser({commit}) {
-          issueService.getIssuesByUser()
+        getIssues({commit, state}) {
+          return issueService.query(state.filter)
           .then(issues => {
             commit({type: 'setIssues', issues})
+            return issues
           })
         },
         
@@ -62,26 +61,31 @@ export default {
           return issueService.getIssueById(issueId)
         },
 
+        saveIssue(context, {issue}) {
+          issueService.saveIssue(issue, context.rootState.userModule.loggedinUser)
+        },
+
         getLoc({commit, dispatch}) {
           return locService.getCurrLoc()
-            .then(pos => {
-              commit({type: 'setPos', pos})
-              return dispatch({type: 'getAddressByPos', pos})
+            .then(coords => {
+              commit({type: 'setFilterKey', key: 'lng', value: coords[0]})
+              commit({type: 'setFilterKey', key: 'lat', value: coords[1]})
+              return dispatch({type: 'getAddressByCoords', coords})
                 .then(address => {
-                  return {pos, address}
+                  return {coords, address}
                 })
             })
         },
 
-        getPosByAddress(context, {address}) {
-          return locService.getPosByAddress(address)
-            .then(pos => {
-              return pos
+        getCoordsByAddress(context, {address}) {
+          return locService.getCoordsByAddress(address)
+            .then(coords => {
+              return coords
             })
         },
 
-        getAddressByPos(context, {pos}) {
-          return locService.getAddressByPos(pos)
+        getAddressByCoords(context, {coords}) {
+          return locService.getAddressByCoords(coords)
             .then(address => {
               return address
             })

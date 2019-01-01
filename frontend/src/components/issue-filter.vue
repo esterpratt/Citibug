@@ -40,6 +40,7 @@ export default {
     data() {
         return {
             filter: {
+                byUser: '',
                 sortBy: 'Distance',
                 // sortDir: 1,
                 byTxt: '',
@@ -47,9 +48,9 @@ export default {
                 byCategory: []
             },
 
-            sortOptions: ['Distance', 'Severity', 'Recent first', 'Oldest first', 'attention'],
+            sortOptions: ['Distance', 'Severity', 'Recent first', 'Oldest first', 'Attention'],
 
-            isExpandFilter: false,
+            // isExpandFilter: false,
         }
     },
 
@@ -61,8 +62,7 @@ export default {
 
     methods: {
         setFilter() {
-            console.log('filter:', this.filter);
-            
+            this.$store.dispatch({type: 'setFilter', filter: this.filter})
         },
     },
 }
