@@ -17,11 +17,11 @@
             </div>
             <h3>{{issue.title}}</h3>
             <div class="category">{{issue.category}}</div>
-            <div class="address">At {{issue.location.address}}</div>
+            <div class="address">At {{issue.address}}</div>
             <div class="social-details">
                 <!-- TODO: merge to one component -->
                 <seen-count :count="issue.seenCount" :severityStatus="severityStatus"/>
-                <comment-count :count="issue.comments.length" :severityStatus="severityStatus"/>
+                <comment-count :count="issue.commentsCount" :severityStatus="severityStatus"/>
                 <share-count :count="issue.shareCount" :severityStatus="severityStatus"/>
             </div>
         </div>
@@ -61,7 +61,6 @@ export default {
       }
   },
   created() {
-      
   }
 }
 </script>

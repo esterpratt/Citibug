@@ -16,6 +16,10 @@
         .user-pic {
             @include round(2rem);
             border: 1px solid $darkBorder;
+            background-color: $darkBorder;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         form {
@@ -52,7 +56,11 @@
             .user-img {
                 @include round(2rem);
                 border: 1px solid $darkBorder;
+                background-color: $darkBorder;
                 margin-right: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             div:last-child {

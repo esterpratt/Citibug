@@ -2,7 +2,7 @@
     <div class="comments-container">
         <h2>Comments</h2>
         <div class="new-comment">
-            <div class="user-pic"></div>
+            <div class="user-pic">{{user ? user.emoji : '?'}}</div>
             <form @submit.prevent="addComment">
                 <el-input type="text" 
                     v-model="newComment" 
@@ -28,7 +28,8 @@ import commentPreview from './comment-preview'
 
 export default {
     props: {
-        comments: Array
+        comments: Array,
+        user: Object
     },
 
     components: {
