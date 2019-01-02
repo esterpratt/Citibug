@@ -49,6 +49,7 @@
 
 <script>
 import emojiPicker from './emoji-picker'
+import eventBus, {USR_MSG_DISPLAY} from '@/services/busService'
 
 export default {
     props: {
@@ -81,11 +82,13 @@ export default {
             // if not empty
             if (this.user.name && this.user.pass) {
                 this.$store.dispatch({type: 'login', user: this.user})
-                    .then(_ => {
-                        console.log(`show welcome back msg to ${this.user.name}`)
+                    .then(name => {
+                        eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt: `Welcome back ${name}!` })
                         this.$emit('closeModal')               
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => {
+                        eventBus.$emit(USR_MSG_DISPLAY, { type: 'fail', txt: err.message })
+                    })
             } else {
                 console.log('show msg to fill required fields');
             }
@@ -106,10 +109,15 @@ export default {
             }
         },
 
-        signUp() {
-            console.log(`show welcome msg to ${this.newUser.name}`);           
+        signUp() {         
             this.$store.dispatch({type: 'signup', user: this.newUser})
-            this.$emit('closeModal')
+            .then(name => {
+                eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt: `Welcome ${name}!` })
+                this.$emit('closeModal')
+            })
+            .catch(err => {
+                eventBus.$emit(USR_MSG_DISPLAY, { type: 'fail', txt: err.message })
+             })
         }
     },
 }

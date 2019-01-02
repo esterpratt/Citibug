@@ -62,7 +62,13 @@ export default {
         },
 
         saveIssue(context, {issue}) {
-          issueService.saveIssue(issue, context.rootState.userModule.loggedinUser)
+          return issueService.saveIssue(issue, context.rootState.userModule.loggedinUser)
+            .then(issue => issue)
+        },
+
+        removeIssue(context, {issueId}) {
+          return issueService.removeIssue(issueId)
+            .then(res => res)
         },
 
         getLoc({commit, dispatch}) {

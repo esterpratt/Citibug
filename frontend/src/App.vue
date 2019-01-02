@@ -5,10 +5,12 @@
     <modal-cmp :isOpen="isModalOpen" @closeModal="isModalOpen=false">
       <login-cmp @closeModal="isModalOpen=false"></login-cmp>
     </modal-cmp>
+    <user-msg></user-msg>
   </div>
 </template>
 
 <script>
+import userMsg from '@/components/user-msg'
 import navBar from '@/components/nav-bar'
 import modalCmp from '@/components/modal-cmp'
 import loginCmp from '@/components/login-cmp'
@@ -22,6 +24,7 @@ export default {
   },
 
   components: {
+    userMsg,
     navBar,
     modalCmp,
     loginCmp,

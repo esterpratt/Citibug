@@ -91,7 +91,7 @@ function remove(issueId) {
     return mongoService.connectToDB()
         .then(dbConn => {
             const issueCollection = dbConn.collection('issue');
-            return issueCollection.remove({ _id: issueId })
+            return issueCollection.deleteOne({ _id: issueId })
         })
 }
 
@@ -101,8 +101,20 @@ function update(issue) {
         .then(dbConn => {
             const issueCollection = dbConn.collection('issue');
             return issueCollection.updateOne({ _id: issueId },
-                // TODO: update only relevant fields!
-                { $set: { name: issue.name, price: issue.price } })
+                // TODO: update only relevant fields:
+                // title, description, category, severity, 
+                // location.coordinates, address, oldPic, newPic
+                { $set: 
+                    {   title: issue.title,
+                        description: issue.description,
+                        category: issue.category,
+                        severity: issue.severity,
+                        "location.coordinates": issue.location.coordinates,
+                        address: issue.address,
+                        oldPic: issue.oldPic,
+                        newPic: issue.newPic,
+                    } 
+                })
         })
 }
 

@@ -8,8 +8,7 @@
             </div>
         </div>
         <div class="issue-img" 
-        :style="'background-image: url(' + issue.pic + ')'">
-            <!-- <img :src="issue.pic"> -->       
+        :style="'background-image: url(' + issue.newPic + ')'">
         </div>
         <div class="issue-details">
             <div class="time">

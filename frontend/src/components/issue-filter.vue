@@ -42,15 +42,12 @@ export default {
             filter: {
                 byUser: '',
                 sortBy: 'Distance',
-                // sortDir: 1,
                 byTxt: '',
                 byStatus: 'All',
                 byCategory: []
             },
 
             sortOptions: ['Distance', 'Severity', 'Recent first', 'Oldest first', 'Attention'],
-
-            // isExpandFilter: false,
         }
     },
 

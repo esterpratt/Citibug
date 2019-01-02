@@ -9,10 +9,10 @@
         <h1>Be a PAL!<p>Make our city a better place!</p></h1>
     </header>
     <section class="container">
-        <div class="carousel-container" v-for="(issues, idx) in issuesLists"
+        <div class="carousel-container" v-for="(issuesObj, idx) in issuesLists"
         :key="idx">
-            <h2>Issues near you</h2>
-            <issue-carousel :issues="issues"></issue-carousel>
+            <h2>{{issuesObj.title}}</h2>
+            <issue-carousel :issues="issuesObj.issues"></issue-carousel>
             <router-link to="/issue">Show All Issues ></router-link>
         </div>
     </section>
@@ -32,7 +32,17 @@ export default {
       return {
           backImg: 1,
           imgInterval: null,
-          issuesLists: [[],[],[]]
+          issuesLists: [
+                        {title: 'Issues near you',
+                         issues: []
+                        },
+                        {title: 'Most urgent issues',
+                         issues: []
+                        },
+                        {title: 'Recent issues',
+                         issues: []
+                        }
+                        ]
       }
   },
   components: {
@@ -65,13 +75,13 @@ export default {
       .then(_ => {
         this.$store.dispatch({type: 'setFilter', filter})
         .then(issues => {
-            this.issuesLists[0] = issues
+            this.issuesLists[0].issues = issues
             this.$store.dispatch({type: 'setFilter', filter: {sortBy: 'Severity'}})
             .then(issues => {
-                this.issuesLists[1] = issues
+                this.issuesLists[1].issues = issues
                 this.$store.dispatch({type: 'setFilter', filter: {sortBy: 'Recent first'}})
                 .then(issues => {
-                    this.issuesLists[2] = issues
+                    this.issuesLists[2].issues = issues
                     })
                 })
             })
