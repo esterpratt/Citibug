@@ -26,7 +26,7 @@
                     <button>Share</button>
                 </div>
             </div>
-            <img class="issue-img" :src="issue.pic"/>
+            <img class="issue-img" :src="issue.newPic"/>
             <map-view :issueCoords="issue.location.coordinates"
             :mapCenter="issue.location.coordinates"
             :isEditable="false" />

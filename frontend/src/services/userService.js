@@ -28,13 +28,15 @@ function logout() {
     // send server to remove user saved on session
     return axios.delete(`${BASE_URL}/logout`)
         .then(res => res.data)
-    // return Promise.resolve('removed')
 }
 
 function signup(user) {
     // add user to collection
     return axios.post(`${BASE_URL}/signup`, user)
         .then(res => res.data)
+        .catch(_ => {
+            throw new Error('User is allready exist')
+        })
 }
 
 function getLoggedinUser() {

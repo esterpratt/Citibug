@@ -1,0 +1,42 @@
+.user-msg {
+    z-index: 101;
+    max-width: 80vw;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    border-radius: 2px;
+    padding: 1.2rem;
+    opacity: 0.95;
+    color: $hlColor;
+    font-size: 1.3rem;
+    font-weight: bold;
+
+    &.success {
+        background-color: $casualColor; 
+    }
+
+    &.error {
+        background-color: $urgentColor;
+    }
+
+    button {
+        margin-bottom: 1rem;
+        @include round(1.5rem);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $hlColor;
+        border: rgba(255, 255, 255, 0);
+        background-color: rgba(187, 187, 187, 0);
+        font-size: 1rem;
+        transition: .3s;
+    
+        &:hover {
+            background-color: rgba(187, 187, 187, 0.918);
+        }
+    }
+
+    p {
+        word-break: break-all;
+    }
+}

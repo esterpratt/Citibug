@@ -35,7 +35,7 @@ export default {
                 // set user to user without password and save to storage
                 commit({type: 'setLoggedinUser', user: {_id: user._id, name: user.name, emoji: user.emoji}})
                 storageService.store('user', {name: user.name, pass: user.pass})
-                return user
+                return user.name
             })
             .catch(err => {
                 // tell login-cmp user/pass is wrong
@@ -44,12 +44,17 @@ export default {
         },
 
         signup({commit}, {user}) {
-            userService.signup(user)
-            .then(user => {
+            return userService.signup(user)
+            .then(_ => {
                 // set user to user without password and save to storage
                 commit({type: 'setLoggedinUser', user: {_id: user._id, name: user.name, emoji: user.emoji}})
-                storageService.store('user', {name: user.name, pass: user.pass})
+                storageService.store('user', {name: user.name, pass: user.pass})              
+                return user.name
             })
+            .catch(err => {
+                // tell login-cmp user/pass is wrong
+                throw new Error(err)
+            }) 
         },
         
         logout({commit}) {

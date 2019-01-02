@@ -38,7 +38,7 @@
 
       <!-- IMG -->
       <div class="img-container">
-        <img :src="issue.pic" ref="img" @load="setImgSize"/>
+        <img :src="issue.newPic" ref="img" @load="setImgSize"/>
         <video ref="video" id="video" autoplay
          :height="imgHeight" :width="imgWidth"></video>
         <div class="img-btns">
@@ -73,7 +73,7 @@
       </div>
     </section>
     <modal-cmp :isOpen="isModalOpen" @closeModal="closeModal">
-      <sure-validation :yesCB="deleteIssueCB" @closeModal="closeModal">
+      <sure-validation :yesCB="removeIssueCB" @closeModal="closeModal">
       </sure-validation>
     </modal-cmp>
   </section>
@@ -84,6 +84,7 @@ import modalCmp from "@/components/modal-cmp"
 import sureValidation from "@/components/sure-validation"
 import mapView from "@/components/map-view"
 import vueSlider from 'vue-slider-component'
+import eventBus, {USR_MSG_DISPLAY} from '@/services/busService'
 
 export default {
   name: "issue-edit",
@@ -97,9 +98,9 @@ export default {
       imgHeight: 0,
       imgWidth: 0,
       isModalOpen: false,
-      deleteIssueCB: () => {
+      removeIssueCB: () => {
         this.closeModal()
-        this.deleteIssue()
+        this.removeIssue()
       }
     };
   },
@@ -127,8 +128,7 @@ export default {
       const issueId = this.$route.params.issueId;
       if (issueId) {
         this.$store.dispatch({ type: "getIssueById", issueId }).then(issue => {
-          // TODO: copy the object?
-          this.issue = issue
+          this.issue = JSON.parse(JSON.stringify(issue))
           this.mapCenter = this.issue.location.coordinates
         });
       } else {
@@ -150,9 +150,8 @@ export default {
           coordinates: [],
         },
         address: null,
-        pic: "https://dummyimage.com/380x250/cccccc/ffffff.png&text=Issue+Photo",
-        // TODO: update the owner according to loggedInUser
-        ownerId: "xyz"
+        oldPic: "https://dummyimage.com/380x250/cccccc/ffffff.png&text=Issue+Photo",
+        newPic: "https://dummyimage.com/380x250/cccccc/ffffff.png&text=Issue+Photo",
       };
       this.getCurrLoc()
     },
@@ -162,13 +161,32 @@ export default {
     },
 
     saveIssue() {
-      this.$store.dispatch({type: 'saveIssue', issue: this.issue})
+      if (this.issue.title && this.issue.description && this.issue.category) {
+        this.$store.dispatch({type: 'saveIssue', issue: this.issue})
+          .then(_ => {
+            var txt;
+            var path = '/';
+            if (this.issue._id) {
+              txt = 'Your issue was updated'
+              path += `issue/${this.issue._id}`
+            } else {
+              txt = 'Thanks for reporting, You are a PAL!'
+            }
+            eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt })
+            this.$router.push(path)
+          })
+      } else {
+        eventBus.$emit(USR_MSG_DISPLAY, { type: 'fail', txt: 'Please fill in the required fields' })
+      }
     },
 
-    deleteIssue() {
+    removeIssue() {
       // delete issue and go to homepage
-        console.log('Delete issue and show msg that issue deleted')
+      this.$store.dispatch({type: 'removeIssue', issueId: this.issue._id})
+      .then(_ => {
+        eventBus.$emit(USR_MSG_DISPLAY, { type: 'fail', txt: 'Issue was deleted' })
         this.$router.push('/')
+      })
     },
 
     // MAP
@@ -199,11 +217,11 @@ export default {
     // IMG
     previewImg(ev) {
       const imgPath = ev.target.files[0];
+      
       if (imgPath) {
         this.issue.picPath = imgPath;
-        this.issue.pic = URL.createObjectURL(imgPath);
+        this.issue.newPic = URL.createObjectURL(imgPath);
         this.setImgSize()
-        // cloudinaryService.uploadImg(ev.target.parentElement)
       }
     },
 
@@ -226,7 +244,10 @@ export default {
     capture() {
       this.canvas = this.$refs.canvas;
       this.canvas.getContext("2d").drawImage(this.video, 0, 0);
-      this.issue.pic = canvas.toDataURL("image/png");
+      canvas.toBlob(blob => {
+        this.issue.picPath = blob;
+        this.issue.newPic = URL.createObjectURL(blob);
+      }, 'image/jpeg');
       this.stopVideo();
     },
 

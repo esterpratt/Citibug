@@ -8,7 +8,7 @@ module.exports = addRoutes;
 
 function requiredAuth(req, res, next) {
     const user = req.session.user;
-    if (user) return res.status(200).send('Not Allowed')
+    if (user) return res.status(400).send('Not Allowed')
     else next()
 }
 
@@ -27,6 +27,8 @@ function addRoutes(app) {
             issueService.getById(issueId),
             commentService.query(issueId)
                 .then(comments => {
+                    // TODO: if ownerId is empty - 
+                    //       user should be name: guest, emoji: ?
                     var prmCommentWithUser = comments.map(comment => {
                         return userService.getById(comment.ownerId)
                             .then(user => {

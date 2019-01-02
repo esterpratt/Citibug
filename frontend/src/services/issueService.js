@@ -41,22 +41,24 @@ function getIssueById(issueId) {
 
 function removeIssue(issueId) {
     return axios.delete(`${BASE_URL}/issue/${issueId}`)
-    // .then(res => res.data)
+    .then(res => res.data)
 }
 
 async function saveIssue(issue, user) {
+    if (issue.oldPic !== issue.newPic) {
+        // upload pic to cloudinary
+        issue.newPic = await cloudinaryService.uploadImg(issue.picPath)
+        issue.oldPic = issue.newPic
+    }
+    
     if (issue._id) {
         return axios.put(`${BASE_URL}/issue/${issue._id}`, issue)
+        .then(res => res.data)
     } else {
         issue.createdAt = Date.now();
-        if (user) {
-            issue.ownerId = user._id
-        };
-        // upload pic to cloudinary (if not the default pic)
-        issue.pic = await cloudinaryService.uploadImg(issue.picPath)
-        console.log(issue);
-        
-        // return axios.post(`${BASE_URL}/issue`, issue)
+        issue.ownerId = user ? user._id : ''
+        return axios.post(`${BASE_URL}/issue`, issue)
+        .then(res => res.data)
     }
 }
 
@@ -84,7 +86,8 @@ async function saveIssue(issue, user) {
 //             coordinates: [34.759140, 32.049720]
 //         },
 //         address: 'Yehuda Hayamit 6 Tel Aviv',
-//         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177621/turtle.jpg',
+//         oldPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177621/turtle.jpg',
+//         newPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177621/turtle.jpg',
 //         ownerId: '5c28d68ce3629fa3c6c86c00',
 //     },
 //     {
@@ -102,7 +105,8 @@ async function saveIssue(issue, user) {
 //             coordinates: [34.799220, 32.097180]
 //         },
 //         address: 'Hamishna 1 Tel Aviv',
-//         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177596/flowers.jpg',
+//         oldPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177596/flowers.jpg',
+//         newPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177596/flowers.jpg',
 //         ownerId: '5c28d68ce3629fa3c6c86c01',
 //     },
 //     {
@@ -120,7 +124,8 @@ async function saveIssue(issue, user) {
 //             coordinates: [34.799560, 32.121380]
 //         },
 //         address: 'Rabina 17 Tel Aviv',
-//         pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546178242/Concrete.jpg',
+//         oldPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546178242/Concrete.jpg',
+//         newPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546178242/Concrete.jpg',
 //         ownerId: '5c28d68ce3629fa3c6c86c02',
 //     },
 //     {
@@ -138,7 +143,8 @@ async function saveIssue(issue, user) {
 //         coordinates: [34.775680, 32.077900]
 //     },
 //     address: 'Zamanhoff 7 Tel Aviv',
-//     pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177623/bat.jpg',
+//     oldPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177623/bat.jpg',
+//     newPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177623/bat.jpg',
 //     ownerId: '5c28d68ce3629fa3c6c86c03',
 //     },
 //     {
@@ -155,7 +161,8 @@ async function saveIssue(issue, user) {
 //         coordinates: [34.791920, 32.055090]
 //     },
 //     address: 'Igal Alon 18 Tel Aviv',
-//     pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177617/milk.jpg',
+//     oldPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177617/milk.jpg',
+//     newPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177617/milk.jpg',
 //     ownerId: '5c28d68ce3629fa3c6c86c00',
 //     },
 //     {
@@ -181,121 +188,121 @@ async function saveIssue(issue, user) {
 
 // var comments = [
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050a',
+//         issueId: '5c2c9fb3312cefae43f1bcec',
 //         txt: 'car almost run over it',
 //         ownerId: '5c28d68ce3629fa3c6c86c01',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050a',
+//         issueId: '5c2c9fb3312cefae43f1bcec',
 //         txt: '1.5 meters left',
 //         ownerId: '5c28d68ce3629fa3c6c86c00',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050a',
+//         issueId: '5c2c9fb3312cefae43f1bcec',
 //         txt: 'its in halfway',
 //         ownerId: '5c28d68ce3629fa3c6c86c02',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050b',
+//         issueId: '5c2c9fb3312cefae43f1bced',
 //         txt: 'I know her she is nice, I will come help',
 //         ownerId: '5c28d68ce3629fa3c6c86c02',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050b',
+//         issueId: '5c2c9fb3312cefae43f1bced',
 //         txt: 'me too',
 //         ownerId: '5c28d68ce3629fa3c6c86c03',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050b',
+//         issueId: '5c2c9fb3312cefae43f1bced',
 //         txt: 'Thanks! I\'ll bring a shovel',
 //         ownerId: '5c28d68ce3629fa3c6c86c01',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050b',
+//         issueId: '5c2c9fb3312cefae43f1bced',
 //         txt: 'does she have sun at the garden?',
 //         ownerId: '5c28d68ce3629fa3c6c86c03',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050b',
+//         issueId: '5c2c9fb3312cefae43f1bced',
 //         txt: 'yes',
 //         ownerId: '5c28d68ce3629fa3c6c86c01',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050b',
+//         issueId: '5c2c9fb3312cefae43f1bced',
 //         txt: 'than we should plant anemon',
 //         ownerId: '5c28d68ce3629fa3c6c86c03',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050c',
+//         issueId: '5c2c9fb3312cefae43f1bcee',
 //         txt: 'OMG it almost fell on me!!',
 //         ownerId: '5c28d68ce3629fa3c6c86c03',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050c',
+//         issueId: '5c2c9fb3312cefae43f1bcee',
 //         txt: 'It\'s really dangerous, whatch out',
 //         ownerId: '5c28d68ce3629fa3c6c86c01',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050d',
+//         issueId: '5c2c9fb3312cefae43f1bcef',
 //         txt: 'I will take him to hospital, where are you?',
 //         ownerId: '5c28d68ce3629fa3c6c86c02',
 //         at: 1546044568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050d',
+//         issueId: '5c2c9fb3312cefae43f1bcef',
 //         txt: 'At the address mentioned',
 //         ownerId: '5c28d68ce3629fa3c6c86c03',
 //         at: 1546054568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050d',
+//         issueId: '5c2c9fb3312cefae43f1bcef',
 //         txt: 'Im coming in half an hour',
 //         ownerId: '5c28d68ce3629fa3c6c86c02',
 //         at: 1546164568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050d',
+//         issueId: '5c2c9fb3312cefae43f1bcef',
 //         txt: 'If it bites you go get a shot against rabies',
 //         ownerId: '5c28d68ce3629fa3c6c86c04',
 //         at: 1546174368296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050d',
+//         issueId: '5c2c9fb3312cefae43f1bcef',
 //         txt: 'But bat is not a mammal',
 //         ownerId: '5c28d68ce3629fa3c6c86c01',
 //         at: 1546174468296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050d',
+//         issueId: '5c2c9fb3312cefae43f1bcef',
 //         txt: 'Of course it is, it\'s a mouse with wings',
 //         ownerId: '5c28d68ce3629fa3c6c86c04',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050f',
+//         issueId: '5c2c9fb3312cefae43f1bcf1',
 //         txt: 'Im coming to help',
 //         ownerId: '5c28d68ce3629fa3c6c86c01',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050f',
+//         issueId: '5c2c9fb3312cefae43f1bcf1',
 //         txt: 'dont come the issue is resolved',
 //         ownerId: '5c28d68ce3629fa3c6c86c04',
 //         at: 1546174568296,
 //     },
 //     {
-//         issueId: '5c2b61f36d73f01d1d25050f',
+//         issueId: '5c2c9fb3312cefae43f1bcf1',
 //         txt: 'ok thanks',
 //         ownerId: '5c28d68ce3629fa3c6c86c01',
 //         at: 1546174568296,
@@ -306,21 +313,21 @@ async function saveIssue(issue, user) {
 // [
 //     {
 //         type: 'resolve',
-//         issueId: ObjectId('5c2b61f36d73f01d1d25050e'),
+//         issueId: ObjectId('5c2c9fb3312cefae43f1bcf0'),
 //         ownerId: '5c28d68ce3629fa3c6c86c00',
 //         from: ObjectId('5c28d68ce3629fa3c6c86c01'),
 //          at: 1546174568296
 //     },
 //     {
 //         type: 'comment',
-//         issueId: ObjectId('5c2b61f36d73f01d1d25050d'),
+//         issueId: ObjectId('5c2c9fb3312cefae43f1bcef'),
 //         ownerId: '5c28d68ce3629fa3c6c86c03',
 //         from: ObjectId('5c28d68ce3629fa3c6c86c02'),
 //         at: 1546164568296
 //     },
 //     {
 //         type: 'comment',
-//         issueId: ObjectId('5c2b61f36d73f01d1d25050d'),
+//         issueId: ObjectId('5c2c9fb3312cefae43f1bcef'),
 //         ownerId: '5c28d68ce3629fa3c6c86c03',
 //         from: ObjectId('5c28d68ce3629fa3c6c86c02'),
 //          at: 1546044568296

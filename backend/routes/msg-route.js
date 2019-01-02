@@ -9,5 +9,7 @@ function addRoutes(app) {
         const {userId} = req.query      
         msgService.query(userId)
           .then(msgs => res.json(msgs))
-      })
+        })
     }
+
+    
