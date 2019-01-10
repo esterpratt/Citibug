@@ -34,7 +34,8 @@ userRoute(app);
 msgRoute(app);
 
 const port = process.env.PORT || 3000;
+const server = app.listen(port, () => console.log(`server on ${port}`));
+const io = require('socket.io').listen(server);
 
-app.listen(port, () => {
-    console.log(`App listening on port ${port}!`);
-})
+const setupIo = require('./services/socket-service')
+setupIo(io)

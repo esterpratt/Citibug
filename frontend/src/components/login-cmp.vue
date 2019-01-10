@@ -83,6 +83,7 @@ export default {
             if (this.user.name && this.user.pass) {
                 this.$store.dispatch({type: 'login', user: this.user})
                     .then(name => {
+                        this.initFields()
                         eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt: `Welcome back ${name}!` })
                         this.$emit('closeModal')               
                     })
@@ -112,12 +113,28 @@ export default {
         signUp() {         
             this.$store.dispatch({type: 'signup', user: this.newUser})
             .then(name => {
+                this.initFields()
                 eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt: `Welcome ${name}!` })
                 this.$emit('closeModal')
             })
             .catch(err => {
                 eventBus.$emit(USR_MSG_DISPLAY, { type: 'fail', txt: err.message })
              })
+        },
+
+        initFields() {
+            this.user = {
+                name: '',
+                pass: '',
+            }
+
+            this.newUser = {
+                name: '',
+                pass: '',
+                emoji: '?',
+            }
+
+            this.rePass = ''
         }
     },
 }

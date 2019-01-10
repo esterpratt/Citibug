@@ -34,12 +34,21 @@ export default {
           imgInterval: null,
           issuesLists: [
                         {title: 'Issues near you',
+                        filter: {
+                                    to: 4,
+                                    byUser: '',
+                                    byTxt: '',
+                                    byStatus: 'All',
+                                    byCategory: []
+                                },
                          issues: []
                         },
                         {title: 'Most urgent issues',
+                        filter: {sortBy: 'Severity'},
                          issues: []
                         },
                         {title: 'Recent issues',
+                        filter: {sortBy: 'Recent first'},
                          issues: []
                         }
                         ]
@@ -54,7 +63,10 @@ export default {
       }
   },
   methods: {
-      
+      loadIssues(filter, idx) {
+          this.$store.dispatch({type: 'setFilter', filter})
+            .then(issues => this.issuesLists[idx].issues = issues)
+      }
   },
   created() {
       this.imgInterval = setInterval(() => {
@@ -62,30 +74,14 @@ export default {
           if (this.backImg === 4) this.backImg = 1
       }, 5000)
 
-      var filter = {
-          to: 4,
-          byUser: '',
-          byTxt: '',
-          byStatus: 'All',
-          byCategory: []
-      }
-
       // get current user location
       this.$store.dispatch({type: 'getLoc'})
       .then(_ => {
-        this.$store.dispatch({type: 'setFilter', filter})
-        .then(issues => {
-            this.issuesLists[0].issues = issues
-            this.$store.dispatch({type: 'setFilter', filter: {sortBy: 'Severity'}})
-            .then(issues => {
-                this.issuesLists[1].issues = issues
-                this.$store.dispatch({type: 'setFilter', filter: {sortBy: 'Recent first'}})
-                .then(issues => {
-                    this.issuesLists[2].issues = issues
-                    })
-                })
-            })
-      })
+          // load issues according to its filter
+          this.issuesLists.forEach((list, idx) => {
+              this.loadIssues(list.filter, idx)
+          })
+    })
   },
   
   destroyed() {

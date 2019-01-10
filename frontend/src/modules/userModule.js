@@ -1,6 +1,7 @@
 import userService from '@/services/userService'
 import msgService from '@/services/msgService'
 import storageService from '@/services/storageService'
+import {vm} from '@/services/socketService'
 
 export default {
     state: {
@@ -33,8 +34,14 @@ export default {
             return userService.login(user)
             .then(user => {
                 // set user to user without password and save to storage
-                commit({type: 'setLoggedinUser', user: {_id: user._id, name: user.name, emoji: user.emoji}})
+                commit({type: 'setLoggedinUser', user: {
+                                                        _id: user._id, 
+                                                        name: user.name, 
+                                                        emoji: user.emoji,
+                                                        msgCount: user.msgCount
+                                                    }})
                 storageService.store('user', {name: user.name, pass: user.pass})
+                vm.$socket.emit('addUser', user._id)
                 return user.name
             })
             .catch(err => {
@@ -44,11 +51,18 @@ export default {
         },
 
         signup({commit}, {user}) {
+            user.msgCount = 0
             return userService.signup(user)
-            .then(_ => {
+            .then(signedUser => {
                 // set user to user without password and save to storage
-                commit({type: 'setLoggedinUser', user: {_id: user._id, name: user.name, emoji: user.emoji}})
-                storageService.store('user', {name: user.name, pass: user.pass})              
+                commit({type: 'setLoggedinUser', user: {
+                                                            _id: signedUser._id, 
+                                                            name: signedUser.name, 
+                                                            emoji: signedUser.emoji, 
+                                                            msgCount: signedUser.msgCount
+                                                        }})
+                storageService.store('user', {name: signedUser.name, pass: signedUser.pass})              
+                vm.$socket.emit('addUser', signedUser._id)
                 return user.name
             })
             .catch(err => {

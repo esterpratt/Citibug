@@ -1,7 +1,10 @@
 'use strict';
 
 import storageService from './storageService.js'
-const axios = require('axios')
+const Axios = require('axios')
+const axios = Axios.create({
+    withCredentials: true,
+})
 
 const BASE_URL = (process.env.NODE_ENV !== 'development')
     ? ''

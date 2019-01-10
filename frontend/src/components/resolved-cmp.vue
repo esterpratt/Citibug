@@ -1,5 +1,5 @@
 <template>
-    <div class="resolved">
+    <div class="resolved" @click="$emit('toggleResolved')">
         <template v-if="isResolved">
             <i class="fas fa-times"></i>
             <p>Re-open</p>

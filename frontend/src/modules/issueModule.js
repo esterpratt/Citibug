@@ -81,6 +81,12 @@ export default {
                   return {coords, address}
                 })
             })
+            .catch(err => {
+              // TODO: decide what to do when refuse to give location:
+              //       1. set default location?
+              //       2. remove issues by distance?
+              console.log("catch location refuse");
+            })
         },
 
         getCoordsByAddress(context, {address}) {
@@ -95,6 +101,10 @@ export default {
             .then(address => {
               return address
             })
-        }
+        },
+
+        // Sockets
+        // SOCKET_addNewComment(context, comment) {
+        // }
       }
 }

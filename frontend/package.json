@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build --dest ../backend/public"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.6.1",
@@ -16,6 +16,7 @@
     "vue-carousel": "^0.16.1",
     "vue-router": "^3.0.1",
     "vue-slider-component": "^2.8.3",
+    "vue-socket.io": "^3.0.4",
     "vue2-google-maps": "^0.10.5",
     "vuex": "^3.0.1"
   },

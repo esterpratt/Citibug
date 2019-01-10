@@ -1,59 +1,80 @@
 <template>
-    <section class="container issue-details-page" v-if="issue">
-        <div class="issue-details-container">
-            <div class="issue-details">
-                <!-- TODO: show only if issue owner -->
-                <router-link v-if="isOwner" :to="'/issue/edit/' + issue._id">
-                    <i class="fas fa-edit"></i>
-                    Edit your issue
-                </router-link>
-                <h2>{{issue.title}}</h2>
-                <p>{{issue.description}}</p>
-                <p class="category">Category: {{issue.category}}</p>
-                <p class="time">Reported {{issue.reportedAt | relative-time}}</p>
-                <p :class="severityStatus">
-                    This issue is {{severityStatus === 'urgent' ? severityStatus+'!' : severityStatus}}
-                </p>
+  <section class="container issue-details-page" v-if="issue">
+    <div class="issue-details-container">
+      <div class="issue-details">
+        <router-link v-if="isOwner" :to="'/issue/edit/' + issue._id">
+          <i class="fas fa-edit"></i>
+          Edit your issue
+        </router-link>
+        <h2>{{issue.title}}</h2>
+        <p>{{issue.description}}</p>
+        <p class="category">Category: {{issue.category}}</p>
+        <p class="time">Reported {{issue.reportedAt | relative-time}}</p>
+        <div v-if="!isOwner" class="issue-by">by 
+            <div class="user-pic">
+                {{(issue.user.length) ? issue.user[0].emoji : '?'}}
             </div>
-            <resolved-cmp :isResolved="issue.isResolved"/>
-            <div class="issue-report social-details">
-                <div class="seen-container">
-                    <seen-count :count="issue.seenCount" :severityStatus="severityStatus"/>
-                    <button>Me Too</button>
-                </div>
-                <div class="share-container">
-                    <share-count :count="issue.shareCount" :severityStatus="severityStatus"/>
-                    <button>Share</button>
-                </div>
-            </div>
-            <img class="issue-img" :src="issue.newPic"/>
-            <map-view :issueCoords="issue.location.coordinates"
-            :mapCenter="issue.location.coordinates"
-            :isEditable="false" />
+            {{(issue.user.length) ? issue.user[0].name : 'a guest'}}
         </div>
-        <comments-cmp :comments="issue.comments"
-        :user="user"
-        @addComment="addComment" />
-    </section>
+        <p :class="severityStatus">
+            This issue is {{severityStatus === 'urgent' ? severityStatus+'!' : severityStatus}}
+        </p>
+      </div>
+          <div class="report-resolve">
+            <p class="report">
+                {{issue.isResolved ? 'This issue was reported as resolved' : 'This issue has been seen by '+ issue.seenCount + ' pals'}}
+            </p>
+            <div>
+                <p class="quest">{{issue.isResolved ? 'Do you agree?' : 'Have you been there?'}}</p>
+                <button v-if="!issue.isResolved" class="seen" @click="reportSeen">
+                    <i class="far fa-eye"></i>
+                    Yes, still there!
+                </button>
+                <button @click="toggleResolved" class="resolve" :class="resolvedStatus">
+                    <template v-if="issue.isResolved">
+                        <i class="far fa-eye"></i>
+                        No, Still There!
+                    </template>
+                    <template v-else>
+                        <i class="fas fa-hand-point-up"></i>
+                        Yes, resolved!
+                    </template>
+                </button>
+            </div>
+          </div>
+      <div class="share">
+          <button>
+              <i class="fas fa-share"></i>
+              Share with friends!
+            </button>
+        </div>
+      <img class="issue-img" :src="issue.newPic">
+      <map-view
+        :issueCoords="issue.location.coordinates"
+        :mapCenter="issue.location.coordinates"
+        :isEditable="false"
+      />
+    </div>
+    <comments-cmp :comments="issue.comments" :user="user" @addComment="addComment"/>
+  </section>
 </template>
 
 <script>
-import mapView from '@/components/map-view'
-import resolvedCmp from '@/components/resolved-cmp'
-import commentsCmp from '@/components/comments-cmp'
-import seenCount from '@/components/seen-count'
-import shareCount from '@/components/share-count'
+import mapView from "@/components/map-view";
+import resolvedCmp from "@/components/resolved-cmp";
+import commentsCmp from "@/components/comments-cmp";
+import seenCount from "@/components/seen-count";
+import shareCount from "@/components/share-count";
+import eventBus, {USR_MSG_DISPLAY} from '@/services/busService'
 
 export default {
-  name: 'issue-details',
-  props: {
-
-  },
+  name: "issue-details",
+  props: {},
   data() {
-      return {
-          issue: null,
-          isOwner: false
-      }
+    return {
+      issue: null,
+      isOwner: false
+    };
   },
   components: {
     mapView,
@@ -63,35 +84,74 @@ export default {
     shareCount
   },
   computed: {
-      severityStatus() {
-          return this.getSeverityStatus(this.issue.severity)
+    severityStatus() {
+      return this.getSeverityStatus(this.issue.severity);
+    },
+    user() {
+      return this.$store.getters.loggedinUser;
+    },
+    resolvedStatus() {
+        return {
+            'resolved': this.issue.isResolved,
+            'open': !this.issue.isResolved,
+        }
+    }
+  },
+  sockets: {
+      addNewComment(comment) {
+          if (comment.issueId === this.issue._id) {
+              this.issue.comments.unshift(comment)
+          }
       },
-      user() {
-          return this.$store.getters.loggedinUser
+
+      toggleResolved(issueId) {
+          if (issueId === this.issue._id) this.issue.isResolved = !this.issue.isResolved
+      },
+
+      addSeen(issueId) {
+          if (issueId === this.issue._id) this.issue.seenCount++
       }
   },
   methods: {
-      addComment(comment) {
-          console.log(comment);
-      }
+    addComment(comment) {
+      this.$socket.emit("addComment", {
+        txt: comment,
+        issueId: this.issue._id,
+        ownerId: (this.user) ? this.user._id : ''
+      }, this.issue.ownerId);
+    },
+
+    reportSeen() {
+        this.$socket.emit("addSeen", this.issue._id)
+        eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt: `Thanks for reporting! You are a PAL!` })
+    },
+
+    toggleResolved() {
+        this.$socket.emit("toggleResolved", {
+            from: (this.user) ? this.user._id : '',
+            issueId: this.issue._id,
+            ownerId: this.issue.ownerId,
+            isResolved: this.issue.isResolved
+        })
+        eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt: `Thanks for reporting! You are a PAL!` })
+    }
   },
   created() {
-      const issueId = this.$route.params.issueId
-      this.$store.dispatch({type: 'getIssueById', issueId})
-        .then(issue => {
-            this.issue = issue
-            if (this.user && this.issue.ownerId === this.user._id) {
-                this.isOwner = true
-            }
-        })
+    const issueId = this.$route.params.issueId;
+    this.$store.dispatch({ type: "getIssueById", issueId }).then(issue => {
+      this.issue = issue;
+      if (this.user && this.issue.ownerId === this.user._id) {
+        this.isOwner = true;
+      }
+    })
   },
   // if owner login while on page
   watch: {
-      user: function() {
-        if (this.user && this.issue.ownerId === this.user._id) {
-            this.isOwner = true
-        }
+    user: function() {
+      if (this.user && this.issue.ownerId === this.user._id) {
+        this.isOwner = true;
       }
+    }
   }
-}
+};
 </script>

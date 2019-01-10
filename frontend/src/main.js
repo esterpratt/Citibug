@@ -6,12 +6,25 @@ import store from './store'
 import './assets/scss/main.scss'
 import './registerServiceWorker'
 // import axios from 'axios'
-// // tell axios to always send the sessionId cookie in AJAX requests
+// tell axios to always send the sessionId cookie in AJAX requests
 // axios.defaults.withCredentials = true
 
 import * as moment from 'moment'
 
 Vue.config.productionTip = false
+
+// sockets
+import VueSocketIO from 'vue-socket.io'
+
+Vue.use(new VueSocketIO({
+    debug: true,
+    connection: (process.env.NODE_ENV !== 'development') ? '' : '//localhost:3000',
+    vuex: {
+        store,
+        actionPrefix: 'SOCKET_',
+        mutationPrefix: 'SOCKET_'
+    }
+}))
 
 // vue-cmps imports
 import vueCarousel from 'vue-carousel'

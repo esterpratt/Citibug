@@ -1,7 +1,6 @@
 .issue-details-page {
     margin-top: 30px;
     display: flex;
-    // flex-direction: column;
 
     .issue-details-container {
         flex: 2;
@@ -10,8 +9,8 @@
         grid-gap: 1rem;
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
-        "details resolved"
         "details report"
+        "details share"
         "img map";
     }
 
@@ -51,6 +50,22 @@
             }
         }
 
+        .issue-by {
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+
+            .user-pic {
+                margin: 0 5px;
+                @include round(1.7rem);
+                border: 0;
+                background-color: $darkBorder;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
         >::first-letter {
             text-transform: capitalize;
         }
@@ -65,63 +80,66 @@
         }
     }
     
-    .issue-report {
+    .report-resolve {
+        font-size: 1rem;
         grid-area: report;
-        align-self: center;
-        display: flex;
-        justify-content: flex-end;
-        
+        justify-self: end;
+
+        .report {
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            color: $casualColor;
+        }
+
         > div {
             display: flex;
             flex-direction: column;
-            align-items: center;
-        }
+            align-items: flex-end;
+            text-align: center;
 
-        .seen-container {
-            margin-right: 1.5rem;
-        }
+            button {
+                font-size: 1rem;
+                font-weight: bold;
+                background-color: transparent;
+                border: 0;
+                padding: 0;
 
-        button {
-            border: 1px solid darken($casualColor, 15%);
-            background-color: $casualColor;
-            color: white;
-            padding: 5px;
-            margin-top: 0.7rem;
-            width: 4rem;
-            border-radius: 500px;
+                &.resolved, &.seen {
+                    color: $urgentColor;
+                    margin-top: 0.8rem;
+                    margin-bottom: 0.6rem;
+    
+                    &:hover {
+                        color: darken($urgentColor, 15%);
+                    }
+                }
 
-            &:hover {
-                background-color: darken($casualColor, 15%);
+                &.open {
+                    color: $casualColor;
+                    
+                    &:hover {
+                        color: darken($casualColor, 15%);
+                    }
+                }
             }
         }
     }
     
-    
-    .resolved {
-        margin: 0.7rem;
-        grid-area: resolved;
+    .share {
+        grid-area: share;
         justify-self: end;
-        cursor: pointer;
-        transition: .3s;
-        font-size: 1.2rem;
-        font-weight: bold;
-        line-height: 1.1;
-        @include round(110px);
-        border: 1px solid darken($casualColor, 15%);
-        background-color: $casualColor;
-        color: white;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        
-        i {
-            margin-bottom: 0.8rem;
-        }
 
-        &:hover {
-            background-color: darken($casualColor, 15%);
+        button {
+            font-size: 1rem;
+            font-weight: bold;
+            color: $casualColor;
+            background-color: transparent;
+            border: 0;
+            padding: 0;
+
+            &:hover {
+                color: darken($casualColor, 15%);
+            }
         }
     }
 

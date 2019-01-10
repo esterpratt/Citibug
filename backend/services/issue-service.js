@@ -8,7 +8,9 @@ module.exports = {
     getById,
     remove,
     update,
-    add
+    incCount,
+    updateField,
+    add,
 }
 
 function query(filter) {
@@ -82,7 +84,29 @@ function getById(issueId) {
     return mongoService.connectToDB()
         .then(dbConn => {
             const issueCollection = dbConn.collection('issue');
-            return issueCollection.findOne({ _id: issueId })
+            return issueCollection.aggregate([
+                {
+                    $match: { _id: issueId }
+                },
+                {
+                    $lookup:
+                    {
+                        from: 'user',
+                        localField: 'ownerId',
+                        foreignField: '_id',
+                        as: 'user',
+                    },
+                },
+                {
+                    $project: 
+                    {
+                        "user.pass": 0,
+                        "user._id": 0,
+                        "user.msgCount": 0
+                    }
+                }
+            ]).toArray()
+            .then(res => res[0])
         })
 }
 
@@ -101,9 +125,7 @@ function update(issue) {
         .then(dbConn => {
             const issueCollection = dbConn.collection('issue');
             return issueCollection.updateOne({ _id: issueId },
-                // TODO: update only relevant fields:
-                // title, description, category, severity, 
-                // location.coordinates, address, oldPic, newPic
+                // update only relevant fields:
                 { $set: 
                     {   title: issue.title,
                         description: issue.description,
@@ -118,7 +140,31 @@ function update(issue) {
         })
 }
 
+function incCount(issueId, field) {
+    issueId = new ObjectId(issueId)
+    return mongoService.connectToDB()
+        .then(dbConn => {
+            const issueCollection = dbConn.collection('issue');
+            return issueCollection.updateOne({ _id: issueId },
+                { $inc: {[field] : 1}})
+        })
+}
+
+function updateField(issueId, field, value) {
+    issueId = new ObjectId(issueId)
+    return mongoService.connectToDB()
+        .then(dbConn => {
+            const issueCollection = dbConn.collection('issue');
+            return issueCollection.updateOne({ _id: issueId },
+                // update only relevant fields:
+                { $set: 
+                    {[field] : value} 
+                })
+        })
+}
+
 function add(issue) {
+    issue.onwerId = new ObjectId(onwerId)
     return mongoService.connectToDB()
         .then(dbConn => {
             const issueCollection = dbConn.collection('issue');

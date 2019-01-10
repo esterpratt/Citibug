@@ -17,12 +17,15 @@ function addRoutes(app) {
     app.post('/signup', (req, res) => {
         const user = req.body
         userService.checkLogin(user)
-          .then(user => {
-            if (user) {
+          .then(foundUser => {
+            if (foundUser) {
               res.status(400).send('User allready exist')
             } else {
               userService.add(user)
-                .then(res.end())
+                .then(sigendUser => {
+                  req.session.user = sigendUser
+                  res.json(sigendUser)
+                })
             }
       })
     })
