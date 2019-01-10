@@ -15,7 +15,7 @@
 
         .user-pic {
             @include round(2rem);
-            border: 1px solid $darkBorder;
+            border: 0;
             background-color: $darkBorder;
             display: flex;
             align-items: center;
@@ -30,6 +30,10 @@
 
             button {
                 @include round(2rem);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 0;
                 background-color: $casualColor;
                 color: white;
 

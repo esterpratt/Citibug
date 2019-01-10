@@ -8,7 +8,8 @@ module.exports = addRoutes;
 
 function requiredAuth(req, res, next) {
     const user = req.session.user;
-    if (user) return res.status(400).send('Not Allowed')
+    const {ownerId} = req.body
+    if (user._id !== ownerId) return res.status(400).send('Not Allowed')
     else next()
 }
 
@@ -26,18 +27,6 @@ function addRoutes(app) {
         Promise.all([
             issueService.getById(issueId),
             commentService.query(issueId)
-                .then(comments => {
-                    // TODO: if ownerId is empty - 
-                    //       user should be name: guest, emoji: ?
-                    var prmCommentWithUser = comments.map(comment => {
-                        return userService.getById(comment.ownerId)
-                            .then(user => {
-                                comment.user = user
-                                return comment
-                            })
-                    })
-                    return Promise.all(prmCommentWithUser)
-                })
         ])
         .then(([issue, comments]) => {
             res.json({issue, comments})
@@ -59,7 +48,7 @@ function addRoutes(app) {
     })
     
     // add issue
-    app.post('/issue', requiredAuth, (req, res) => {
+    app.post('/issue', (req, res) => {
         const issue = req.body;
         issueService.add(issue)
             .then(issue => res.json(issue));

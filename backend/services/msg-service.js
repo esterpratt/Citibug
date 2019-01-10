@@ -5,7 +5,7 @@ const ObjectId = require('mongodb').ObjectId;
 
 module.exports = {
     query,
-    // add
+    add
 }
 
 function query(userId) {
@@ -45,5 +45,15 @@ function query(userId) {
                     }
                 }
             ]).sort({at : -1}).toArray()
+        })
+}
+
+function add(msg) {
+    msg.issueId = new ObjectId(msg.issueId)
+    msg.from = (msg.from) ? new ObjectId(msg.from) : ''
+    return mongoService.connectToDB()
+        .then(dbConn => {
+            const issueCollection = dbConn.collection('message');
+            return issueCollection.insertOne(msg)
         })
 }

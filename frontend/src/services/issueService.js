@@ -1,6 +1,9 @@
 'use strict';
 
-const axios = require('axios')
+const Axios = require('axios')
+const axios = Axios.create({
+    withCredentials: true,
+})
 import cloudinaryService from './cloudinaryService'
 
 const BASE_URL = (process.env.NODE_ENV !== 'development')

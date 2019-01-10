@@ -54,6 +54,17 @@ export default {
           return this.getSeverityStatus(this.issue.severity)
       }
   },
+  sockets: {
+      toggleResolved(issueId) {
+          if (issueId === this.issue._id) {
+              this.issue.isResolved = !this.issue.isResolved
+          }
+      },
+
+      addSeen(issueId) {
+          if (issueId === this.issue._id) this.issue.seenCount++
+      }
+  },
   methods: {
       openIssue() {
           this.$router.push(`/issue/${this.issue._id}`)

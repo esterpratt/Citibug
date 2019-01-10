@@ -43,6 +43,25 @@ nav {
                 box-shadow: inset 0px -37px 1px -32px rgba($bgColorLight, 0.75);
             }
         }
+
+        .profile-link {
+            position: relative;
+
+            .notification {
+                position: absolute;
+                top: 0.8rem;
+                right: 0.5rem;
+
+                @include round(1.1rem);
+                background-color: $urgentColor;
+                color: white;
+                font-weight: bold;
+                font-size: 0.8rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
     }
     
 }
