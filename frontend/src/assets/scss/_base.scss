@@ -3,6 +3,8 @@
 }
 
 html {
+    line-height: 1rem;
+    scroll-behavior: smooth;
     font-family: 'poppins', sans-serif;
 }
 
@@ -16,10 +18,11 @@ button, input, select, textarea {
 }
 
 button {
-    // padding: 0;
-    // margin: 0;
     cursor: pointer;
-    // border: 1px solid $darkBorder;
+    border: 0;
+    padding: 0.4rem 0.9rem;
+    line-height: 1rem;
+    font-weight: bold;
     transition: .3s;
 }
 

@@ -1,6 +1,7 @@
 <template>
     <nav>
-        <router-link to="/" class="logo"><i class="fas fa-home"></i>
+        <!-- <i class="fas fa-home"></i> -->
+        <router-link to="/" class="logo">
         munici<span>pal</span></router-link>
         <ul>
             <router-link to="/" exact tag="li">Home</router-link>

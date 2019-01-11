@@ -1,10 +1,10 @@
 .home {
     header {
         height: 70vh;
-        text-align: center;
         position: relative;
         display: flex;
-        justify-content: center;
+        // justify-content: center;
+        // text-align: center;
 
         .back-img {
             position: absolute;
@@ -23,20 +23,48 @@
             left: 0;
             height: 100%;
             width: 100%;
-            background-color: rgba(83, 83, 83, 0.8);
+            background-image: linear-gradient(to right, rgba(83, 83, 83, 0.82), rgba(83, 83, 83, 0.2));
         }
 
         h1 {
+            display: flex;
+            flex-direction: column;
+            margin-top: 2rem;
+            padding: 2rem;
+            border-radius: 2px;
+            height: fit-content;
             color: $bgColorLight;
-            margin-top: 150px;
             font-size: 3rem;
             font-weight: bold;
             letter-spacing: 2px;
             z-index: 1;
 
             p {
-                margin-top: 3rem;
-                line-height: 4rem;
+                font-size: 1.7rem;
+                margin-top: 2rem;
+                line-height: 2.5rem;
+            }
+
+            button {
+                margin-top: 2rem;
+                background-color: transparent;
+                color: $bgColorLight;
+                font-size: 3rem;
+
+                &:hover {
+                    animation-name: move; 
+                    animation-duration: 1s; 
+                    animation-iteration-count: infinite;
+                    animation-timing-function: linear;
+                }
+
+                @keyframes move {
+                    0%	{transform: translateY(0px);}
+                    25%	{transform: translateY(4px);}
+                    50% {transform: translateY(8px);}
+                    75%	{transform: translateY(4px);}
+                    100% {transform: translateY(0px);}
+                }
             }
         }
     }

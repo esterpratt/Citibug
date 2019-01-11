@@ -5,7 +5,7 @@
     :isUserLoggedin="!!loggedinUser"
     :notificationNum="notificationNum">
     </nav-bar>
-    <router-view/>
+    <router-view @openLogin="openLogin"/>
     <modal-cmp :isOpen="isModalOpen" @closeModal="isModalOpen=false">
       <login-cmp @closeModal="isModalOpen=false"></login-cmp>
     </modal-cmp>

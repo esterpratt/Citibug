@@ -6,9 +6,16 @@
             :style="{'background-image': 'url(' + backImgSrc +')'}"></div>
         </transition>
         <div class="back-color"></div>
-        <h1>Be a PAL!<p>Make our city a better place!</p></h1>
+        <h1>Be a PAL!
+            <p>Join the community,</br>
+            report issues,</br>
+            help solving others</br>
+            and make our city</br>
+            a better place!</p>
+            <button @click="scrollDown"><i class="fas fa-angle-down"></i></button>
+        </h1>
     </header>
-    <section class="container">
+    <section class="container" ref="main">
         <div class="carousel-container" v-for="(issuesObj, idx) in issuesLists"
         :key="idx">
             <h2>{{issuesObj.title}}</h2>
@@ -66,6 +73,11 @@ export default {
       loadIssues(filter, idx) {
           this.$store.dispatch({type: 'setFilter', filter})
             .then(issues => this.issuesLists[idx].issues = issues)
+      },
+
+      scrollDown() {
+          const height = this.$refs.main.offsetTop
+          window.scrollBy(0, height)
       }
   },
   created() {
@@ -91,12 +103,12 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
     .fade-enter-active, .fade-leave-active {
-    transition: opacity 1s;
+        transition: opacity 1s;
     }
 
     .fade-enter, .fade-leave-to {
-    opacity: 0;
+        opacity: 0;
     }
 </style>

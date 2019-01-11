@@ -3,18 +3,17 @@
     <div class="issue-details-container">
       <div class="issue-details">
         <router-link v-if="isOwner" :to="'/issue/edit/' + issue._id">
-          <i class="fas fa-edit"></i>
-          Edit your issue
+          <i class="fas fa-edit"></i>Edit
         </router-link>
         <h2>{{issue.title}}</h2>
         <p>{{issue.description}}</p>
         <p class="category">Category: {{issue.category}}</p>
         <p class="time">Reported {{issue.reportedAt | relative-time}}</p>
-        <div v-if="!isOwner" class="issue-by">by 
+        <div v-if="!isOwner" class="issue-by">by&thinsp;
+            <span>{{(issue.user.length) ? issue.user[0].name : 'a guest'}}</span>
             <div class="user-pic">
                 {{(issue.user.length) ? issue.user[0].emoji : '?'}}
             </div>
-            {{(issue.user.length) ? issue.user[0].name : 'a guest'}}
         </div>
         <p :class="severityStatus">
             This issue is {{severityStatus === 'urgent' ? severityStatus+'!' : severityStatus}}
@@ -27,26 +26,22 @@
             <div>
                 <p class="quest">{{issue.isResolved ? 'Do you agree?' : 'Have you been there?'}}</p>
                 <button v-if="!issue.isResolved" class="seen" @click="reportSeen">
-                    <i class="far fa-eye"></i>
-                    Yes, still there!
+                    <i class="far fa-eye"></i>Yes, still there!
                 </button>
                 <button @click="toggleResolved" class="resolve" :class="resolvedStatus">
                     <template v-if="issue.isResolved">
-                        <i class="far fa-eye"></i>
-                        No, Still There!
+                      <i class="far fa-eye"></i>No, Still There!
                     </template>
                     <template v-else>
-                        <i class="fas fa-hand-point-up"></i>
-                        Yes, resolved!
+                      <i class="fas fa-hand-peace"></i>Yes, resolved!
                     </template>
                 </button>
             </div>
           </div>
       <div class="share">
           <button>
-              <i class="fas fa-share"></i>
-              Share with friends!
-            </button>
+            <i class="fas fa-share"></i>Share
+          </button>
         </div>
       <img class="issue-img" :src="issue.newPic">
       <map-view

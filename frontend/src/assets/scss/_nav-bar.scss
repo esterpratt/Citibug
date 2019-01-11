@@ -8,13 +8,13 @@ nav {
     .logo {
         flex: 1;
         margin: 1rem;
-        font-style: italic;
+        font-size: 1.5rem;
 
         span {
             text-transform: uppercase;
             font-style: normal;
             color: $hlColor;
-            background-color: $bgColorLight;
+            background-color: $importantColor;
             border-radius: 3px;
             padding: 1px 2px;
             margin-left: 4px;
@@ -40,7 +40,7 @@ nav {
             }
 
             &:hover, &.router-link-active {
-                box-shadow: inset 0px -37px 1px -32px rgba($bgColorLight, 0.75);
+                box-shadow: inset 0px -37px 1px -32px $importantColor;
             }
         }
 

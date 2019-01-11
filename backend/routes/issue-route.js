@@ -8,8 +8,9 @@ module.exports = addRoutes;
 
 function requiredAuth(req, res, next) {
     const user = req.session.user;
-    const {ownerId} = req.body
-    if (user._id !== ownerId) return res.status(400).send('Not Allowed')
+    // const ownerId = req.body.ownerId
+    // if (user._id !== ownerId) return res.status(400).send('Not Allowed')
+    if (!user) return res.status(400).send('Not Allowed')
     else next()
 }
 

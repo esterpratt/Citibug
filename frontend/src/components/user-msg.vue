@@ -3,7 +3,7 @@
         <button @click="closeMsg">
             <i class="fas fa-times"></i>
         </button>
-        <h2>{{msg.txt}}</h2>
+        <p>{{msg.txt}}</p>
     </section>
 </template>
 
