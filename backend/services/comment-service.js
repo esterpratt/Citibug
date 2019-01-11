@@ -38,7 +38,7 @@ function query(issueId) {
 }
 
 function add(comment) {
-    comment.ownerId = (comment.ownerId) ? new ObjectId(onwerId) : (comment.ownerId)
+    comment.ownerId = (comment.ownerId) ? new ObjectId(comment.ownerId) : (comment.ownerId)
     return mongoService.connectToDB()
         .then(dbConn => {
             const issueCollection = dbConn.collection('comment');

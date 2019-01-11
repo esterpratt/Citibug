@@ -7,7 +7,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(128, 128, 128, 0.6);
+    background-color: rgba(189, 189, 189, 0.767);
     transition: .5s;
 
     .modal-inner {
@@ -18,7 +18,7 @@
         padding: 10px;
         border: 1px solid $darkBorder;
         border-radius: 5px;
-        background-color: $bgColorDark;
+        background-color: $bgColorLight;
     }
 
     &.open {
@@ -29,13 +29,14 @@
 
 // sure-validation
 
-.sure-validation {
+.sure-validation, .join-modal {
     margin: 2rem;
     text-align: center;
     h2 {
+        line-height: 3rem;
         font-size: 2rem;
         font-weight: bold;
-        margin-bottom: 5rem;
+        margin-bottom: 3rem;
     }
 
     .sure-btns {
@@ -43,29 +44,46 @@
         justify-content: space-around;
         
         button {
-            border-radius: 500px;
-            padding: 0.4rem 1rem;
+            border-radius: 2px;
             color: white;
-            width: 80px;
+        }
+    }
+}
 
-            &:first-child {
-                border: 1px solid darken(grey, 15%);
-                background-color: grey;
-
-                &:hover {
-                    background-color: darken(grey, 15%);
-                }
+.sure-validation {
+    button {
+        width: 5rem;
+        &:first-child {
+            background-color: grey;
+    
+            &:hover {
+                background-color: darken(grey, 15%);
             }
-
-            &:last-child {
-                margin-left: 3rem;
-                border: 1px solid darken($urgentColor, 15%);
-                background-color: $urgentColor;
-
-                &:hover {
-                    background-color: darken($urgentColor, 15%);
-                }
+        }
+    
+        &:last-child {
+            margin-left: 3rem;
+            background-color: $urgentColor;
+    
+            &:hover {
+                background-color: darken($urgentColor, 15%);
             }
+        }
+    }
+}
+
+.join-modal {
+    p {
+        font-size: 1.2rem;
+        margin-bottom: 3rem;
+    }
+
+    button {
+        width: 9rem;
+        background-color: $casualColor;
+
+        &:hover {
+            background-color: darken($casualColor, 15%);
         }
     }
 }

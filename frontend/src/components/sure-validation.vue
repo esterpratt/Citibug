@@ -2,7 +2,7 @@
     <div class="sure-validation">
         <h2>Are you sure?</h2>
         <div class="sure-btns">
-            <button @click="$emit('closeModal')">Cancel</button>
+            <button @click="$emit('closeModal', 'isSureModalOpen')">Cancel</button>
             <button @click="yesCB">Yes</button>
         </div>
     </div>

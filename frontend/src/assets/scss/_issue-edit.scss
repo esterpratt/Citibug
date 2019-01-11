@@ -4,7 +4,6 @@
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: 1fr 1fr;
-    // grid-template-rows: 4fr 4fr 8fr 1fr;
     grid-template-areas:
     "input delete"
     "input map-btns"
@@ -61,8 +60,8 @@
     font-size: 1.2rem;
     font-weight: bold;
     line-height: 1.1;
-    border: 1px solid darken($urgentColor, 15%);
-    border-radius: 500px;
+    border: 0;
+    border-radius: 2px;
     background-color: $urgentColor;
     color: white;
     transition: .3s;
@@ -81,6 +80,7 @@
     align-self: end;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     form {
         display: flex;
@@ -94,12 +94,11 @@
         button {
             margin-left: 5px;
             @include round(2.3rem);
-            
         }
     }
 
     button {
-        border: 1px solid darken($casualColor, 15%);
+        padding: 0.6rem 0.8rem;
         background-color: $casualColor;
         color: white;
 
@@ -109,8 +108,7 @@
     }
 
     & > button {
-        padding: 0.3rem 1rem;
-        border-radius: 500px;
+        border-radius: 2px;
     }
 }
 
@@ -197,12 +195,11 @@
     justify-self: end;
 
     button {
-        border-radius: 500px;
-        padding: 0.4rem 1rem;
+        width: 5rem;
+        border-radius: 2px;
         color: white;
 
         &:first-child {
-            border: 1px solid darken(grey, 15%);
             background-color: grey;
             &:hover {
                 background-color: darken(grey, 15%);
@@ -211,7 +208,6 @@
 
         &:last-child {
             margin-left: 3rem;
-            border: 1px solid darken($casualColor, 15%);
             background-color: $casualColor;
 
             &:hover {

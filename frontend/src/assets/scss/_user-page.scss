@@ -17,10 +17,10 @@
             a {
                 font-size: 1.2rem;
                 font-weight: bold;
-                border-top: 1px solid $hlColor;
-                border-left: 1px solid $hlColor;
+                border-top: 1px solid $casualColor;
+                border-left: 1px solid $casualColor;
                 padding: 12px 1.5rem;
-                background-color: $bgColorLight;
+                background-color: $bgColorDark;
                 color: $hlColor;
                 transition: .3s;
         
@@ -29,24 +29,25 @@
                 }        
         
                 &:last-of-type {
-                    border-right: 1px solid $hlColor;
+                    border-right: 1px solid $casualColor;
                     border-top-right-radius: 10px;
                 }
     
-                &:hover {
-                    background-color: darken($bgColorLight, 15%);
+                &:hover:not(.router-link-active) {
+                    background-color: darken($bgColorDark, 5%);
                 }
             }
     
             .router-link-active {
-                background-color: $hlColor;
+                cursor: default;
+                background-color: $casualColor;
                 color: white;
             }
         }
     
         .route-page-container {
             min-height: 60vh;
-            border: 1px solid $hlColor;
+            border: 1px solid $casualColor;
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
             border-bottom-left-radius: 10px;

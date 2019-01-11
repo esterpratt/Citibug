@@ -71,12 +71,11 @@
         }
 
         button {
+            width: 5rem;
             align-self: center;
             margin-top: 2rem;
-            border-radius: 500px;
-            padding: 0.4rem 1rem;
+            border-radius: 2px;
             color: white;
-            border: 1px solid darken($casualColor, 15%);
             background-color: $casualColor;
 
             &:hover {

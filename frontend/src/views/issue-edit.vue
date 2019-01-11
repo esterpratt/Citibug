@@ -27,7 +27,7 @@
           ></vue-slider>
         </div>
       </div>
-      <button v-if="issue._id" class="delete-btn" @click="isModalOpen=true">
+      <button v-if="issue._id" class="delete-btn" @click="isSureModalOpen=true">
         <i class="fas fa-trash-alt"></i>
         Delete Issue
       </button>
@@ -69,12 +69,18 @@
         @setCoords="setCoords"/>
       <div class="edit-btns">
         <button @click="goBack">Cancel</button>
-        <button @click="saveIssue">{{issue._id ? 'Save' : 'Report'}}</button>
+        <button @click="validateIssue">{{issue._id ? 'Save' : 'Report'}}</button>
       </div>
     </section>
-    <modal-cmp :isOpen="isModalOpen" @closeModal="closeModal">
+    <!-- Modals -->
+    <modal-cmp :isOpen="isSureModalOpen" @closeModal="closeModal('isSureModalOpen')">
       <sure-validation :yesCB="removeIssueCB" @closeModal="closeModal">
       </sure-validation>
+    </modal-cmp>
+    <modal-cmp :isOpen="isSaveModalOpen" @closeModal="closeModal('isSaveModalOpen')">
+      <join-modal @saveIssue="saveIssue"
+      @openLogin="openLogin">
+      </join-modal>
     </modal-cmp>
   </section>
 </template>
@@ -82,6 +88,7 @@
 <script>
 import modalCmp from "@/components/modal-cmp"
 import sureValidation from "@/components/sure-validation"
+import joinModal from "@/components/join-modal"
 import mapView from "@/components/map-view"
 import vueSlider from 'vue-slider-component'
 import eventBus, {USR_MSG_DISPLAY} from '@/services/busService'
@@ -97,9 +104,10 @@ export default {
       canvas: null,
       imgHeight: 0,
       imgWidth: 0,
-      isModalOpen: false,
+      isSureModalOpen: false,
+      isSaveModalOpen: false,
       removeIssueCB: () => {
-        this.closeModal()
+        this.closeModal('isSureModalOpen')
         this.removeIssue()
       }
     };
@@ -108,6 +116,7 @@ export default {
   components: {
     modalCmp,
     sureValidation,
+    joinModal,
     mapView,
     vueSlider
   },
@@ -116,11 +125,15 @@ export default {
     categoryOptions() {
       return this.$store.getters.issueCategories;
     },
+
+    isUserLoggedIn() {
+      return !!this.$store.getters.loggedinUser
+    }
   },
 
   methods: {
-    closeModal() {
-      this.isModalOpen = false;
+    closeModal(varName) {
+      this[varName] = false;
     },
 
     // ISSUE
@@ -160,24 +173,35 @@ export default {
       this.$router.push(this.issue._id ? `/issue/${this.issue._id}` : '/')
     },
 
-    saveIssue() {
+    validateIssue() {
+      // validate fields
       if (this.issue.title && this.issue.description && this.issue.category) {
-        this.$store.dispatch({type: 'saveIssue', issue: this.issue})
-          .then(_ => {
-            var txt;
-            var path = '/';
-            if (this.issue._id) {
-              txt = 'Your issue was updated'
-              path += `issue/${this.issue._id}`
-            } else {
-              txt = 'Thanks for reporting, You are a PAL!'
-            }
-            eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt })
-            this.$router.push(path)
-          })
+        // if user exist save issue
+        if (this.isUserLoggedIn) this.saveIssue()
+        // if no user, open modal
+        else this.openSaveModal()
       } else {
         eventBus.$emit(USR_MSG_DISPLAY, { type: 'fail', txt: 'Please fill in the required fields' })
       }
+    },
+
+    saveIssue() {
+      this.$store.dispatch({type: 'saveIssue', issue: this.issue})
+          .then(_ => {
+            var txt = 'Thanks for reporting, You are a PAL!';
+            if (this.issue._id) txt = 'Your issue was updated'
+            eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt })
+            this.goBack()
+          })
+    },
+
+    openLogin() {
+      this.isSaveModalOpen = false
+      this.$emit('openLogin')
+    },
+
+    openSaveModal() {
+      this.isSaveModalOpen = true;
     },
 
     removeIssue() {

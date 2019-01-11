@@ -8,8 +8,6 @@ module.exports = {
     getById,
     remove,
     update,
-    incCount,
-    updateField,
     add,
 }
 
@@ -23,6 +21,7 @@ function query(filter) {
     }
     // if to filter by user
     if (filter.byUser) {
+        filter.byUser = new ObjectId(filter.byUser)
         findFilters.push({ownerId: filter.byUser})
     } else {
         // add filters options
@@ -140,31 +139,8 @@ function update(issue) {
         })
 }
 
-function incCount(issueId, field) {
-    issueId = new ObjectId(issueId)
-    return mongoService.connectToDB()
-        .then(dbConn => {
-            const issueCollection = dbConn.collection('issue');
-            return issueCollection.updateOne({ _id: issueId },
-                { $inc: {[field] : 1}})
-        })
-}
-
-function updateField(issueId, field, value) {
-    issueId = new ObjectId(issueId)
-    return mongoService.connectToDB()
-        .then(dbConn => {
-            const issueCollection = dbConn.collection('issue');
-            return issueCollection.updateOne({ _id: issueId },
-                // update only relevant fields:
-                { $set: 
-                    {[field] : value} 
-                })
-        })
-}
-
 function add(issue) {
-    issue.onwerId = new ObjectId(onwerId)
+    if (issue.ownerId) issue.ownerId = new ObjectId(issue.ownerId)
     return mongoService.connectToDB()
         .then(dbConn => {
             const issueCollection = dbConn.collection('issue');

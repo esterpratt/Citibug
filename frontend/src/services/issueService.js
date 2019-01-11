@@ -168,24 +168,25 @@ async function saveIssue(issue, user) {
 //     newPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177617/milk.jpg',
 //     ownerId: '5c28d68ce3629fa3c6c86c00',
 //     },
-//     {
-//     title: 'a lot a lot a lot of garbage on the street',
-//     description: 'garbage is thrown all over the street!',
-//     category: 'Sanitation',
-//     createdAt: 1546164568296,
-//     severity: 4.3,
-//     seenCount: 12,
-//     shareCount: 2,
-//     commentsCount: 3,
-//     isResolved: true,
-//     location: {
-//         type: 'Point',
-//         coordinates: [34.770830, 32.082060]
-//     },
-//     address: 'Ben Yehuda 85 Tel Aviv',
-//     pic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177614/garbage.jpg',
-//     ownerId: '5c28d68ce3629fa3c6c86c04',
-//     }
+    // {
+    // title: 'a lot a lot a lot of garbage on the street',
+    // description: 'garbage is thrown all over the street!',
+    // category: 'Sanitation',
+    // createdAt: 1546164568296,
+    // severity: 4.3,
+    // seenCount: 12,
+    // shareCount: 2,
+    // commentsCount: 3,
+    // isResolved: true,
+    // location: {
+    //     type: 'Point',
+    //     coordinates: [34.770830, 32.082060]
+    // },
+    // address: 'Ben Yehuda 85 Tel Aviv',
+    // oldPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177614/garbage.jpg',
+    // newPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177614/garbage.jpg',
+    // ownerId: '5c28d68ce3629fa3c6c86c04',
+    // }
 // ]
 
 

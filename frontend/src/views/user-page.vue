@@ -24,8 +24,7 @@ export default {
   computed: {
       user() {
           return this.$store.getters.loggedinUser
-      },
-      
+      },    
   },
   methods: {},
   created() {

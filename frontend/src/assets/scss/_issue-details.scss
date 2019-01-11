@@ -2,6 +2,17 @@
     margin-top: 30px;
     display: flex;
 
+    button, a {
+        display: flex;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        border-radius: 2px;
+    }
+
     .issue-details-container {
         flex: 2;
         padding: 0 2rem;
@@ -32,11 +43,12 @@
         h2 {
             font-size: 1.5rem;
             font-weight: bold;
-            margin-top: 1rem;
+            margin-top: 0.8rem;
             margin-bottom: 1rem;
         }
 
         > p {
+            line-height: 1.2rem;
             font-size: 1rem;
             margin-top: 1rem;
 
@@ -55,6 +67,10 @@
             display: flex;
             align-items: center;
 
+            span {
+                text-transform: capitalize;
+            }
+
             .user-pic {
                 margin: 0 5px;
                 @include round(1.7rem);
@@ -71,23 +87,27 @@
         }
 
         > a {
-            color: $casualColor;
-            font-weight: bold;
+            width: fit-content;
+            background-color: $casualColor;
+            padding: 0.4rem 0.8rem;
+            transition: .3s;
+            margin-top: 0.5rem;
 
             &:hover {
-                color: darken($casualColor, 15%);
+                background-color: darken($casualColor, 15%);
             }
         }
     }
     
     .report-resolve {
-        font-size: 1rem;
         grid-area: report;
         justify-self: end;
+        font-size: 1rem;
 
         .report {
             font-size: 0.9rem;
             margin: 1rem 0;
+            line-height: 1.2rem;
             color: $casualColor;
         }
 
@@ -95,50 +115,70 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            text-align: center;
 
             button {
-                font-size: 1rem;
-                font-weight: bold;
-                background-color: transparent;
-                border: 0;
-                padding: 0;
-
+                width: 10.5rem;
                 &.resolved, &.seen {
-                    color: $urgentColor;
                     margin-top: 0.8rem;
                     margin-bottom: 0.6rem;
-    
+                }
+                
+                &.resolved {
+                    background-color: $casualColor;
                     &:hover {
-                        color: darken($urgentColor, 15%);
+                        background-color: darken($casualColor, 15%);
+                    }
+                }
+
+                &.seen {
+                    background-color: $urgentColor;
+                    &:hover {
+                        background-color: darken($urgentColor, 15%);
                     }
                 }
 
                 &.open {
-                    color: $casualColor;
+                    background-color: $casualColor;
                     
                     &:hover {
-                        color: darken($casualColor, 15%);
+                        background-color: darken($casualColor, 15%);
                     }
                 }
             }
         }
     }
+
+    i {
+        margin-right: 6px;
+    }
+    // .icon {
+    //     @include round(1.7rem);
+    //     transition: .3s;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     margin-right: 3px;
+    //     font-size: 0.9rem;
+
+    //     &.icon-red {
+    //         background-color: $urgentColor;
+    //         color: white;
+    //     }
+
+    //     &.icon-green {
+    //         background-color: $casualColor;
+    //         color: white;
+    //     }
+    // }
     
     .share {
         grid-area: share;
         justify-self: end;
 
         button {
-            font-size: 1rem;
-            font-weight: bold;
-            color: $casualColor;
-            background-color: transparent;
-            border: 0;
-            padding: 0;
-
+            background-color: $casualColor;
             &:hover {
-                color: darken($casualColor, 15%);
+                background-color: darken($casualColor, 15%);
             }
         }
     }

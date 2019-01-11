@@ -1,4 +1,5 @@
 const commentService = require('./comment-service')
+const utilService = require('./util-service')
 const userService = require('./user-service')
 const issueService = require('./issue-service')
 const msgService = require('./msg-service')
@@ -19,10 +20,10 @@ function setupIo(io) {
                 .then(_ => {
                     userService.getById(comment.ownerId)
                         .then(user => {
-                            comment.user = user;
+                            comment.user = [user];
                             io.emit('addNewComment', comment);
-                        })
-                    if (issueOwner !== comment.ownerId) {
+                        })                       
+                    if (issueOwner && issueOwner!== comment.ownerId) {
                         const msg = {
                             type: 'comment',
                             issueId: comment.issueId,
@@ -32,6 +33,7 @@ function setupIo(io) {
                         }
                         msgService.add(msg)
                         userService.updateMsgCount(issueOwner, false)
+                        utilService.incCount('issue', comment.issueId, 'commentsCount')
                         io.to(gUsersMap[issueOwner]).emit('addNotification');
                     }
                 })
@@ -55,12 +57,12 @@ function setupIo(io) {
                 userService.updateMsgCount(ownerId, false)
                 io.to(gUsersMap[ownerId]).emit('addNotification');
             }
-            issueService.updateField(issueId, 'isResolved', !isResolved)
+            utilService.updateField('issue', issueId, 'isResolved', !isResolved)
             io.emit('toggleResolved', issueId);
         })
 
         socket.on('addSeen', issueId => {            
-            issueService.incCount(issueId, 'seenCount')
+            utilService.incCount('issue', issueId, 'seenCount')
             io.emit('addSeen', issueId);
         })
     })
