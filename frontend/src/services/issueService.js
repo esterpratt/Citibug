@@ -151,23 +151,23 @@ async function saveIssue(issue, user) {
 //     ownerId: '5c28d68ce3629fa3c6c86c03',
 //     },
 //     {
-//     title: 'Milk spilled from truck',
-//     description: 'Lo mevi hu leTnuva beizim vehalav',
-//     category: 'Traffic & walkways',
-//     createdAt: 1546179940868,
-//     severity: 6.3,
-//     seenCount: 212,
-//     shareCount: 10,
-//     isResolved: true,
-//     location: {
-//         type: 'Point',
-//         coordinates: [34.791920, 32.055090]
-//     },
-//     address: 'Igal Alon 18 Tel Aviv',
-//     oldPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177617/milk.jpg',
-//     newPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177617/milk.jpg',
-//     ownerId: '5c28d68ce3629fa3c6c86c00',
-//     },
+    // title: 'Milk spilled from truck',
+    // description: 'Lo mevi hu leTnuva beizim vehalav',
+    // category: 'Traffic & walkways',
+    // createdAt: 1546179940868,
+    // severity: 6.3,
+    // seenCount: 212,
+    // shareCount: 10,
+    // isResolved: true,
+    // location: {
+    //     type: 'Point',
+    //     coordinates: [34.791920, 32.055090]
+    // },
+    // address: 'Igal Alon 18 Tel Aviv',
+    // oldPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177617/milk.jpg',
+    // newPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177617/milk.jpg',
+    // ownerId: ObejctId("5c28d68ce3629fa3c6c86c00"),
+    // },
     // {
     // title: 'a lot a lot a lot of garbage on the street',
     // description: 'garbage is thrown all over the street!',
@@ -185,7 +185,7 @@ async function saveIssue(issue, user) {
     // address: 'Ben Yehuda 85 Tel Aviv',
     // oldPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177614/garbage.jpg',
     // newPic: 'https://res.cloudinary.com/dnz0a2abj/image/upload/v1546177614/garbage.jpg',
-    // ownerId: '5c28d68ce3629fa3c6c86c04',
+    // ownerId: ObejctId("5c28d68ce3629fa3c6c86c04"),
     // }
 // ]
 

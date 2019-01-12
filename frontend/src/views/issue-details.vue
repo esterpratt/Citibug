@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       issue: null,
-      isOwner: false
+      isOwner: false,
     };
   },
   components: {

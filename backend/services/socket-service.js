@@ -22,8 +22,10 @@ function setupIo(io) {
                         .then(user => {
                             comment.user = [user];
                             io.emit('addNewComment', comment);
-                        })                       
-                    if (issueOwner && issueOwner!== comment.ownerId) {
+                        })
+                        // TODO: put new users and issues, and then
+                        // change != to !==. 
+                    if (issueOwner && issueOwner != comment.ownerId) {
                         const msg = {
                             type: 'comment',
                             issueId: comment.issueId,

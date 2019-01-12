@@ -1,6 +1,7 @@
 .issue-details-page {
-    margin-top: 30px;
+    margin-top: 10px;
     display: flex;
+    flex-direction: column;
 
     button, a {
         display: flex;
@@ -8,21 +9,23 @@
         display: flex;
         align-items: center;
         font-size: 1rem;
-        font-weight: bold;
+        font-weight: 100;
         color: white;
         border-radius: 2px;
     }
 
     .issue-details-container {
-        flex: 2;
-        padding: 0 2rem;
+        padding: 0 0.8rem;
         display: grid;
         grid-gap: 1rem;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 3fr 2fr;
         grid-template-areas:
         "details report"
         "details share"
-        "img map";
+        "img img"
+        "img img"
+        "map map"
+        "map map";
     }
 
     .issue-details {
@@ -51,14 +54,12 @@
             line-height: 1.2rem;
             font-size: 1rem;
             margin-top: 1rem;
-
             &:first-of-type {
-                margin-bottom: 3rem;
+                margin-bottom: 1rem;
             }
-
             &:last-of-type {
-                margin-bottom: 1.5rem;
-                margin-top: 1.5rem;
+                margin-bottom: 0.5rem;
+                margin-top: 0.5rem;
             }
         }
 
@@ -117,7 +118,7 @@
             align-items: flex-end;
 
             button {
-                width: 10.5rem;
+                width: 7rem;
                 &.resolved, &.seen {
                     margin-top: 0.8rem;
                     margin-bottom: 0.6rem;
@@ -149,27 +150,8 @@
     }
 
     i {
-        margin-right: 6px;
+        margin-right: 3px;
     }
-    // .icon {
-    //     @include round(1.7rem);
-    //     transition: .3s;
-    //     display: flex;
-    //     align-items: center;
-    //     justify-content: center;
-    //     margin-right: 3px;
-    //     font-size: 0.9rem;
-
-    //     &.icon-red {
-    //         background-color: $urgentColor;
-    //         color: white;
-    //     }
-
-    //     &.icon-green {
-    //         background-color: $casualColor;
-    //         color: white;
-    //     }
-    // }
     
     .share {
         grid-area: share;
@@ -185,11 +167,16 @@
 
     .issue-img {
         grid-area: img;
-        width: 100%;
         border: 1px solid $darkBorder;
+        margin: auto auto;
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
     }
     
     .map {
         grid-area: map;
+        max-width: 100%;
+        height: 300px;
     }
 }

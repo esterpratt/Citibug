@@ -4,12 +4,12 @@ self.__precacheManifest = [
     "url": "/js/about.2d08d6d4.js"
   },
   {
-    "revision": "89bc242dd20fe50f9859",
-    "url": "/css/app.0db68ffe.css"
+    "revision": "61c52c56d7eb1a8a8153",
+    "url": "/css/app.40b60b98.css"
   },
   {
-    "revision": "89bc242dd20fe50f9859",
-    "url": "/js/app.33df3544.js"
+    "revision": "61c52c56d7eb1a8a8153",
+    "url": "/js/app.d4e97ac5.js"
   },
   {
     "revision": "67e12b64d0b50f8a4b5d",
@@ -18,6 +18,14 @@ self.__precacheManifest = [
   {
     "revision": "67e12b64d0b50f8a4b5d",
     "url": "/js/chunk-vendors.de5441d5.js"
+  },
+  {
+    "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
+    "url": "/fonts/element-icons.2fad952a.woff"
+  },
+  {
+    "revision": "6f0a76321d30f3c8120915e57f7bd77e",
+    "url": "/fonts/element-icons.6f0a7632.ttf"
   },
   {
     "revision": "3352653dedd571bbc490c8be132b38cd",
@@ -56,32 +64,24 @@ self.__precacheManifest = [
     "url": "/fonts/fa-solid-900.686e245a.woff"
   },
   {
-    "revision": "877baf6278a6f1506a07afd23b334f47",
-    "url": "/fonts/fa-brands-400.877baf62.eot"
-  },
-  {
     "revision": "418d54a4a9df0e7b3e28dc09e4cce808",
     "url": "/fonts/fa-brands-400.418d54a4.ttf"
   },
   {
-    "revision": "b9c86e3abec102a2c9910dfac85c1c17",
-    "url": "/fonts/fa-solid-900.b9c86e3a.ttf"
+    "revision": "877baf6278a6f1506a07afd23b334f47",
+    "url": "/fonts/fa-brands-400.877baf62.eot"
   },
   {
     "revision": "f9103ae53b2dbcb0a14605eebc90a2ce",
     "url": "/fonts/fa-solid-900.f9103ae5.eot"
   },
   {
+    "revision": "b9c86e3abec102a2c9910dfac85c1c17",
+    "url": "/fonts/fa-solid-900.b9c86e3a.ttf"
+  },
+  {
     "revision": "e54c6ae126dd37d48c47dc1aa75cb54e",
     "url": "/img/fa-regular-400.e54c6ae1.svg"
-  },
-  {
-    "revision": "2fad952a20fbbcfd1bf2ebb210dccf7a",
-    "url": "/fonts/element-icons.2fad952a.woff"
-  },
-  {
-    "revision": "6f0a76321d30f3c8120915e57f7bd77e",
-    "url": "/fonts/element-icons.6f0a7632.ttf"
   },
   {
     "revision": "3e30e90a9ee4f94765599bcefd758cb3",
@@ -96,7 +96,7 @@ self.__precacheManifest = [
     "url": "/img/gps.294ad7a2.png"
   },
   {
-    "revision": "5128fdb3d992d422a41ce62e0229a994",
+    "revision": "aff1870a3af1fa06805154158937ed46",
     "url": "/index.html"
   },
   {

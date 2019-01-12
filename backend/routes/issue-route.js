@@ -2,7 +2,6 @@
 
 const issueService = require('../services/issue-service')
 const commentService = require('../services/comment-service')
-const userService = require('../services/user-service')
 
 module.exports = addRoutes;
 
