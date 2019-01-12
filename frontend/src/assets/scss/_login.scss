@@ -1,13 +1,23 @@
 .login-container {
     display: flex;
+    flex-direction: column;
+
+    // wide
+    // flex-direction: row;
+
     
     .login, .signup {
         flex: 1;
-        padding: 1.5rem;
+        padding: 0.5rem;
+
+        // wide
+        // padding: 1rem;
     }
     
     .signup {
-        border-left: 1px solid $darkBorder;
+        border-top: 1px solid $darkBorder;
+        // wide
+        // border-left: 1px solid $darkBorder;
 
         .emoji-picked {
             margin-top: 1.5rem;
@@ -31,11 +41,11 @@
         }
 
         .emoji-picker {
-            width: 80%;
+            width: 90%;
             align-self: center;
             display: grid;
-            grid-gap: 0.4rem;
-            grid-template-columns: repeat(auto-fill, minmax(2.7rem, 1fr));
+            grid-gap: 0.3rem;
+            grid-template-columns: repeat(auto-fill, minmax(2.3rem, 1fr));
 
             div {
                 cursor: pointer;
@@ -58,7 +68,7 @@
     h2 {
         font-size: 1.3rem;
         font-weight: bold;
-        margin-bottom: 1.7rem;
+        margin-bottom: 1rem;
     }
 
     form {
@@ -71,9 +81,10 @@
         }
 
         button {
-            width: 5rem;
+            width: 6rem;
             align-self: center;
             margin-top: 2rem;
+            margin-bottom: 0.5rem;
             border-radius: 2px;
             color: white;
             background-color: $casualColor;

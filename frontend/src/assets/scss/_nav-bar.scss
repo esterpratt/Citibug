@@ -25,23 +25,53 @@ nav {
         }
     }
 
+    .nav-btn, ul button {
+        @include round(2rem);
+        margin-right: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        background-color: rgba(187, 187, 187, 0);
+        font-size: 1.5rem;
+        transition: .3s;
+    
+        &:hover {
+            background-color: rgba(187, 187, 187, 0.6);
+        }
+    }
+
     ul {
         display: flex;
+        z-index: 99;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -200px;
+        background-color: $hlColor;
+        height: 100vh;
+        transition: .6s;
+
+        &.open {
+            right: 0;
+        }
 
         li {
-            cursor: pointer;
-            text-align: center;
-            width: 100px;
-            padding: 1.5rem 1rem;
-            transition: .3s;
-
-            &:not(:last-child) {
-                border-right: 1px solid darken($bgColorLight, 50%);
-            }
+            width: 30vw;
+            border-bottom: 1px solid darken($bgColorLight, 50%);
 
             &:hover, &.router-link-active {
-                box-shadow: inset 0px -37px 1px -32px $importantColor;
+                box-shadow: inset 37px 0px 1px -32px $importantColor;
             }
+            cursor: pointer;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            transition: .3s;
+        }
+
+        button {
+            margin: 0.72rem;
+            align-self: flex-end;
         }
 
         .profile-link {
@@ -62,6 +92,5 @@ nav {
                 justify-content: center;
             }
         }
-    }
-    
+    }   
 }

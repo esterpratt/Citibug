@@ -2,6 +2,7 @@
     flex: 1;
     padding: 1rem 1.5rem;
     background-color: $bgColorDark;
+    margin-top: 1rem;
 
     h2 {
         font-size: 1.2rem;
@@ -33,7 +34,6 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 0;
                 background-color: $casualColor;
                 color: white;
 
@@ -85,6 +85,10 @@
                     .user-name {
                         font-weight: bold;
                         text-transform: capitalize;
+                    }
+
+                    .comment-time {
+                        margin-right: 5px;
                     }
                 }
 

@@ -4,8 +4,6 @@ export default {
 
 const CLOUD_NAME = "dnz0a2abj"
 
-// var UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
-
 // on submit call to this function
 function uploadImg(elForm) {
     if(elForm) {
@@ -28,7 +26,8 @@ function doUploadImg(elForm, onSuccess) {
 
     return fetch(UPLOAD_URL, {
         method: 'POST',
-        body: formData
+        body: formData,
+        mode: 'cors'
     })
     .then(function (response) {
         return response.json()

@@ -38,9 +38,8 @@
 
       <!-- IMG -->
       <div class="img-container">
-        <img :src="issue.newPic" ref="img" @load="setImgSize"/>
-        <video ref="video" id="video" autoplay
-         :height="imgHeight" :width="imgWidth"></video>
+        <img :src="issue.newPic" @load="setImgSize"/>
+        <video ref="video" id="video" autoplay></video>
         <div class="img-btns">
           <form v-if="!video" class="publish-form" method="POST" enctype="multipart/form-data">
             <label for="imgFile">
@@ -163,8 +162,8 @@ export default {
           coordinates: [],
         },
         address: null,
-        oldPic: "https://dummyimage.com/380x250/cccccc/ffffff.png&text=Issue+Photo",
-        newPic: "https://dummyimage.com/380x250/cccccc/ffffff.png&text=Issue+Photo",
+        oldPic: "https://dummyimage.com/300x335/cccccc/ffffff.png&text=Issue+Photo",
+        newPic: "https://dummyimage.com/300x335/cccccc/ffffff.png&text=Issue+Photo",
       };
       this.getCurrLoc()
     },
@@ -245,7 +244,6 @@ export default {
       if (imgPath) {
         this.issue.picPath = imgPath;
         this.issue.newPic = URL.createObjectURL(imgPath);
-        this.setImgSize()
       }
     },
 
@@ -267,7 +265,7 @@ export default {
 
     capture() {
       this.canvas = this.$refs.canvas;
-      this.canvas.getContext("2d").drawImage(this.video, 0, 0);
+      this.canvas.getContext("2d").drawImage(this.video, 0, 0, this.imgWidth, this.imgHeight);
       canvas.toBlob(blob => {
         this.issue.picPath = blob;
         this.issue.newPic = URL.createObjectURL(blob);
@@ -276,8 +274,8 @@ export default {
     },
 
     setImgSize(ev) {
-      this.imgHeight = this.$refs.img.clientHeight
-      this.imgWidth = this.$refs.img.clientWidth
+      this.imgHeight = ev.target.parentElement.clientHeight
+      this.imgWidth = ev.target.parentElement.clientWidth
     }
   },
 
