@@ -74,10 +74,8 @@ export default {
           this.$store.dispatch({type: 'setFilter', filter})
             .then(issues => this.issuesLists[idx].issues = issues)
       },
-
       scrollDown() {
-          const height = this.$refs.main.offsetTop
-          window.scrollBy(0, height)
+        this.$refs.main.scrollIntoView({block: "start", inline: "nearest", behavior: 'smooth'})
       }
   },
   created() {

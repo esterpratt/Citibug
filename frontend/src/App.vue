@@ -1,11 +1,14 @@
 <template>
-  <div id="app" v-if="!isLoading">
-    <nav-bar @openLogin="openLogin"
-    @initNotification="initNotification"
-    :isUserLoggedin="!!loggedinUser"
-    :notificationNum="notificationNum">
-    </nav-bar>
-    <router-view @openLogin="openLogin"/>
+  <div id="app" class="app" v-if="!isLoading">
+    <nav-bar
+      @openLogin="openLogin"
+      @initNotification="initNotification"
+      :isUserLoggedin="!!loggedinUser"
+      :notificationNum="notificationNum"
+    ></nav-bar>
+    <div class="pages-container">
+      <router-view @openLogin="openLogin"/>
+    </div>
     <modal-cmp :isOpen="isModalOpen" @closeModal="isModalOpen=false">
       <login-cmp @closeModal="isModalOpen=false"></login-cmp>
     </modal-cmp>
@@ -14,10 +17,10 @@
 </template>
 
 <script>
-import userMsg from '@/components/user-msg'
-import navBar from '@/components/nav-bar'
-import modalCmp from '@/components/modal-cmp'
-import loginCmp from '@/components/login-cmp'
+import userMsg from "@/components/user-msg";
+import navBar from "@/components/nav-bar";
+import modalCmp from "@/components/modal-cmp";
+import loginCmp from "@/components/login-cmp";
 
 export default {
   data() {
@@ -25,56 +28,65 @@ export default {
       isModalOpen: false,
       isLoading: true,
       notificationNum: 0
-    }
+    };
   },
 
   components: {
     userMsg,
     navBar,
     modalCmp,
-    loginCmp,
+    loginCmp
   },
 
   computed: {
     loggedinUser() {
-      return this.$store.getters.loggedinUser
+      return this.$store.getters.loggedinUser;
     }
   },
   sockets: {
     addNotification() {
-      this.notificationNum++
+      this.notificationNum++;
     }
   },
   methods: {
     initNotification() {
-      this.notificationNum = 0
-      this.$socket.emit('initNotification', this.loggedinUser._id)
+      this.notificationNum = 0;
+      this.$socket.emit("initNotification", this.loggedinUser._id);
     },
     openLogin() {
       // if user exist - logout and go to homepage
       if (this.loggedinUser) {
-        this.$store.dispatch({type: 'logout'})
-        this.$router.push('/')
+        this.$store.dispatch({ type: "logout" });
+        this.$router.push("/");
       } else {
         this.isModalOpen = true;
       }
+    },
+    setVh() {
+      let vh = window.innerHeight * 0.01;
+      // Then we set the value in the --vh custom property to the root of the document
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
     }
   },
 
   created() {
-    this.$store.dispatch({type: 'getLoggedinUser'})
-    .then(_ => {
+    this.setVh();
+    window.addEventListener("resize", this.setVh);
+    this.$store.dispatch({ type: "getLoggedinUser" }).then(_ => {
       this.isLoading = false;
-    })
+    });
+  },
+
+  destroyed() {
+    window.addEventListener("resize", this.setVh);
   },
 
   watch: {
-    'loggedinUser': function () {
+    loggedinUser: function() {
       if (this.loggedinUser) {
-        this.notificationNum = this.loggedinUser.msgCount
+        this.notificationNum = this.loggedinUser.msgCount;
       }
     }
   }
-}
-
+};
 </script>
