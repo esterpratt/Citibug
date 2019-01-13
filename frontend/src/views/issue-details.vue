@@ -1,6 +1,6 @@
 <template>
   <section class="container issue-details-page" v-if="issue">
-    <div class="issue-details-container">
+    <div class="issue-details-container" ref="issueDetails">
       <div class="issue-details">
         <router-link v-if="isOwner" :to="'/issue/edit/' + issue._id">
           <i class="fas fa-edit"></i>Edit
@@ -43,14 +43,15 @@
             <i class="fas fa-share"></i>Share
           </button>
         </div>
-      <img class="issue-img" :src="issue.newPic">
+      <img class="issue-img" :src="issue.newPic" @load="setCommentsHeight">
       <map-view
         :issueCoords="issue.location.coordinates"
         :mapCenter="issue.location.coordinates"
         :isEditable="false"
       />
     </div>
-    <comments-cmp :comments="issue.comments" :user="user" @addComment="addComment"/>
+    <comments-cmp :comments="issue.comments" :user="user" @addComment="addComment"
+    :style="{height: commentsHeight}"/>
   </section>
 </template>
 
@@ -69,6 +70,7 @@ export default {
     return {
       issue: null,
       isOwner: false,
+      commentsHeight: 0,
     };
   },
   components: {
@@ -129,6 +131,10 @@ export default {
             isResolved: this.issue.isResolved
         })
         eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt: `Thanks for reporting! You are a PAL!` })
+    },
+
+    setCommentsHeight() {
+      this.commentsHeight = (window.innerWidth >= 586) ? this.$refs.issueDetails.clientHeight + 'px': ''
     }
   },
   created() {

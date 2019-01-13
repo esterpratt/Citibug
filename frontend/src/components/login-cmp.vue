@@ -91,7 +91,7 @@ export default {
                         eventBus.$emit(USR_MSG_DISPLAY, { type: 'fail', txt: err.message })
                     })
             } else {
-                console.log('show msg to fill required fields');
+                eventBus.$emit(USR_MSG_DISPLAY, { type: 'fail', txt: 'Please fill in the required fields' })
             }
         },
 
@@ -103,10 +103,10 @@ export default {
                 if (this.newUser.pass === this.rePass) {
                     this.signUp()
                 } else {
-                    console.log('show msg that passwords dont match');
+                    eventBus.$emit(USR_MSG_DISPLAY, { type: 'fail', txt: 'Passwords don\'t match' })
                 }
             } else {
-                console.log('show msg to fill required fields');
+                eventBus.$emit(USR_MSG_DISPLAY, { type: 'fail', txt: 'Please fill in the required fields' })
             }
         },
 

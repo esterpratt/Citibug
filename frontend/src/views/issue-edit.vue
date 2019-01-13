@@ -1,7 +1,7 @@
 <template>
   <!-- TODO: optimize: divide to select/input cmps -->
   <section class="container">
-    <canvas ref="canvas" id="canvas" :height="imgHeight" :width="imgWidth"></canvas>
+    <canvas ref="canvas" id="canvas"></canvas>
     <section class="issue-edit" v-if="issue">
       <div class="edit-input">
         <div class="title">
@@ -9,6 +9,7 @@
         </div>
         <div class="description">
           <el-input type="textarea" v-model="issue.description"
+          maxlength="120"
           placeholder="Description" rows="3">
           </el-input>
         </div>
@@ -38,9 +39,9 @@
 
       <!-- IMG -->
       <div class="img-container">
-        <img :src="issue.newPic" @load="setImgSize"/>
-        <video ref="video" id="video" autoplay></video>
-        <div class="img-btns">
+        <img :src="issue.newPic" ref="img"/>
+        <video ref="video" id="video" autoplay :class="{open: !!video}"></video>
+        <div class="img-btns" :class="{open: !!video}">
           <form v-if="!video" class="publish-form" method="POST" enctype="multipart/form-data">
             <label for="imgFile">
               <i class="fas fa-file-upload"></i>
@@ -101,14 +102,13 @@ export default {
       mapCenter: [],
       video: null,
       canvas: null,
-      imgHeight: 0,
-      imgWidth: 0,
       isSureModalOpen: false,
       isSaveModalOpen: false,
       removeIssueCB: () => {
         this.closeModal('isSureModalOpen')
         this.removeIssue()
-      }
+      },
+      isMobile: false,
     };
   },
 
@@ -127,6 +127,10 @@ export default {
 
     isUserLoggedIn() {
       return !!this.$store.getters.loggedinUser
+    },
+
+    videoConstrain() {
+      return (this.isMobile) ? { facingMode: { exact: "environment" } } : true
     }
   },
 
@@ -187,7 +191,7 @@ export default {
     saveIssue() {
       this.$store.dispatch({type: 'saveIssue', issue: this.issue})
           .then(_ => {
-            var txt = 'Thanks for reporting, You are a PAL!';
+            var txt = 'Thanks for reporting, You are a PAL!'
             if (this.issue._id) txt = 'Your issue was updated'
             eventBus.$emit(USR_MSG_DISPLAY, { type: 'success', txt })
             this.goBack()
@@ -200,7 +204,7 @@ export default {
     },
 
     openSaveModal() {
-      this.isSaveModalOpen = true;
+      this.isSaveModalOpen = true
     },
 
     removeIssue() {
@@ -215,77 +219,99 @@ export default {
     // MAP
     getCurrLoc() {
       this.$store.dispatch({ type: "getLoc" }).then(loc => {
-        this.issue.location.coordinates = loc.coords;
-        this.issue.address = loc.address;
-        this.mapCenter = loc.coords;
+        this.issue.location.coordinates = loc.coords
+        this.issue.address = loc.address
+        this.mapCenter = loc.coords
       });
     },
 
     getCoordsByAddress() {
       if (this.issue.address) {
         this.$store.dispatch({ type: "getCoordsByAddress", address: this.issue.address }).then(coords => {
-          this.issue.location.coordinates = coords;
-          this.mapCenter = coords;
+          this.issue.location.coordinates = coords
+          this.mapCenter = coords
         });
       }
     },
 
     setCoords(coords) {
-      this.issue.location.coordinates = coords;
+      this.issue.location.coordinates = coords
       this.$store
         .dispatch({ type: "getAddressByCoords", coords })
-        .then(address => (this.issue.address = address));
+        .then(address => (this.issue.address = address))
     },
 
     // IMG
     previewImg(ev) {
-      const imgPath = ev.target.files[0];
+      const imgPath = ev.target.files[0]
       
       if (imgPath) {
-        this.issue.picPath = imgPath;
-        this.issue.newPic = URL.createObjectURL(imgPath);
+        this.issue.picPath = imgPath
+        this.issue.newPic = URL.createObjectURL(imgPath)
       }
     },
 
     startVideo() {
-      this.video = this.$refs.video;
+      this.video = this.$refs.video
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-          this.video.srcObject = stream;
-          this.video.play();
+        navigator.mediaDevices.getUserMedia({ video: this.videoConstrain }).then(stream => {
+          this.video.srcObject = stream
+          this.video.play()
         });
       }
     },
 
     stopVideo() {
-      this.video.srcObject.getTracks().forEach(track => track.stop());
-      this.video.srcObject = null;
-      this.video = null;
+      this.video.srcObject.getTracks().forEach(track => track.stop())
+      this.video.srcObject = null
+      this.video = null
     },
 
     capture() {
-      this.canvas = this.$refs.canvas;
-      this.canvas.getContext("2d").drawImage(this.video, 0, 0, this.imgWidth, this.imgHeight);
+      const size = this.getImgSize()
+      this.canvas.width = size.width;
+      this.canvas.height = size.height;
+      this.canvas.getContext("2d").drawImage(this.video, 0, 0, size.width, size.height);     
       canvas.toBlob(blob => {
-        this.issue.picPath = blob;
+        this.issue.picPath = blob
         this.issue.newPic = URL.createObjectURL(blob);
-      }, 'image/jpeg');
-      this.stopVideo();
+      }, 'image/jpeg')
+      this.stopVideo()
     },
 
-    setImgSize(ev) {
-      this.imgHeight = ev.target.parentElement.clientHeight
-      this.imgWidth = ev.target.parentElement.clientWidth
+    getImgSize() {
+      this.canvas = this.$refs.canvas
+      let width = this.$refs.video.videoWidth
+      let height = this.$refs.video.videoHeight
+      const ratio = width/height
+      width = this.$refs.img.clientWidth
+      height = width/ratio;
+      return {width, height}
+    },
+
+    checkIfMobile() {
+      return !!(navigator.userAgent.match(/Android/i)
+            || navigator.userAgent.match(/webOS/i)
+            || navigator.userAgent.match(/iPhone/i)
+            || navigator.userAgent.match(/iPad/i)
+            || navigator.userAgent.match(/iPod/i)
+            || navigator.userAgent.match(/BlackBerry/i)
+            || navigator.userAgent.match(/Windows Phone/i))
     }
   },
 
   created() {
-    this.getId();
+    this.getId()
+    this.isMobile = this.checkIfMobile()
+  },
+
+  mounted() {
+
   },
 
   watch: {
     "$route.params.issueId": function() {
-      this.getId();
+      this.getId()
     },
   }
 };

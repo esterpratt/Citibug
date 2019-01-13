@@ -133,8 +133,6 @@
     }
 
     .comments-container {
-        max-height: 60vh;
-
         .comments {
             height: 70%;
             overflow-y: auto;
@@ -206,6 +204,14 @@
     .loc-select {
         button {
             padding: 0.6rem 0.6rem;
+        }
+    }
+
+    .modal-container {
+        .modal-inner {
+            width: 70vw;
+            margin: 60px auto;
+            padding: 10px;
         }
     }
 }
