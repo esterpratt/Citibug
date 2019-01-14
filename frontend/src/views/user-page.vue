@@ -18,8 +18,6 @@
 <script>
 export default {
   name: "user-page",
-  props: {},
-  components: {},
   data() {
     return {};
   },

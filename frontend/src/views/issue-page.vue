@@ -11,7 +11,6 @@ import issueFilter from "@/components/issue-filter.vue";
 
 export default {
   name: "issue-page",
-  props: {},
   data() {
     return {};
   },

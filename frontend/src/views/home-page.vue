@@ -37,7 +37,6 @@ import issueCarousel from "@/components/issue-carousel.vue";
 
 export default {
   name: "home",
-  props: {},
   data() {
     return {
       backImg: 1,

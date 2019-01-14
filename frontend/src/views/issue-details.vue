@@ -67,7 +67,6 @@ import eventBus, { USR_MSG_DISPLAY } from "@/services/busService";
 
 export default {
   name: "issue-details",
-  props: {},
   data() {
     return {
       issue: null,

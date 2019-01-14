@@ -1,6 +1,6 @@
 <template>
     <div class="join-modal">
-        <h2>Would you like to login </br>and report your issue as a Pal?</h2>
+        <h2>Would you like to login <br/>and report your issue as a Pal?</h2>
         <p>Login will allow you to edit and get notifications about your issue</p>
         <div class="sure-btns">
             <button @click="$emit('saveIssue')">Report as guest</button>
