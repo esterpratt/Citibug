@@ -153,6 +153,34 @@
     .delete-btn {
         margin: 0.7rem;
     }
+
+    // profile page
+    .user-page {
+        .routes-container {
+            margin: 4rem 2rem;
+        }
+    }
+
+    // about
+    .about {
+        .details {
+            flex-direction: row;
+            text-align: left;
+        
+            img {
+                margin-right: 3rem;
+            }
+    
+            h2 {
+                margin-top: 0;
+            }
+        }
+
+        .contact {
+            text-align: left;
+            padding: 1rem 0 1rem 20rem;
+        }
+    }
 }
                                 
 @media (min-width: 768px) {

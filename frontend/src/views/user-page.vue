@@ -1,6 +1,8 @@
 <template>
   <section class="container user-page">
-    <h1>Hello <span>{{user.name}}!</span></h1>
+    <h1>Hello
+      <span>{{user.name}}!</span>
+    </h1>
     <div class="routes-container">
       <div class="links">
         <router-link to="/user" exact>Messages</router-link>
@@ -22,16 +24,16 @@ export default {
     return {};
   },
   computed: {
-      user() {
-          return this.$store.getters.loggedinUser
-      },    
+    user() {
+      return this.$store.getters.loggedinUser;
+    }
   },
   methods: {},
   created() {
     const filter = {
       byUser: this.user._id
-    }
-    this.$store.dispatch({type: 'setFilter', filter})
+    };
+    this.$store.dispatch({ type: "setFilter", filter });
   }
 };
 </script>

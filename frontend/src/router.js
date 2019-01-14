@@ -42,8 +42,8 @@ export default new Router({
     {
       path: '/user',
       component: userPage,
-      children: [{path: '', name: 'user-profile', component: userProfile},
-                 {path: 'issues', component: userIssues}]
+      children: [{ path: '', name: 'user-profile', component: userProfile },
+      { path: 'issues', component: userIssues }]
     },
     {
       path: '/about',

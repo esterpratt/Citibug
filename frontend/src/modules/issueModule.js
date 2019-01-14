@@ -2,109 +2,104 @@ import issueService from '@/services/issueService'
 import locService from '@/services/locService'
 
 export default {
-    state: {
-        issues: [],
-        issueCategories: ['Animals', 'Landscape', 'Sanitation', 
-                          'Construction', 'Traffic & walkways'],
-        filter: {
-          lat: null,
-          lng: null,
-          byUser: '',
-          // could be: distance, severity, time, attention
-          sortBy: 'Distance',
-          byTxt: '',
-          // could be: open, resolved, all
-          byStatus: 'All',
-          from: 0,
-          to: 18,
-          byCategory: []
-        },
-      },
-    
-      getters: {
-        issues(state) {
-          return state.issues
-        },
+  state: {
+    issues: [],
+    issueCategories: ['Animals', 'Landscape', 'Sanitation',
+      'Construction', 'Traffic & walkways'],
+    filter: {
+      lat: null,
+      lng: null,
+      byUser: '',
+      // could be: distance, severity, time, attention
+      sortBy: 'Distance',
+      byTxt: '',
+      // could be: open, resolved, all
+      byStatus: 'All',
+      from: 0,
+      to: 18,
+      byCategory: []
+    },
+  },
 
-        issueCategories(state) {
-          return state.issueCategories
-        },
-      },
-    
-      mutations: {
-        setIssues(state, {issues}) {
-          state.issues = issues
-        },
+  getters: {
+    issues(state) {
+      return state.issues
+    },
 
-        setFilterKey(state, {key, value}) {
-          state.filter[key] = value
-        }
-      },
-    
-      actions: {
-        setFilter({commit, dispatch}, {filter}) {
-          Object.keys(filter).forEach(key => {
-            commit({type: 'setFilterKey', key, value: filter[key]})
-          })
-          return dispatch({type: 'getIssues'})
-        },
+    issueCategories(state) {
+      return state.issueCategories
+    },
+  },
 
-        getIssues({commit, state}) {
-          return issueService.query(state.filter)
-          .then(issues => {
-            commit({type: 'setIssues', issues})
-            return issues
-          })
-        },
-        
-        getIssueById(context, {issueId}) {
-          return issueService.getIssueById(issueId)
-        },
+  mutations: {
+    setIssues(state, { issues }) {
+      state.issues = issues
+    },
 
-        saveIssue(context, {issue}) {
-          return issueService.saveIssue(issue, context.rootState.userModule.loggedinUser)
-            .then(issue => issue)
-        },
+    setFilterKey(state, { key, value }) {
+      state.filter[key] = value
+    }
+  },
 
-        removeIssue(context, {issueId}) {
-          return issueService.removeIssue(issueId)
-            .then(res => res)
-        },
+  actions: {
+    setFilter({ commit, dispatch }, { filter }) {
+      Object.keys(filter).forEach(key => {
+        commit({ type: 'setFilterKey', key, value: filter[key] })
+      })
+      return dispatch({ type: 'getIssues' })
+    },
 
-        getLoc({commit, dispatch}) {
-          return locService.getCurrLoc()
-            .then(coords => {
-              commit({type: 'setFilterKey', key: 'lng', value: coords[0]})
-              commit({type: 'setFilterKey', key: 'lat', value: coords[1]})
-              return dispatch({type: 'getAddressByCoords', coords})
-                .then(address => {
-                  return {coords, address}
-                })
-            })
-            .catch(err => {
-              // TODO: decide what to do when refuse to give location:
-              //       1. set default location?
-              //       2. remove issues by distance?
-              console.log("catch location refuse");
-            })
-        },
+    getIssues({ commit, state }) {
+      return issueService.query(state.filter)
+        .then(issues => {
+          commit({ type: 'setIssues', issues })
+          return issues
+        })
+    },
 
-        getCoordsByAddress(context, {address}) {
-          return locService.getCoordsByAddress(address)
-            .then(coords => {
-              return coords
-            })
-        },
+    getIssueById(context, { issueId }) {
+      return issueService.getIssueById(issueId)
+    },
 
-        getAddressByCoords(context, {coords}) {
-          return locService.getAddressByCoords(coords)
+    saveIssue(context, { issue }) {
+      return issueService.saveIssue(issue, context.rootState.userModule.loggedinUser)
+        .then(issue => issue)
+    },
+
+    removeIssue(context, { issueId }) {
+      return issueService.removeIssue(issueId)
+        .then(res => res)
+    },
+
+    getLoc({ commit, dispatch }) {
+      return locService.getCurrLoc()
+        .then(coords => {
+          commit({ type: 'setFilterKey', key: 'lng', value: coords[0] })
+          commit({ type: 'setFilterKey', key: 'lat', value: coords[1] })
+          return dispatch({ type: 'getAddressByCoords', coords })
             .then(address => {
-              return address
+              return { coords, address }
             })
-        },
+        })
+        .catch(err => {
+          // if refuse to give location, return default location
+          console.log("catch location refuse");
+          return { coords: [34.774050, 32.078130], address: 'Dizengoff square, Tel Aviv' }
+        })
+    },
 
-        // Sockets
-        // SOCKET_addNewComment(context, comment) {
-        // }
-      }
+    getCoordsByAddress(context, { address }) {
+      return locService.getCoordsByAddress(address)
+        .then(coords => {
+          return coords
+        })
+    },
+
+    getAddressByCoords(context, { coords }) {
+      return locService.getAddressByCoords(coords)
+        .then(address => {
+          return address
+        })
+    }
+  }
 }

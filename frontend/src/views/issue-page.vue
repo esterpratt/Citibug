@@ -1,43 +1,35 @@
 <template>
-    <section class="container">
-        <issue-filter></issue-filter>
-        <issue-list :issues="issues"></issue-list>
-    </section>
+  <section class="container">
+    <issue-filter></issue-filter>
+    <issue-list :issues="issues"></issue-list>
+  </section>
 </template>
 
 <script>
-import issueList from '@/components/issue-list.vue'
-import issueFilter from '@/components/issue-filter.vue'
+import issueList from "@/components/issue-list.vue";
+import issueFilter from "@/components/issue-filter.vue";
 
 export default {
-  name: 'issue-page',
-  props: {
-    
-  },
+  name: "issue-page",
+  props: {},
   data() {
-      return {
-          
-      }
+    return {};
   },
   components: {
     issueList,
-    issueFilter,
+    issueFilter
   },
   computed: {
-      issues() {
-          return this.$store.getters.issues
-      },
-  },
-  methods: {
-      
+    issues() {
+      return this.$store.getters.issues;
+    }
   },
   created() {
-      // scroll to top of the screen
-      window.scrollTo(0, 0)
-      this.$store.dispatch({type: 'getLoc'})
-        .then(_ => {
-            this.$store.dispatch({type: 'getIssues'})
-        })  
+    // scroll to top of the screen
+    window.scrollTo(0, 0);
+    this.$store.dispatch({ type: "getLoc" }).then(_ => {
+      this.$store.dispatch({ type: "getIssues" });
+    });
   }
-}
+};
 </script>

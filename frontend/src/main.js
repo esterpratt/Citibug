@@ -17,13 +17,13 @@ Vue.config.productionTip = false
 import VueSocketIO from 'vue-socket.io'
 
 Vue.use(new VueSocketIO({
-    debug: true,
-    connection: (process.env.NODE_ENV !== 'development') ? '' : '//localhost:3000',
-    vuex: {
-        store,
-        actionPrefix: 'SOCKET_',
-        mutationPrefix: 'SOCKET_'
-    }
+  debug: true,
+  connection: (process.env.NODE_ENV !== 'development') ? '' : '//localhost:3000',
+  vuex: {
+    store,
+    actionPrefix: 'SOCKET_',
+    mutationPrefix: 'SOCKET_'
+  }
 }))
 
 // vue-cmps imports
@@ -56,9 +56,9 @@ Vue.mixin({
       if (severity < 4) {
         return 'casual'
       } else if (severity < 7) {
-          return 'important'
+        return 'important'
       } else {
-          return 'urgent'
+        return 'urgent'
       }
     },
   }
