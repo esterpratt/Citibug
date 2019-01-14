@@ -8,7 +8,7 @@
         <h2>{{issue.title}}</h2>
         <p>{{issue.description}}</p>
         <p class="category">Category: {{issue.category}}</p>
-        <p class="time">Reported {{issue.reportedAt | relative-time}}</p>
+        <p class="time">Reported {{issue.createdAt | relative-time}}</p>
         <div v-if="!isOwner" class="issue-by">
           by&thinsp;
           <span>{{(issue.user.length) ? issue.user[0].name : 'a guest'}}</span>
