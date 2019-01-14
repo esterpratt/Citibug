@@ -110,8 +110,14 @@
             grid-template-areas:
             "details report"
             "details share"
+            "details address"
             "img map";
         }
+
+        .issue-address {
+            justify-self: flex-end;
+        }
+        
         .report-resolve {
             justify-self: end;
 

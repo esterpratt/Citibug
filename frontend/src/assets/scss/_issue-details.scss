@@ -22,10 +22,15 @@
         grid-template-areas:
         "details report"
         "details share"
+        "address address"
         "map map"
         "map map"
         "img img"
         "img img";
+    }
+
+    .issue-address {
+        grid-area: address;
     }
 
     .issue-details {

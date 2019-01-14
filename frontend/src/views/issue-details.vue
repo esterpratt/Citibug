@@ -43,6 +43,7 @@
         </button>
       </div>
       <img class="issue-img" :src="issue.newPic" @load="setCommentsHeight">
+      <p class="issue-address">{{issue.address}}</p>
       <map-view
         :issueCoords="issue.location.coordinates"
         :mapCenter="issue.location.coordinates"
