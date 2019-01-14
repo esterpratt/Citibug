@@ -15,8 +15,9 @@ function updateField(collection, docId, field, value) {
             const issueCollection = dbConn.collection(collection);
             return issueCollection.updateOne({ _id: docId },
                 // update only relevant field
-                { $set: 
-                    {[field] : value} 
+                {
+                    $set:
+                        { [field]: value }
                 })
         })
 }
@@ -27,6 +28,6 @@ function incCount(collection, docId, field) {
         .then(dbConn => {
             const issueCollection = dbConn.collection(collection);
             return issueCollection.updateOne({ _id: docId },
-                { $inc: {[field] : 1}})
+                { $inc: { [field]: 1 } })
         })
 }

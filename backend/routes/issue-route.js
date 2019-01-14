@@ -7,8 +7,6 @@ module.exports = addRoutes;
 
 function requiredAuth(req, res, next) {
     const user = req.session.user;
-    // const ownerId = req.body.ownerId
-    // if (user._id !== ownerId) return res.status(400).send('Not Allowed')
     if (!user) return res.status(400).send('Not Allowed')
     else next()
 }
@@ -28,9 +26,9 @@ function addRoutes(app) {
             issueService.getById(issueId),
             commentService.query(issueId)
         ])
-        .then(([issue, comments]) => {
-            res.json({issue, comments})
-        });
+            .then(([issue, comments]) => {
+                res.json({ issue, comments })
+            });
     })
 
     // delete issue
@@ -46,7 +44,7 @@ function addRoutes(app) {
         issueService.update(issue)
             .then(issue => res.json(issue));
     })
-    
+
     // add issue
     app.post('/issue', (req, res) => {
         const issue = req.body;

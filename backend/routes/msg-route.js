@@ -6,10 +6,9 @@ module.exports = addRoutes;
 
 function addRoutes(app) {
     app.get('/msg', (req, res) => {
-        const {userId} = req.query      
+        const { userId } = req.query
         msgService.query(userId)
-          .then(msgs => res.json(msgs))
-        })
-    }
+            .then(msgs => res.json(msgs))
+    })
+}
 
-    

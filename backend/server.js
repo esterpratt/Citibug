@@ -27,19 +27,19 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
-  }))
-  
-  app.use(history({
-      varbose: true
-  }));
-  app.use(express.static(__dirname + '/public'));
-  issueRoute(app);
-  userRoute(app);
-  msgRoute(app);
-  
-  
-  const port = process.env.PORT || 3000;
-  const server = app.listen(port, () => console.log(`server on ${port}`));
-  const io = require('socket.io').listen(server);
-  const setupIo = require('./services/socket-service')
-  setupIo(io)
+}))
+
+app.use(history({
+    varbose: true
+}));
+app.use(express.static(__dirname + '/public'));
+issueRoute(app);
+userRoute(app);
+msgRoute(app);
+
+
+const port = process.env.PORT || 3000;
+const server = app.listen(port, () => console.log(`server on ${port}`));
+const io = require('socket.io').listen(server);
+const setupIo = require('./services/socket-service')
+setupIo(io)

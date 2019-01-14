@@ -14,6 +14,10 @@ function setupIo(io) {
             gUsersMap[userId] = socket.id
         })
 
+        socket.on('removeUser', userId => {
+            delete gUsersMap[userId]
+        });
+
         socket.on('addComment', (comment, issueOwner) => {
             comment.at = Date.now()
             commentService.add(comment)
@@ -23,8 +27,8 @@ function setupIo(io) {
                             comment.user = [user];
                             io.emit('addNewComment', comment);
                         })
-                        // TODO: put new users and issues, and then
-                        // change != to !==. 
+                    // TODO: put new users and issues, and then
+                    // change != to !==. 
                     if (issueOwner && issueOwner != comment.ownerId) {
                         const msg = {
                             type: 'comment',
@@ -45,7 +49,7 @@ function setupIo(io) {
             userService.updateMsgCount(userId, true)
         })
 
-        socket.on('toggleResolved', ({from, issueId, ownerId, isResolved}) => {
+        socket.on('toggleResolved', ({ from, issueId, ownerId, isResolved }) => {
             const type = (isResolved) ? 'open' : 'resolve'
             if (ownerId !== from) {
                 const msg = {
@@ -63,7 +67,7 @@ function setupIo(io) {
             io.emit('toggleResolved', issueId);
         })
 
-        socket.on('addSeen', issueId => {            
+        socket.on('addSeen', issueId => {
             utilService.incCount('issue', issueId, 'seenCount')
             io.emit('addSeen', issueId);
         })

@@ -14,59 +14,59 @@ module.exports = {
 function query(filter) {
     const categoriesCount = 5;
     var findFilters = [];
-    
-    var sortObj = {createdAt: -1};
+
+    var sortObj = { createdAt: -1 };
     var findFunc = (issueCollection) => {
         return issueCollection.find({ $and: findFilters }).limit(+filter.to).sort(sortObj).toArray()
     }
     // if to filter by user
     if (filter.byUser) {
         filter.byUser = new ObjectId(filter.byUser)
-        findFilters.push({ownerId: filter.byUser})
+        findFilters.push({ ownerId: filter.byUser })
     } else {
         // add filters options
-        findFilters.push({ title: { $regex: `.*${filter.byTxt}.*`, $options: 'i'}})
+        findFilters.push({ title: { $regex: `.*${filter.byTxt}.*`, $options: 'i' } })
         if (filter.byStatus !== 'All') {
             if (filter.byStatus === 'Open') {
-                findFilters.push({isResolved : false})
+                findFilters.push({ isResolved: false })
             } else {
-                findFilters.push({isResolved : true})
+                findFilters.push({ isResolved: true })
             }
         }
         // if only some of the categories were chosen
         var byCategory = filter.byCategory.split(',')
-        if (byCategory[0] && byCategory.length < categoriesCount) { 
-            findFilters.push({category : { $in : byCategory}})
+        if (byCategory[0] && byCategory.length < categoriesCount) {
+            findFilters.push({ category: { $in: byCategory } })
         }
 
-        switch(filter.sortBy) {
-            case('Distance'):
+        switch (filter.sortBy) {
+            case ('Distance'):
                 findFunc = (issueCollection) => {
                     return issueCollection.aggregate([
                         {
-                        $geoNear: {
-                            near: { 
-                                type: "Point", 
-                                coordinates: [+filter.lng , +filter.lat] 
-                            },
-                            distanceField: "dist.calculated",
-                            spherical: true,
-                            query: {$and: findFilters}
-                        }
-                    }]).limit(+filter.to).toArray()
+                            $geoNear: {
+                                near: {
+                                    type: "Point",
+                                    coordinates: [+filter.lng, +filter.lat]
+                                },
+                                distanceField: "dist.calculated",
+                                spherical: true,
+                                query: { $and: findFilters }
+                            }
+                        }]).limit(+filter.to).toArray()
                 }
-            break;
-            case('Attention'):
-                sortObj = {commentsCount: -1}
                 break;
-            case('Oldest first'):
-                sortObj = {createdAt: 1}
+            case ('Attention'):
+                sortObj = { commentsCount: -1 }
                 break;
-            case('Recent first'):
-                sortObj = {createdAt: -1}
+            case ('Oldest first'):
+                sortObj = { createdAt: 1 }
                 break;
-            case('Severity'):
-                sortObj = {severity: -1}
+            case ('Recent first'):
+                sortObj = { createdAt: -1 }
+                break;
+            case ('Severity'):
+                sortObj = { severity: -1 }
                 break;
         }
     }
@@ -97,7 +97,7 @@ function getById(issueId) {
                     },
                 },
                 {
-                    $project: 
+                    $project:
                     {
                         "user.pass": 0,
                         "user._id": 0,
@@ -105,7 +105,7 @@ function getById(issueId) {
                     }
                 }
             ]).toArray()
-            .then(res => res[0])
+                .then(res => res[0])
         })
 }
 
@@ -125,8 +125,10 @@ function update(issue) {
             const issueCollection = dbConn.collection('issue');
             return issueCollection.updateOne({ _id: issueId },
                 // update only relevant fields:
-                { $set: 
-                    {   title: issue.title,
+                {
+                    $set:
+                    {
+                        title: issue.title,
                         description: issue.description,
                         category: issue.category,
                         severity: issue.severity,
@@ -134,7 +136,7 @@ function update(issue) {
                         address: issue.address,
                         oldPic: issue.oldPic,
                         newPic: issue.newPic,
-                    } 
+                    }
                 })
         })
 }

@@ -26,14 +26,14 @@ function query(issueId) {
                     },
                 },
                 {
-                    $project: 
+                    $project:
                     {
                         "user.pass": 0,
                         "user._id": 0,
                         "user.msgCount": 0
                     }
                 }
-            ]).sort({at : -1}).toArray()
+            ]).sort({ at: -1 }).toArray()
         })
 }
 

@@ -35,16 +35,16 @@ function query(userId) {
                     },
                 },
                 {
-                    $project: 
-                    { 
+                    $project:
+                    {
                         "type": 1,
                         "at": 1,
-                        "issue._id" : 1,
-                        "issue.title" : 1,
+                        "issue._id": 1,
+                        "issue.title": 1,
                         "from.name": 1,
                     }
                 }
-            ]).sort({at : -1}).toArray()
+            ]).sort({ at: -1 }).toArray()
         })
 }
 
