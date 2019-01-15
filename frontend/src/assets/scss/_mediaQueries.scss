@@ -257,7 +257,7 @@
 
     // filter
     .issue-filter {
-        margin: 3rem 2rem;
+        margin: 3rem 1.7rem;
         flex-direction: row;
         button {
             display: none;
@@ -266,7 +266,7 @@
         > div {
 
             > *:not(.issue-sort) {
-                margin-right: 0.5rem;
+                margin-right: 0.4rem;
             }
 
             &:last-of-type {
@@ -285,7 +285,7 @@
         }
 
         .category-filter {
-            width: 13.6rem;
+            width: 14rem;
         }
 
         .issue-sort >:last-child {
@@ -300,5 +300,19 @@
     // issue list
     .issues-list {
         grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    }
+}
+
+@media (min-width: 1200px) {
+    // filter
+    .issue-filter {
+        margin: 3rem 2rem;
+        .issue-search {
+            width: 14rem;
+        }
+
+        .issue-sort >:last-child {
+            width: 14rem;
+        }
     }
 }

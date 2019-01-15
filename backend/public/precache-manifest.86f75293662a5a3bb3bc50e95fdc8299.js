@@ -4,11 +4,11 @@ self.__precacheManifest = [
     "url": "/js/about.23d979c1.js"
   },
   {
-    "revision": "ad936e0383018d767f32",
-    "url": "/css/app.c496c3b3.css"
+    "revision": "502535f117f4b7b2153d",
+    "url": "/css/app.10666a3a.css"
   },
   {
-    "revision": "ad936e0383018d767f32",
+    "revision": "502535f117f4b7b2153d",
     "url": "/js/app.cb6c10ec.js"
   },
   {
@@ -76,12 +76,12 @@ self.__precacheManifest = [
     "url": "/fonts/fa-brands-400.418d54a4.ttf"
   },
   {
-    "revision": "f9103ae53b2dbcb0a14605eebc90a2ce",
-    "url": "/fonts/fa-solid-900.f9103ae5.eot"
-  },
-  {
     "revision": "b9c86e3abec102a2c9910dfac85c1c17",
     "url": "/fonts/fa-solid-900.b9c86e3a.ttf"
+  },
+  {
+    "revision": "f9103ae53b2dbcb0a14605eebc90a2ce",
+    "url": "/fonts/fa-solid-900.f9103ae5.eot"
   },
   {
     "revision": "e54c6ae126dd37d48c47dc1aa75cb54e",
@@ -100,7 +100,7 @@ self.__precacheManifest = [
     "url": "/img/gps.294ad7a2.png"
   },
   {
-    "revision": "390c483317b51d1787562a8b5f65f13c",
+    "revision": "a4fc163e8029417513c87b7cdca1bfe9",
     "url": "/index.html"
   },
   {
