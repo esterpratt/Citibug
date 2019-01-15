@@ -266,7 +266,7 @@
         > div {
 
             > *:not(.issue-sort) {
-                margin-right: 0.7rem;
+                margin-right: 0.5rem;
             }
 
             &:last-of-type {
@@ -280,8 +280,16 @@
             }
         }
 
-        .issue-search, .category-filter, .issue-sort >:last-child {
-            width: 10.8rem;
+        .issue-search {
+            width: 10rem;
+        }
+
+        .category-filter {
+            width: 13.6rem;
+        }
+
+        .issue-sort >:last-child {
+            width: 9.5rem;
         }
         
         .el-radio-button__inner {

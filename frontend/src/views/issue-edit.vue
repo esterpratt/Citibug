@@ -46,7 +46,7 @@
       <!-- IMG -->
       <div class="img-container">
         <img :src="issue.newPic" ref="img">
-        <video ref="video" id="video" autoplay :class="{open: !!video}"></video>
+        <video ref="video" id="video" autoplay :class="[{open: !!video}, videoClass]"></video>
         <div class="img-btns" :class="{open: !!video}">
           <form v-if="!video" class="publish-form" method="POST" enctype="multipart/form-data">
             <label for="imgFile">
@@ -138,7 +138,13 @@ export default {
 
     videoConstrain() {
       return this.isMobile ? { facingMode: { exact: "environment" } } : true;
-    }
+    },
+
+    videoClass() {
+      return {
+        wide: window.innerWidth > window.innerHeight
+      }
+    },
   },
 
   methods: {
