@@ -6,7 +6,7 @@
       :isUserLoggedin="!!loggedinUser"
       :notificationNum="notificationNum"
     ></nav-bar>
-    <div class="pages-container">
+    <div class="pages-container" ref="pagesContainer">
       <router-view @openLogin="openLogin"/>
     </div>
     <modal-cmp :isOpen="isModalOpen" @closeModal="isModalOpen=false">
@@ -82,10 +82,13 @@ export default {
   },
 
   watch: {
-    loggedinUser: function() {
+    loggedinUser() {
       if (this.loggedinUser) {
         this.notificationNum = this.loggedinUser.msgCount;
       }
+    },
+    $route() {
+      this.$refs.pagesContainer.scrollTo(0, 0)
     }
   }
 };

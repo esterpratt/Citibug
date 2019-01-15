@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="container" ref="container">
     <issue-filter></issue-filter>
     <issue-list :issues="issues"></issue-list>
   </section>
@@ -24,11 +24,9 @@ export default {
     }
   },
   created() {
-    // scroll to top of the screen
-    window.scrollTo(0, 0);
     this.$store.dispatch({ type: "getLoc" }).then(_ => {
       this.$store.dispatch({ type: "getIssues" });
     });
-  }
+  },
 };
 </script>

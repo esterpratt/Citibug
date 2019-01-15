@@ -339,7 +339,7 @@ export default {
   },
 
   watch: {
-    "$route.params.issueId": function() {
+    "$route.params.issueId"() {
       this.getId();
     }
   }
