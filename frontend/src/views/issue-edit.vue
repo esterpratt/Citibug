@@ -173,6 +173,7 @@ export default {
         severity: 5,
         seenCount: 0,
         shareCount: 0,
+        commentsCount: 0,
         isResolved: false,
         location: {
           type: "Point",

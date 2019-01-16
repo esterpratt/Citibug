@@ -22,6 +22,7 @@ function setupIo(io) {
             comment.at = Date.now()
             commentService.add(comment)
                 .then(_ => {
+                    utilService.incCount('issue', comment.issueId, 'commentsCount')
                     userService.getById(comment.ownerId)
                         .then(user => {
                             comment.user = [user];
@@ -39,7 +40,6 @@ function setupIo(io) {
                         }
                         msgService.add(msg)
                         userService.updateMsgCount(issueOwner, false)
-                        utilService.incCount('issue', comment.issueId, 'commentsCount')
                         io.to(gUsersMap[issueOwner]).emit('addNotification');
                     }
                 })
