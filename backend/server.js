@@ -9,6 +9,7 @@ const app = express();
 const issueRoute = require('./routes/issue-route')
 const userRoute = require('./routes/user-route')
 const msgRoute = require('./routes/msg-route')
+const mailRoute = require('./routes/mail-route')
 
 const cors = require('cors')
 const history = require('connect-history-api-fallback');
@@ -36,6 +37,7 @@ app.use(express.static(__dirname + '/public'));
 issueRoute(app);
 userRoute(app);
 msgRoute(app);
+mailRoute(app);
 
 
 const port = process.env.PORT || 3000;

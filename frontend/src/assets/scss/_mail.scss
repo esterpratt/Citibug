@@ -1,0 +1,48 @@
+.mail-modal {
+    padding: 20px;
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        section {
+            display: flex;
+        }
+    }
+    label {
+        width: 50%;
+    }
+    input {
+        width: 80%;
+        margin-left: 5px;
+        padding: 1px 7px;
+        border: 0px;
+        // border-bottom: 1px solid $darkBorder;
+        border-radius: 0;
+    }
+
+    div {
+        font-size: 1rem;
+        font-weight: bold;
+        border-bottom: 1px solid $darkBorder;
+        border-top: 1px solid $darkBorder;
+        padding: 50px 10px;
+        word-wrap: break-word;
+
+        p {
+            margin-bottom: 20px;
+        }
+    }
+
+    button {
+        width: fit-content;
+        align-self: flex-end;
+        margin-top: 20px;
+        background-color: $casualColor;
+        transition: .3s;
+
+        &:hover {
+            background-color: darken($casualColor, 10%);
+        }
+    }
+}

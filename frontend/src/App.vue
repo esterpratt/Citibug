@@ -78,7 +78,7 @@ export default {
   },
 
   destroyed() {
-    window.addEventListener("resize", this.setVh);
+    window.removeEventListener("resize", this.setVh);
   },
 
   watch: {

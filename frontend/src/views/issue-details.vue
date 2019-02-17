@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="share">
-        <button @click="shareIssue">
+        <button @click="openShareModal">
           <i class="fas fa-share"></i>Share
         </button>
       </div>
@@ -56,6 +56,9 @@
       @addComment="addComment"
       :style="{height: commentsHeight}"
     />
+    <modal-cmp :isOpen="isModalOpen" @closeModal="isModalOpen = false">
+      <mailModal :link="issueLink" @sendMail="sendMail"/>
+    </modal-cmp>
   </section>
 </template>
 
@@ -64,6 +67,8 @@ import mapView from "@/components/map-view";
 import commentsCmp from "@/components/comments-cmp";
 import seenCount from "@/components/seen-count";
 import shareCount from "@/components/share-count";
+import modalCmp from "@/components/modal-cmp";
+import mailModal from "@/components/mail-modal";
 import eventBus, { USR_MSG_DISPLAY } from "@/services/busService";
 
 export default {
@@ -72,14 +77,18 @@ export default {
     return {
       issue: null,
       isOwner: false,
-      commentsHeight: 0
+      commentsHeight: 0,
+      isModalOpen: false,
+      issueLink: window.location.href
     };
   },
   components: {
     mapView,
     commentsCmp,
     seenCount,
-    shareCount
+    shareCount,
+    modalCmp,
+    mailModal
   },
   computed: {
     severityStatus() {
@@ -152,8 +161,18 @@ export default {
           : "";
     },
 
-    shareIssue() {
-      alert("Sorry, still under construction. Don't let it stop you!");
+    openShareModal() {
+      this.isModalOpen = true;
+    },
+
+    sendMail(mailOptions) {
+      this.isModalOpen = false;
+      let from = mailOptions.from;
+      from = from.charAt(0).toUpperCase() + from.substring(1);
+      this.$store.dispatch({ type: "sendMail", mailOptions: 
+        {to: mailOptions.to, 
+        text: `${from} invites you to check out this issue: ${this.issueLink}`
+        }})
     }
   },
   created() {

@@ -1,7 +1,6 @@
 const commentService = require('./comment-service')
 const utilService = require('./util-service')
 const userService = require('./user-service')
-const issueService = require('./issue-service')
 const msgService = require('./msg-service')
 
 const gUsersMap = {}
